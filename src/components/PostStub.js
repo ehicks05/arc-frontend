@@ -6,7 +6,7 @@ const PostStub = ({ post, i }) => {
     <div className="p-2 border">
       <Link to={`/posts/${post.id}`}>
         <div className="flex gap-2">
-          <div className="">{`${i + 1}.`}</div>
+          {i !== undefined && <div className="">{`${i + 1}.`}</div>}
           <div className="">
             <div className="text-lg">title: {post.title}</div>
             <div className="text-sm">{post.author.username}</div>

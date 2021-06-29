@@ -29,9 +29,9 @@ const Post = ({ posts }) => {
 
   return (
     <div>
-      <div className="box is-small">
+      <div className="">
         <PostStub post={post} />
-        <span className="is-size-7">{post.content}</span>
+        <div className="border">{post.content}</div>
       </div>
       <CommentInput postId={post.id} parentCommentId={0} />
       Comments:

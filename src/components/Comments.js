@@ -26,9 +26,9 @@ const Comments = ({ comments }) => {
 
 const Comment = ({ comment }) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
-  const ml = `ml-${comment.level}`;
+  const indent = `ml-${comment.level}`;
   return (
-    <div className={`${ml} p-2 border`} key={comment.id}>
+    <div className={`${indent} m-2 p-2 border`} key={comment.id}>
       <span>
         <span>{comment.author}</span>
         <span title={"id: " + comment.id}>{comment.content}</span>
