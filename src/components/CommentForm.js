@@ -21,12 +21,16 @@ const CommentForm = ({ postId, parentCommentId, toggleReplyBox }) => {
   return (
     <div className="">
       <textarea
-        className="dark:bg-gray-600 dark:text-gray-100"
+        className="border p-1 dark:bg-gray-600 dark:text-gray-100"
         placeholder={"add a comment"}
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button className="" disabled={!text} onClick={() => submitComment()}>
+      <button
+        className="block border p-0.5"
+        disabled={!text}
+        onClick={() => submitComment()}
+      >
         Submit
       </button>
     </div>

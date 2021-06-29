@@ -33,7 +33,7 @@ const Comment = ({ comment }) => {
         <span>{comment.author}</span>
         <span title={"id: " + comment.id}>{comment.content}</span>
       </span>
-      <div className="flex gap-4">
+      <div className="flex pt-1 gap-4">
         <button
           className="p-0.5 border"
           onClick={() => setShowReplyForm(!showReplyForm)}
@@ -56,7 +56,7 @@ const Comment = ({ comment }) => {
         />
       )}
 
-      <Comments comments={comment.comments} />
+      {comment.comments?.length > 0 && <Comments comments={comment.comments} />}
     </div>
   );
 };
