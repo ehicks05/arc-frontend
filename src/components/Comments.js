@@ -2,19 +2,8 @@ import React, { useState } from "react";
 import TimeAgo from "timeago-react";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/all";
 
-import CommentForm from "./CommentForm.js";
-
-const deleteComment = async (commentId) => {
-  await fetch({
-    method: "DELETE",
-    url: "/api/comments/" + commentId,
-    async: false,
-    success: function (data) {
-      console.log(data);
-      //getPosts();
-    },
-  });
-};
+import { deleteComment } from "../api";
+import CommentForm from "./CommentForm";
 
 const Comments = ({ comments }) => {
   return (
@@ -50,20 +39,11 @@ const Comment = ({ comment }) => {
           <div>
             <span>{comment.content}</span>
           </div>
-          <div className="flex pt-1 gap-4">
-            <button
-              className="p-0.5 border"
-              onClick={() => setShowReplyForm(!showReplyForm)}
-            >
-              Reply
-            </button>
-            <button
-              className="p-0.5 border"
-              onClick={() => deleteComment(comment.id)}
-            >
-              Delete
-            </button>
-          </div>
+          <CommentActions
+            comment={comment}
+            showReplyForm={showReplyForm}
+            setShowReplyForm={setShowReplyForm}
+          />
 
           {showReplyForm && (
             <CommentForm
@@ -78,6 +58,25 @@ const Comment = ({ comment }) => {
           )}
         </>
       )}
+    </div>
+  );
+};
+
+const CommentActions = ({ comment, showReplyForm, setShowReplyForm }) => {
+  return (
+    <div className="flex pt-1 gap-4">
+      <button
+        className="p-0.5 border"
+        onClick={() => setShowReplyForm(!showReplyForm)}
+      >
+        Reply
+      </button>
+      <button
+        className="p-0.5 border "
+        onClick={() => deleteComment(comment.id)}
+      >
+        Delete
+      </button>
     </div>
   );
 };

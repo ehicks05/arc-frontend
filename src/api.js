@@ -9,13 +9,18 @@ const getPosts = async () => {
 
 const addComment = async (data) => {
   fetch({
+    method: "POST",
     url: "/api/comments",
-    type: "POST",
     data: data,
-    success: function (data) {
-      // self.handlePostsChange();
-    },
   });
 };
 
-export { getPosts, addComment };
+const deleteComment = async (commentId) => {
+  await fetch({
+    method: "DELETE",
+    url: "/api/comments/" + commentId,
+    async: false,
+  });
+};
+
+export { getPosts, addComment, deleteComment };
