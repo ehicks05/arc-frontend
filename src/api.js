@@ -18,4 +18,4 @@ const addComment = async (data) => {
   });
 };
 
-export { getPosts };
+export { getPosts, addComment };
