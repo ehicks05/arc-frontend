@@ -7,7 +7,7 @@ const CommentForm = ({ postId, parentComment, toggleReplyBox }) => {
   const [content, setContent] = useState("");
   const queryClient = useQueryClient();
 
-  const mutation = useMutation((data) => addComment(data), {
+  const createCommentMutation = useMutation((data) => addComment(data), {
     onSuccess: () => {
       queryClient.invalidateQueries("posts");
     },
@@ -23,15 +23,16 @@ const CommentForm = ({ postId, parentComment, toggleReplyBox }) => {
       content: content,
     };
 
-    mutation.mutate(data);
+    createCommentMutation.mutate(data);
     setContent("");
 
     // the top level 'make a comment' input shouldn't be hidden
     if (toggleReplyBox) toggleReplyBox();
   };
 
-  if (mutation.isLoading) return <div>loading...</div>;
-  if (mutation.isError) return <div>{mutation.error}</div>;
+  if (createCommentMutation.isLoading) return <div>loading...</div>;
+  if (createCommentMutation.isError)
+    return <div>{createCommentMutation.error}</div>;
 
   return (
     <div className="">

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import TimeAgo from "timeago-react";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/all";
 
@@ -17,8 +18,15 @@ const Comments = ({ comments }) => {
 };
 
 const Comment = ({ comment }) => {
-  const [minimized, setMinimized] = useState(false);
+  const [minimized, setMinimized] = useState(comment.deleted);
   const [showReplyForm, setShowReplyForm] = useState(false);
+  const queryClient = useQueryClient();
+
+  const deleteCommentMutation = useMutation((data) => deleteComment(data), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("posts");
+    },
+  });
 
   const indent = `ml-${comment.level}`;
   return (
@@ -27,7 +35,9 @@ const Comment = ({ comment }) => {
         <button onClick={() => setMinimized(!minimized)}>
           {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
         </button>
-        <span className="text-xs">{comment.author.username}</span>
+        <span className="text-xs">
+          {comment?.author?.username || "[Removed]"}
+        </span>
         <TimeAgo
           title={comment.createdAt}
           className="text-xs"
@@ -39,11 +49,22 @@ const Comment = ({ comment }) => {
           <div>
             <span>{comment.content}</span>
           </div>
-          <CommentActions
-            comment={comment}
-            showReplyForm={showReplyForm}
-            setShowReplyForm={setShowReplyForm}
-          />
+          {!comment.deleted && (
+            <div className="flex pt-1 gap-4">
+              <Button
+                className="text-xs"
+                onClick={() => setShowReplyForm(!showReplyForm)}
+              >
+                Reply
+              </Button>
+              <Button
+                className="text-xs"
+                onClick={() => deleteCommentMutation.mutate(comment.id)}
+              >
+                Delete
+              </Button>
+            </div>
+          )}
 
           {showReplyForm && (
             <div className="mt-2">
@@ -62,15 +83,6 @@ const Comment = ({ comment }) => {
           )}
         </>
       )}
-    </div>
-  );
-};
-
-const CommentActions = ({ comment, showReplyForm, setShowReplyForm }) => {
-  return (
-    <div className="flex pt-1 gap-4">
-      <Button onClick={() => setShowReplyForm(!showReplyForm)}>Reply</Button>
-      <Button onClick={() => deleteComment(comment.id)}>Delete</Button>
     </div>
   );
 };
