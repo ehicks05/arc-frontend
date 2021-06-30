@@ -10,7 +10,7 @@ const Comments = ({ comments }) => {
     <div className="flex flex-col gap-2">
       {comments &&
         comments.map((comment) => (
-          <Comment comment={comment} key={comment.id} />
+          <Comment key={comment.id} comment={comment} />
         ))}
     </div>
   );
@@ -49,7 +49,7 @@ const Comment = ({ comment }) => {
             <div className="mt-2">
               <CommentForm
                 postId={comment.postId}
-                parentCommentId={comment.id}
+                parentComment={comment}
                 toggleReplyBox={setShowReplyForm}
               />
             </div>

@@ -13,7 +13,7 @@ function App() {
     isError,
     data: posts,
     error,
-  } = useQuery("todos", getPosts);
+  } = useQuery("posts", getPosts, { refetchOnWindowFocus: false });
 
   if (isLoading) {
     return (

@@ -1,25 +1,48 @@
+import _ from "lodash";
+
+const buildCommentTree = (comments) => {
+  const commentsById = _.keyBy(comments, "id");
+
+  comments
+    .filter((c) => c.parentCommentId)
+    .forEach((c) => {
+      const parent = commentsById[c.parentCommentId];
+      parent.comments = [...(parent.comments || []), c];
+    });
+
+  // console.log(JSON.stringify(commentsById, null, 2));
+
+  return Object.values(commentsById).filter((c) => !c.parentCommentId);
+};
+
 const getPosts = async () => {
   const response = await fetch("/posts");
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
 
-  return response.json();
+  const posts = await response.json();
+
+  posts.forEach((post) => {
+    post.comments = buildCommentTree(post.comments);
+  });
+
+  return posts;
 };
 
 const addComment = async (data) => {
-  fetch({
+  await fetch("/comments", {
     method: "POST",
-    url: "/api/comments",
-    data: data,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
   });
 };
 
 const deleteComment = async (commentId) => {
-  await fetch({
+  await fetch(`/comments/${commentId}`, {
     method: "DELETE",
-    url: "/api/comments/" + commentId,
-    async: false,
   });
 };
 
