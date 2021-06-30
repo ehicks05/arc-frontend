@@ -10,8 +10,6 @@ const buildCommentTree = (comments) => {
       parent.comments = [...(parent.comments || []), c];
     });
 
-  // console.log(JSON.stringify(commentsById, null, 2));
-
   return Object.values(commentsById).filter((c) => !c.parentCommentId);
 };
 
@@ -24,6 +22,7 @@ const getPosts = async () => {
   const posts = await response.json();
 
   posts.forEach((post) => {
+    post.commentCount = post.comments.length;
     post.comments = buildCommentTree(post.comments);
   });
 

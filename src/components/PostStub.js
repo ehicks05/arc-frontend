@@ -18,7 +18,7 @@ const PostStub = ({ post, i }) => {
                 datetime={post.createdAt}
               />
             </div>
-            <div className="text-sm">{`${post.comments.length} comments`}</div>
+            <div className="text-sm">{`${post.commentCount} comments`}</div>
           </div>
         </div>
       </Link>
