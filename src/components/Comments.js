@@ -3,11 +3,11 @@ import TimeAgo from "timeago-react";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/all";
 
 import { deleteComment } from "../api";
-import CommentForm from "./CommentForm";
+import { Button, CommentForm } from "./index";
 
 const Comments = ({ comments }) => {
   return (
-    <div className="p-2">
+    <div className="flex flex-col gap-2">
       {comments &&
         comments.map((comment) => (
           <Comment comment={comment} key={comment.id} />
@@ -22,7 +22,7 @@ const Comment = ({ comment }) => {
 
   const indent = `ml-${comment.level}`;
   return (
-    <div className={`${indent} m-2 p-2 border`} key={comment.id}>
+    <div className={`${indent} p-2 border`} key={comment.id}>
       <div className="flex gap-4">
         <button onClick={() => setMinimized(!minimized)}>
           {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
@@ -46,15 +46,19 @@ const Comment = ({ comment }) => {
           />
 
           {showReplyForm && (
-            <CommentForm
-              postId={comment.postId}
-              parentCommentId={comment.id}
-              toggleReplyBox={setShowReplyForm}
-            />
+            <div className="mt-2">
+              <CommentForm
+                postId={comment.postId}
+                parentCommentId={comment.id}
+                toggleReplyBox={setShowReplyForm}
+              />
+            </div>
           )}
 
           {comment.comments?.length > 0 && (
-            <Comments comments={comment.comments} />
+            <div className="mt-2">
+              <Comments comments={comment.comments} />
+            </div>
           )}
         </>
       )}
@@ -65,18 +69,8 @@ const Comment = ({ comment }) => {
 const CommentActions = ({ comment, showReplyForm, setShowReplyForm }) => {
   return (
     <div className="flex pt-1 gap-4">
-      <button
-        className="p-0.5 border"
-        onClick={() => setShowReplyForm(!showReplyForm)}
-      >
-        Reply
-      </button>
-      <button
-        className="p-0.5 border "
-        onClick={() => deleteComment(comment.id)}
-      >
-        Delete
-      </button>
+      <Button onClick={() => setShowReplyForm(!showReplyForm)}>Reply</Button>
+      <Button onClick={() => deleteComment(comment.id)}>Delete</Button>
     </div>
   );
 };

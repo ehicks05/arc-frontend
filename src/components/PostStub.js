@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import TimeAgo from "timeago-react";
 
 const PostStub = ({ post, i }) => {
   return (
@@ -8,9 +9,15 @@ const PostStub = ({ post, i }) => {
         <div className="flex gap-2">
           {i !== undefined && <div className="">{`${i + 1}.`}</div>}
           <div className="">
-            <div className="text-lg">title: {post.title}</div>
-            <div className="text-sm">{post.author.username}</div>
-            <div className="text-sm">{post.createdAt}</div>
+            <div className="text-lg">{post.title}</div>
+            <div className="flex gap-4">
+              <span className="text-xs">{post.author.username}</span>
+              <TimeAgo
+                title={post.createdAt}
+                className="text-xs"
+                datetime={post.createdAt}
+              />
+            </div>
             <div className="text-sm">{`${post.comments.length} comments`}</div>
           </div>
         </div>

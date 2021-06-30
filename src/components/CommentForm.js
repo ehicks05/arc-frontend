@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { addComment } from "../api";
+import { Button } from "./index";
 
 const CommentForm = ({ postId, parentCommentId, toggleReplyBox }) => {
   const [text, setText] = useState("");
 
-  const submitComment = async () => {
+  const handleSubmit = async () => {
     const data = JSON.stringify({
       postId: postId,
       parentCommentId: parentCommentId,
@@ -26,13 +27,9 @@ const CommentForm = ({ postId, parentCommentId, toggleReplyBox }) => {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button
-        className="block border p-0.5"
-        disabled={!text}
-        onClick={() => submitComment()}
-      >
+      <Button className="block" disabled={!text} onClick={() => handleSubmit()}>
         Submit
-      </button>
+      </Button>
     </div>
   );
 };

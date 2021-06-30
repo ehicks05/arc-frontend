@@ -1,9 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { useParams } from "react-router-dom";
-import CommentInput from "./CommentForm";
-import Comments from "./Comments";
-import PostStub from "./PostStub";
+import { CommentForm, Comments, PostStub } from "./index";
 
 const buildCommentTree = (comments) => {
   const commentsById = _.keyBy(
@@ -23,9 +21,9 @@ const buildCommentTree = (comments) => {
 const Post = ({ posts }) => {
   const { id } = useParams();
   const post = posts.find((post) => post.id === id);
-  const commentTree = buildCommentTree(post.comments);
-  console.log(commentTree);
   if (!post) return <div>Something went wrong...</div>;
+
+  const commentTree = buildCommentTree(post.comments);
 
   return (
     <div>
@@ -33,7 +31,9 @@ const Post = ({ posts }) => {
         <PostStub post={post} />
         <div className="border">{post.content}</div>
       </div>
-      <CommentInput postId={post.id} parentCommentId={0} />
+      <div className="mt-2">
+        <CommentForm postId={post.id} parentCommentId={0} />
+      </div>
       Comments:
       <Comments comments={commentTree} />
     </div>
