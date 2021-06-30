@@ -3,6 +3,7 @@ import React from "react";
 const Button = ({ className, disabled, onClick, children }) => {
   return (
     <button
+      disabled={disabled}
       onClick={onClick}
       className={`px-1 py-0.5 border 
       text-black bg-white
