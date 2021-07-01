@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 
 import { getPosts } from "./api";
 
-import { Header, Footer, Post, PostStub } from "./components";
+import { Header, Footer, Post, PostStub, User } from "./components";
 
 function App() {
   const {
@@ -38,6 +38,11 @@ function App() {
               exact
               path="/posts/:id"
               render={(props) => <Post {...props} posts={posts} />}
+            />
+            <Route
+              exact
+              path="/users/:id"
+              render={(props) => <User {...props} />}
             />
           </Switch>
         </div>
