@@ -10,7 +10,10 @@ const buildCommentTree = (comments) => {
       parent.comments = [...(parent.comments || []), c];
     });
 
-  return Object.values(commentsById).filter((c) => !c.parentCommentId);
+  return {
+    commentCount: comments.length,
+    comments: Object.values(commentsById).filter((c) => !c.parentCommentId),
+  };
 };
 
 const getPosts = async () => {
@@ -19,14 +22,20 @@ const getPosts = async () => {
     throw new Error("Network response was not ok");
   }
 
-  const posts = await response.json();
+  return (await response.json()).map((post) => ({
+    ...post,
+    ...buildCommentTree(post.comments),
+  }));
+};
 
-  posts.forEach((post) => {
-    post.commentCount = post.comments.length;
-    post.comments = buildCommentTree(post.comments);
-  });
+const getUser = async (id) => {
+  const response = await fetch(`/users/${id}`);
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  const user = await response.json();
 
-  return posts;
+  return user;
 };
 
 const addComment = async (data) => {
@@ -45,4 +54,4 @@ const deleteComment = async (commentId) => {
   });
 };
 
-export { getPosts, addComment, deleteComment };
+export { getPosts, getUser, addComment, deleteComment };
