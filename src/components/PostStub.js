@@ -4,7 +4,7 @@ import TimeAgo from "timeago-react";
 
 const PostStub = ({ post, i }) => {
   return (
-    <div className="p-2 border">
+    <div className="p-2 border dark:border-gray-600">
       <Link to={`/posts/${post.id}`}>
         <div className="flex gap-2">
           {i !== undefined && <div className="">{`${i + 1}.`}</div>}

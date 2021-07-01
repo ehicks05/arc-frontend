@@ -17,7 +17,7 @@ body {
 @media (prefers-color-scheme: dark) {
   body {
     color: #eee;
-    background-color: #060606;
+    background-color: #111;
   }
 }
 #root {

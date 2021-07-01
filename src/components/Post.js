@@ -11,7 +11,7 @@ const Post = ({ posts }) => {
     <div>
       <div className="">
         <PostStub post={post} />
-        <div className="border">{post.content}</div>
+        <div className="border dark:border-gray-600">{post.content}</div>
       </div>
       <div className="mt-2">
         <CommentForm postId={post.id} parentCommentId={0} />

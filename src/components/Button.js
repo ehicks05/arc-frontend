@@ -5,7 +5,8 @@ const Button = ({ className, disabled, onClick, children }) => {
     <button
       disabled={disabled}
       onClick={onClick}
-      className={`px-1 py-0.5 border 
+      className={`px-1 py-0.5 border
+      dark:border-gray-600
       text-black bg-white
       dark:text-white dark:bg-black
       hover:bg-gray-100
