@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import TimeAgo from "timeago-react";
 
 const PostStub = ({ post, i }) => {
+    const bgClass =
+    i % 2 === 0
+      ? "bg-gray-50 dark:bg-gray-900"
+      : "bg-white dark:bg-black";
   return (
-    <div className="p-2 border dark:border-gray-600">
+    <div className={`p-2 border dark:border-gray-600 ${bgClass}`}>
       <Link to={`/posts/${post.id}`}>
         <div className="flex gap-2">
           {i !== undefined && <div className="">{`${i + 1}.`}</div>}

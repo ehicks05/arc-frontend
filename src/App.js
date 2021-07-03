@@ -17,7 +17,7 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center min-h-screen">
         <Loader type="Rings" color="#00BFFF" height={256} width={256} />
       </div>
     );
@@ -29,7 +29,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col min-h-screen">
         <Header title={"ARC"} titleClass={null} />
         <div className="p-4 flex-grow flex flex-col h-full">
           <Switch>
