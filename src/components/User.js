@@ -11,11 +11,11 @@ const User = ({}) => {
   const {
     isLoading,
     isError,
-    data: posts,
+    data: user,
     error,
-  } = useQuery("posts", getUser, { refetchOnWindowFocus: false });
-
-  const user = posts.find((post) => post.id === id);
+  } = useQuery(["users", id], () => getUser(id), {
+    refetchOnWindowFocus: false,
+  });
 
   if (isLoading) {
     return (

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 import TimeAgo from "timeago-react";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/all";
@@ -42,9 +43,12 @@ const Comment = ({ comment }) => {
         <button onClick={() => setMinimized(!minimized)}>
           {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
         </button>
-        <span className="text-xs">
+        <Link
+          className={`text-xs ${!comment.author && "pointer-events-none"}`}
+          to={`/users/${comment?.author?.id}`}
+        >
           {comment?.author?.username || "[Removed]"}
-        </span>
+        </Link>
         <TimeAgo
           title={comment.createdAt}
           className="text-xs"

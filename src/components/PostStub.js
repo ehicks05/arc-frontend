@@ -16,7 +16,9 @@ const PostStub = ({ post, i }) => {
             </a>
           </div>
           <div className="flex gap-4">
-            <span className="text-xs">{post.author.username}</span>
+            <Link className="text-xs" to={`/users/${post.author.id}`}>
+              {post.author.username}
+            </Link>
             <TimeAgo
               title={post.createdAt}
               className="text-xs"
