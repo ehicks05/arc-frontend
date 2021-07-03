@@ -29,11 +29,13 @@ const Comment = ({ comment }) => {
   });
 
   const indent = `ml-${comment.level}`;
-  const bgColor = comment.level % 2 === 0 ? "#202020" : "#121212";
+  const bgClass =
+    comment.level % 2 === 0
+      ? "bg-gray-50 dark:bg-gray-900"
+      : "bg-white dark:bg-black";
   return (
     <div
-      className={`${indent} p-2 border dark:border-gray-600`}
-      style={{ backgroundColor: bgColor }}
+      className={`${indent} ${bgClass} p-2 border dark:border-gray-600`}
       key={comment.id}
     >
       <div className="flex gap-4">
