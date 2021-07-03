@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, NavLink } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import { useQuery } from "react-query";
 
@@ -33,7 +33,11 @@ function App() {
         <Header title={"ARC"} titleClass={null} />
         <div className="p-4 flex-grow flex flex-col h-full">
           <Switch>
-            <Route exact path="/" render={() => <Posts posts={posts} />} />
+            <Route
+              exact
+              path={["/", "/top", "/new"]}
+              render={() => <Posts posts={posts} />}
+            />
             <Route
               exact
               path="/posts/:id"
@@ -55,6 +59,17 @@ function App() {
 const Posts = ({ posts }) => {
   return (
     <>
+      <div className="flex gap-2">
+        <NavLink exact to={"/"} activeClassName="font-bold">
+          Hot
+        </NavLink>
+        <NavLink exact to={"/top"} activeClassName="font-bold">
+          Top
+        </NavLink>
+        <NavLink exact to={"/new"} activeClassName="font-bold">
+          New
+        </NavLink>
+      </div>
       {posts.map((post, i) => (
         <PostStub key={i} post={post} i={i} />
       ))}
