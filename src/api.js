@@ -16,16 +16,20 @@ const buildCommentTree = (comments) => {
   };
 };
 
+const hydratePost = (post) => {
+  return {
+    ...post,
+    ...buildCommentTree(post.comments),
+  };
+};
+
 const getPosts = async () => {
   const response = await fetch("/posts");
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
 
-  return (await response.json()).map((post) => ({
-    ...post,
-    ...buildCommentTree(post.comments),
-  }));
+  return (await response.json()).map((post) => hydratePost(post));
 };
 
 const getUser = async (id) => {
@@ -33,9 +37,13 @@ const getUser = async (id) => {
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
+
   const user = await response.json();
 
-  return user;
+  return {
+    ...user,
+    posts: user.posts.map((post) => hydratePost(post)),
+  };
 };
 
 const addComment = async (data) => {
