@@ -9,11 +9,10 @@ const PostStub = ({ post, i }) => {
       : "bg-white dark:bg-black";
   return (
     <div className={`p-2 border dark:border-gray-600 ${bgClass}`}>
-      <Link to={`/posts/${post.id}`}>
         <div className="flex gap-2">
           {i !== undefined && <div className="">{`${i + 1}.`}</div>}
           <div className="">
-            <div className="text-lg">{post.title}</div>
+            <div className="text-lg"><a href={post.link} target="_blank" rel="noopener noreferrer">{post.title}</a></div>
             <div className="flex gap-4">
               <span className="text-xs">{post.author.username}</span>
               <TimeAgo
@@ -22,10 +21,11 @@ const PostStub = ({ post, i }) => {
                 datetime={post.createdAt}
               />
             </div>
+      <Link to={`/posts/${post.id}`}>
             <div className="text-sm">{`${post.commentCount} comments`}</div>
+      </Link>
           </div>
         </div>
-      </Link>
     </div>
   );
 };
