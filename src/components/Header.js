@@ -2,7 +2,7 @@ import React from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const Header = ({ title, titleClass, showSettings, setShowSettings }) => {
+const Header = ({ title, showSettings, setShowSettings }) => {
   return (
     <header className="flex p-4 justify-between">
       <Link to="/">{title}</Link>

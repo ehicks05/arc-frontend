@@ -5,7 +5,7 @@ import Loader from "react-loader-spinner";
 import { Comment, PostStub } from "./index";
 import { getUser } from "../api";
 
-const User = ({}) => {
+const User = () => {
   const { id } = useParams();
 
   const {
