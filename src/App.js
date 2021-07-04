@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 
 import { getPosts } from "./api";
 
-import { Header, Footer, Post, PostStub, User } from "./components";
+import { Header, Footer, Post, PostStub, User, Auth } from "./components";
 
 function App() {
   const {
@@ -32,6 +32,7 @@ function App() {
       <div className="flex flex-col min-h-screen">
         <Header title={"ARC"} titleClass={null} />
         <div className="p-4 flex-grow flex flex-col h-full">
+          <Auth />
           <Switch>
             <Route
               exact

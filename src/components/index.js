@@ -7,6 +7,7 @@ import Comment from "./Comment";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 import User from "./User";
+import Auth from "./Auth";
 
 export {
   Footer,
@@ -18,4 +19,5 @@ export {
   Comments,
   CommentForm,
   User,
+  Auth,
 };
