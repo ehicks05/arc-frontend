@@ -23,6 +23,7 @@ const PostStub = ({ post, i }) => {
               title={post.createdAt}
               className="text-xs"
               datetime={post.createdAt}
+              opts={{ minInterval: 60 }}
             />
           </div>
           <Link to={`/posts/${post.id}`}>

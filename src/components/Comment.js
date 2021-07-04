@@ -42,6 +42,7 @@ const Comment = ({ comment }) => {
           title={comment.createdAt}
           className="text-xs"
           datetime={comment.createdAt}
+          opts={{ minInterval: 60 }}
         />
       </div>
       {!minimized && (
