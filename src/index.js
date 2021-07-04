@@ -13,6 +13,8 @@ ReactDOM.render(
       domain={process.env.REACT_APP_DOMAIN}
       clientId={process.env.REACT_APP_CLIENT_ID}
       redirectUri={window.location.origin}
+      audience={process.env.REACT_APP_AUDIENCE}
+      scope={"read:whatever"}
     >
       <QueryClientProvider client={queryClient}>
         <App />
