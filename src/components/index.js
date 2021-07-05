@@ -9,6 +9,7 @@ import CommentForm from "./CommentForm";
 import User from "./User";
 import Auth from "./Auth";
 import Profile from "./Profile";
+import VoteInput from "./VoteInput";
 
 export {
   Footer,
@@ -22,4 +23,5 @@ export {
   User,
   Auth,
   Profile,
+  VoteInput,
 };
