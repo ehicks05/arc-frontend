@@ -7,8 +7,10 @@ const PostStub = ({ post, i }) => {
     i % 2 === 0 ? "bg-gray-50 dark:bg-gray-900" : "bg-white dark:bg-black";
   return (
     <div className={`p-2 border dark:border-gray-600 ${bgClass}`}>
-      <div className="flex gap-2">
-        {i !== undefined && <div className="">{`${i + 1}.`}</div>}
+      <div className="flex items-center gap-2">
+        {i !== undefined && (
+          <div className="text-xl opacity-50">{`${i + 1}`}</div>
+        )}
         <div className="">
           <div className="text-lg">
             <a href={post.link} target="_blank" rel="noopener noreferrer">
