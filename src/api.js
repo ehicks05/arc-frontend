@@ -19,6 +19,7 @@ const buildCommentTree = (comments) => {
 const hydratePost = (post) => {
   return {
     ...post,
+    netVotes: Math.round(Math.random() * 1000),
     ...buildCommentTree(post.comments),
   };
 };
