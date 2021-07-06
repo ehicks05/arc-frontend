@@ -41,7 +41,6 @@ function App() {
         <Header title={"ARC"} titleClass={null} />
         <div className="p-4 flex-grow flex flex-col h-full">
           <Auth />
-          <Profile />
           <Switch>
             <Route
               exact
@@ -57,6 +56,11 @@ function App() {
               exact
               path="/users/:id"
               render={(props) => <User {...props} />}
+            />
+            <Route
+              exact
+              path="/profile"
+              render={(props) => <Profile {...props} />}
             />
           </Switch>
         </div>
