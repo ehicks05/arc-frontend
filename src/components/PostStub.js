@@ -28,6 +28,7 @@ const PostStub = ({ post, i }) => {
           <div className="text-xl opacity-50">{`${i + 1}`}</div>
         )}
         <VoteInput
+          netVotes={post.netVotes}
           upvoted={userVote.upvoted}
           downvoted={userVote.downvoted}
           handleUpvote={() => upvote(user.sub, post.id)}
@@ -39,19 +40,23 @@ const PostStub = ({ post, i }) => {
               {post.title}
             </a>
           </div>
-          <div className="flex gap-4">
-            <Link className="text-xs" to={`/users/${post.author.id}`}>
+          <div className="flex">
+            <span className="text-xs opacity-50">
+              <span>Posted </span>
+              <TimeAgo
+                title={post.createdAt}
+                className="text-xs"
+                datetime={post.createdAt}
+                opts={{ minInterval: 60 }}
+              />
+              <span> by </span>
+            </span>
+            <Link className="text-xs ml-2" to={`/users/${post.author.id}`}>
               {post.author.username}
             </Link>
-            <TimeAgo
-              title={post.createdAt}
-              className="text-xs"
-              datetime={post.createdAt}
-              opts={{ minInterval: 60 }}
-            />
           </div>
           <Link to={`/posts/${post.id}`}>
-            <div className="text-sm">{`${post.commentCount} comments`}</div>
+            <div className="text-xs font-bold opacity-50">{`${post.commentCount} comments`}</div>
           </Link>
         </div>
       </div>
