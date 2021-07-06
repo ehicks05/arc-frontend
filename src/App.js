@@ -1,19 +1,11 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, NavLink } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import { useQuery } from "react-query";
 
 import { getPosts } from "./api";
 
-import {
-  Header,
-  Footer,
-  Post,
-  PostStub,
-  User,
-  Auth,
-  Profile,
-} from "./components";
+import { Header, Footer, Post, PostStub, User, Profile } from "./components";
 
 function App() {
   const {
@@ -40,7 +32,6 @@ function App() {
       <div className="flex flex-col min-h-screen">
         <Header title={"ARC"} titleClass={null} />
         <div className="p-4 flex-grow flex flex-col h-full">
-          <Auth />
           <Switch>
             <Route
               exact
@@ -71,24 +62,7 @@ function App() {
 }
 
 const Posts = ({ posts }) => {
-  return (
-    <>
-      <div className="flex gap-2">
-        <NavLink exact to={"/"} activeClassName="font-bold">
-          Hot
-        </NavLink>
-        <NavLink exact to={"/top"} activeClassName="font-bold">
-          Top
-        </NavLink>
-        <NavLink exact to={"/new"} activeClassName="font-bold">
-          New
-        </NavLink>
-      </div>
-      {posts.map((post, i) => (
-        <PostStub key={i} post={post} i={i} />
-      ))}
-    </>
-  );
+  return posts.map((post, i) => <PostStub key={i} post={post} i={i} />);
 };
 
 export default App;
