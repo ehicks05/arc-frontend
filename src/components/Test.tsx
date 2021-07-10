@@ -7,7 +7,7 @@ const Test = () => {
   if (loading) return <div>loading...</div>;
   if (error) return <div>{error.message}</div>;
 
-  const posts = data?.posts || [];
+  const posts = data?.getPosts || [];
 
   return (
     <div>
