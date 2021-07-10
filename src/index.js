@@ -2,10 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./index.css";
 import App from "./App";
 
 const queryClient = new QueryClient();
+
+const client = new ApolloClient({
+  uri: "http://localhost:4000",
+  cache: new InMemoryCache(),
+});
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,7 +23,9 @@ ReactDOM.render(
       scope={"read:whatever"}
     >
       <QueryClientProvider client={queryClient}>
-        <App />
+        <ApolloProvider client={client}>
+          <App />
+        </ApolloProvider>
       </QueryClientProvider>
     </Auth0Provider>
   </React.StrictMode>,

@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { getPosts } from "./api";
 
 import { Header, Footer, Post, PostStub, User, Profile } from "./components";
+import Test from "./components/Test";
 
 function App() {
   const {
@@ -53,6 +54,7 @@ function App() {
               path="/profile"
               render={(props) => <Profile {...props} />}
             />
+            <Route exact path="/test" render={(props) => <Test {...props} />} />
           </Switch>
         </div>
         <Footer />
