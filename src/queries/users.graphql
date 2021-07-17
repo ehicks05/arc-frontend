@@ -1,0 +1,12 @@
+query getUser($id: ID) {
+  getUser(id: $id) {
+    id
+    username
+    posts {
+      ...PostFragment
+    }
+    comments {
+      id
+    }
+  }
+}

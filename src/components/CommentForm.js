@@ -1,38 +1,32 @@
 import React, { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
-import { addComment } from "../api";
+import { useQueryClient } from "react-query";
 import { Button } from "./index";
+import { useCreateCommentMutation } from "../generated/graphql";
 
 const CommentForm = ({ postId, parentComment, toggleReplyBox }) => {
   const [content, setContent] = useState("");
   const queryClient = useQueryClient();
 
-  const createCommentMutation = useMutation((data) => addComment(data), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-    },
-  });
+  const [createComment, { data, loading, error }] = useCreateCommentMutation();
 
-  const handleSubmit = async () => {
+  const handleClick = async () => {
     const data = {
-      post: { connect: { id: postId } },
-      parentComment: parentComment?.id
-        ? { connect: { id: parentComment?.id } }
-        : undefined,
+      postId,
+      parentCommentId: parentComment?.id,
       level: parentComment?.level === undefined ? 0 : parentComment.level + 1,
       content: content,
     };
 
-    createCommentMutation.mutate(data);
+    await createComment({ variables: data });
+    queryClient.invalidateQueries("posts");
     setContent("");
 
     // the top level 'make a comment' input shouldn't be hidden
     if (toggleReplyBox) toggleReplyBox();
   };
 
-  if (createCommentMutation.isLoading) return <div>loading...</div>;
-  if (createCommentMutation.isError)
-    return <div>{createCommentMutation.error}</div>;
+  if (loading) return <div>loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="">
@@ -45,7 +39,7 @@ const CommentForm = ({ postId, parentComment, toggleReplyBox }) => {
       <Button
         className="block"
         disabled={!content}
-        onClick={() => handleSubmit()}
+        onClick={() => handleClick()}
       >
         Submit
       </Button>

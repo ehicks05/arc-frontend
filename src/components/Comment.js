@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useMutation, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import TimeAgo from "timeago-react";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/all";
 
-import { deleteComment } from "../api";
 import { Button, Comments, CommentForm } from "./index";
+import { useDeleteCommentMutation } from "../generated/graphql";
 
 const Comment = ({ comment }) => {
   const [minimized, setMinimized] = useState(comment.deleted);
   const [showReplyForm, setShowReplyForm] = useState(false);
   const queryClient = useQueryClient();
 
-  const deleteCommentMutation = useMutation((data) => deleteComment(data), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-    },
-  });
+  const [deleteComment, { data, loading, error }] = useDeleteCommentMutation();
+
+  const handleClick = async (id) => {
+    deleteComment({ variables: { id } });
+    queryClient.invalidateQueries("posts");
+  };
 
   const indent = `ml-${comment.level}`;
   const bgClass =
@@ -60,7 +61,7 @@ const Comment = ({ comment }) => {
               </Button>
               <Button
                 className="text-xs"
-                onClick={() => deleteCommentMutation.mutate(comment.id)}
+                onClick={() => handleClick(comment.id)}
               >
                 Delete
               </Button>

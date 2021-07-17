@@ -1,23 +1,16 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
 import Loader from "react-loader-spinner";
 import { Comment, PostStub } from "./index";
-import { getUser } from "../api";
+import { useGetUserQuery } from "../generated/graphql";
 
 const User = () => {
   const { id } = useParams();
 
-  const {
-    isLoading,
-    isError,
-    data: user,
-    error,
-  } = useQuery(["users", id], () => getUser(id), {
-    refetchOnWindowFocus: false,
-  });
+  const { data, loading, error } = useGetUserQuery({ variables: { id } });
+  const user = data.getUser;
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
         <Loader type="Rings" color="#00BFFF" height={256} width={256} />
@@ -25,7 +18,7 @@ const User = () => {
     );
   }
 
-  if (isError) {
+  if (error) {
     return <span>Error: {error.message}</span>;
   }
 

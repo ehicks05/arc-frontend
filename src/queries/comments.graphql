@@ -1,0 +1,37 @@
+fragment CommentFragment on Comment {
+  id
+  post {
+    id
+  }
+  content
+  deleted
+  level
+  createdAt
+  updatedAt
+  author {
+    id
+    username
+  }
+  parentComment {
+    id
+  }
+  comments {
+    id
+    parentComment {
+      id
+    }
+  }
+  score
+}
+
+mutation createComment($input: createCommentInput) {
+  createComment(input: $input) {
+    id
+  }
+}
+
+mutation deleteComment($id: ID) {
+  deleteComment(id: $id) {
+    id
+  }
+}

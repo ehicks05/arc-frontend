@@ -1,11 +1,22 @@
+fragment PostFragment on Post {
+  id
+  title
+  createdAt
+  updatedAt
+  author {
+    id
+    username
+  }
+  commentCount
+  comments {
+    ...CommentFragment
+  }
+  netVotes
+  score
+}
+
 query GetPosts {
   getPosts {
-    id
-    title
-    createdAt
-    author {
-      id
-      username
-    }
+    ...PostFragment
   }
 }

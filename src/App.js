@@ -1,22 +1,16 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Loader from "react-loader-spinner";
-import { useQuery } from "react-query";
-
-import { getPosts } from "./api";
 
 import { Header, Footer, Post, PostStub, User, Profile } from "./components";
 import Test from "./components/Test";
+import { useGetPostsQuery } from "./generated/graphql";
 
 function App() {
-  const {
-    isLoading,
-    isError,
-    data: posts,
-    error,
-  } = useQuery("posts", getPosts, { refetchOnWindowFocus: false });
+  const { data, loading, error } = useGetPostsQuery();
+  const posts = data?.getPosts;
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loader type="Rings" color="#00BFFF" height={256} width={256} />
@@ -24,8 +18,8 @@ function App() {
     );
   }
 
-  if (isError) {
-    return <span>Error: {error.message}</span>;
+  if (error) {
+    return <span>Error: {error}</span>;
   }
 
   return (
