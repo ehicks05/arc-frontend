@@ -66,6 +66,7 @@ export type Post = {
   __typename?: 'Post';
   id: Scalars['ID'];
   title: Scalars['String'];
+  link: Scalars['String'];
   content: Scalars['String'];
   author: User;
   comments: Array<Comment>;
@@ -169,7 +170,7 @@ export type DeleteCommentMutation = (
 
 export type PostFragmentFragment = (
   { __typename?: 'Post' }
-  & Pick<Post, 'id' | 'title' | 'createdAt' | 'updatedAt' | 'commentCount' | 'netVotes' | 'score'>
+  & Pick<Post, 'id' | 'title' | 'link' | 'createdAt' | 'updatedAt' | 'commentCount' | 'netVotes' | 'score'>
   & { author: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'username'>
@@ -241,6 +242,7 @@ export const PostFragmentFragmentDoc = gql`
     fragment PostFragment on Post {
   id
   title
+  link
   createdAt
   updatedAt
   author {

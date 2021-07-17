@@ -80,7 +80,7 @@ const Comment = ({ comment }) => {
 
           {comment.comments?.length > 0 && (
             <div className="mt-2">
-              <Comments comments={comment.comments} />
+              <Comments comments={comment.commentForest} />
             </div>
           )}
         </>
