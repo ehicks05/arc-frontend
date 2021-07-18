@@ -2,6 +2,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Button from "./Button";
 import Post from "./Post";
+import Posts from "./Posts";
 import PostStub from "./PostStub";
 import Comment from "./Comment";
 import Comments from "./Comments";
@@ -16,6 +17,7 @@ export {
   Header,
   Button,
   Post,
+  Posts,
   PostStub,
   Comment,
   Comments,

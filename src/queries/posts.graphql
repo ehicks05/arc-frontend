@@ -16,8 +16,14 @@ fragment PostFragment on Post {
   score
 }
 
-query GetPosts {
-  getPosts {
+query GetPosts($sort: Sort) {
+  getPosts(sort: $sort) {
+    ...PostFragment
+  }
+}
+
+query GetPostById($id: ID) {
+  getPostById(id: $id) {
     ...PostFragment
   }
 }

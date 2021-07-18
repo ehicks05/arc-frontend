@@ -73,7 +73,7 @@ export type Post = {
   commentCount?: Maybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
-  netVotes?: Maybe<Scalars['Int']>;
+  netVotes: Scalars['Int'];
   score: Scalars['Float'];
 };
 
@@ -85,6 +85,11 @@ export type Query = {
   getCommentById?: Maybe<Comment>;
   getUsers?: Maybe<Array<Maybe<User>>>;
   getUser?: Maybe<User>;
+};
+
+
+export type QueryGetPostsArgs = {
+  sort?: Maybe<Sort>;
 };
 
 
@@ -101,6 +106,12 @@ export type QueryGetCommentByIdArgs = {
 export type QueryGetUserArgs = {
   id?: Maybe<Scalars['ID']>;
 };
+
+export enum Sort {
+  Hot = 'HOT',
+  Top = 'TOP',
+  New = 'NEW'
+}
 
 /** A User... */
 export type User = {
@@ -180,7 +191,9 @@ export type PostFragmentFragment = (
   )> }
 );
 
-export type GetPostsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetPostsQueryVariables = Exact<{
+  sort?: Maybe<Sort>;
+}>;
 
 
 export type GetPostsQuery = (
@@ -189,6 +202,19 @@ export type GetPostsQuery = (
     { __typename?: 'Post' }
     & PostFragmentFragment
   )>>> }
+);
+
+export type GetPostByIdQueryVariables = Exact<{
+  id?: Maybe<Scalars['ID']>;
+}>;
+
+
+export type GetPostByIdQuery = (
+  { __typename?: 'Query' }
+  & { getPostById?: Maybe<(
+    { __typename?: 'Post' }
+    & PostFragmentFragment
+  )> }
 );
 
 export type GetUserQueryVariables = Exact<{
@@ -324,8 +350,8 @@ export type DeleteCommentMutationHookResult = ReturnType<typeof useDeleteComment
 export type DeleteCommentMutationResult = Apollo.MutationResult<DeleteCommentMutation>;
 export type DeleteCommentMutationOptions = Apollo.BaseMutationOptions<DeleteCommentMutation, DeleteCommentMutationVariables>;
 export const GetPostsDocument = gql`
-    query GetPosts {
-  getPosts {
+    query GetPosts($sort: Sort) {
+  getPosts(sort: $sort) {
     ...PostFragment
   }
 }
@@ -343,6 +369,7 @@ export const GetPostsDocument = gql`
  * @example
  * const { data, loading, error } = useGetPostsQuery({
  *   variables: {
+ *      sort: // value for 'sort'
  *   },
  * });
  */
@@ -357,6 +384,41 @@ export function useGetPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>;
 export type GetPostsLazyQueryHookResult = ReturnType<typeof useGetPostsLazyQuery>;
 export type GetPostsQueryResult = Apollo.QueryResult<GetPostsQuery, GetPostsQueryVariables>;
+export const GetPostByIdDocument = gql`
+    query GetPostById($id: ID) {
+  getPostById(id: $id) {
+    ...PostFragment
+  }
+}
+    ${PostFragmentFragmentDoc}`;
+
+/**
+ * __useGetPostByIdQuery__
+ *
+ * To run a query within a React component, call `useGetPostByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPostByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPostByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetPostByIdQuery(baseOptions?: Apollo.QueryHookOptions<GetPostByIdQuery, GetPostByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPostByIdQuery, GetPostByIdQueryVariables>(GetPostByIdDocument, options);
+      }
+export function useGetPostByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostByIdQuery, GetPostByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPostByIdQuery, GetPostByIdQueryVariables>(GetPostByIdDocument, options);
+        }
+export type GetPostByIdQueryHookResult = ReturnType<typeof useGetPostByIdQuery>;
+export type GetPostByIdLazyQueryHookResult = ReturnType<typeof useGetPostByIdLazyQuery>;
+export type GetPostByIdQueryResult = Apollo.QueryResult<GetPostByIdQuery, GetPostByIdQueryVariables>;
 export const GetUserDocument = gql`
     query getUser($id: ID) {
   getUser(id: $id) {
