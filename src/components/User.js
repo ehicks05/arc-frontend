@@ -8,7 +8,6 @@ const User = () => {
   const { id } = useParams();
 
   const { data, loading, error } = useGetUserQuery({ variables: { id } });
-  const user = data.getUser;
 
   if (loading) {
     return (
@@ -21,6 +20,8 @@ const User = () => {
   if (error) {
     return <span>Error: {error.message}</span>;
   }
+
+  const user = data.getUser;
 
   return (
     <div>
