@@ -1,12 +1,32 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import Loader from "react-loader-spinner";
+
+import { useGetPostByIdQuery } from "../generated/graphql";
 import { CommentForm, Comments, PostStub } from "./index";
 import { toForest } from "./utils";
 
-const Post = ({ posts }) => {
+const Post = () => {
   const { id } = useParams();
-  const post = posts.find((post) => post.id === id);
-  if (!post) return <div>Something went wrong...</div>;
+
+  const { data, loading, error } = useGetPostByIdQuery({
+    variables: { id },
+  });
+  const post = data?.getPostById;
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader type="Rings" color="#00BFFF" height={256} width={256} />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <span>Error: {error}</span>;
+  }
+
+  if (!post) return <div>something went wrong...</div>;
 
   console.log(toForest(post.comments));
 

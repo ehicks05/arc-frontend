@@ -1,27 +1,10 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Loader from "react-loader-spinner";
 
-import { Header, Footer, Post, PostStub, User, Profile } from "./components";
+import { Header, Footer, Post, Posts, User, Profile } from "./components";
 import Test from "./components/Test";
-import { useGetPostsQuery } from "./generated/graphql";
 
 function App() {
-  const { data, loading, error } = useGetPostsQuery();
-  const posts = data?.getPosts;
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader type="Rings" color="#00BFFF" height={256} width={256} />
-      </div>
-    );
-  }
-
-  if (error) {
-    return <span>Error: {error}</span>;
-  }
-
   return (
     <BrowserRouter>
       <div className="flex flex-col min-h-screen">
@@ -31,12 +14,12 @@ function App() {
             <Route
               exact
               path={["/", "/top", "/new"]}
-              render={() => <Posts posts={posts} />}
+              render={() => <Posts />}
             />
             <Route
               exact
               path="/posts/:id"
-              render={(props) => <Post {...props} posts={posts} />}
+              render={(props) => <Post {...props} />}
             />
             <Route
               exact
@@ -56,10 +39,5 @@ function App() {
     </BrowserRouter>
   );
 }
-
-const Posts = ({ posts }) => {
-  if (!posts.length) return "nothing to see here...";
-  return posts.map((post, i) => <PostStub key={i} post={post} i={i} />);
-};
 
 export default App;
