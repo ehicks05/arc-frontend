@@ -23,8 +23,11 @@ export type Comment = {
   deleted: Scalars['Boolean'];
   level: Scalars['Int'];
   author?: Maybe<User>;
+  authorId?: Maybe<Scalars['String']>;
   post: Post;
+  postId: Scalars['String'];
   parentComment?: Maybe<Comment>;
+  parentCommentId?: Maybe<Scalars['String']>;
   comments: Array<Comment>;
   score: Scalars['Float'];
   createdAt: Scalars['DateTime'];
@@ -36,6 +39,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   createPost?: Maybe<Post>;
   adminCreatePost?: Maybe<Post>;
+  adminSeed?: Maybe<Array<Maybe<Post>>>;
+  adminNuke?: Maybe<Post>;
   deletePost?: Maybe<Post>;
   createComment?: Maybe<Comment>;
   deleteComment?: Maybe<Comment>;
@@ -75,6 +80,7 @@ export type Post = {
   link: Scalars['String'];
   content: Scalars['String'];
   author: User;
+  authorId?: Maybe<Scalars['String']>;
   comments: Array<Comment>;
   commentCount?: Maybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
@@ -91,6 +97,7 @@ export type Query = {
   getCommentById?: Maybe<Comment>;
   getUsers?: Maybe<Array<Maybe<User>>>;
   getUser?: Maybe<User>;
+  getMe?: Maybe<User>;
 };
 
 
@@ -197,10 +204,7 @@ export type PostFragmentFragment = (
   & { author: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'username'>
-  ), comments: Array<(
-    { __typename?: 'Comment' }
-    & CommentFragmentFragment
-  )> }
+  ) }
 );
 
 export type GetPostsQueryVariables = Exact<{
@@ -225,6 +229,10 @@ export type GetPostByIdQuery = (
   { __typename?: 'Query' }
   & { getPostById?: Maybe<(
     { __typename?: 'Post' }
+    & { comments: Array<(
+      { __typename?: 'Comment' }
+      & CommentFragmentFragment
+    )> }
     & PostFragmentFragment
   )> }
 );
@@ -288,13 +296,10 @@ export const PostFragmentFragmentDoc = gql`
     username
   }
   commentCount
-  comments {
-    ...CommentFragment
-  }
   netVotes
   score
 }
-    ${CommentFragmentFragmentDoc}`;
+    `;
 export const CreateCommentDocument = gql`
     mutation createComment($input: createCommentInput) {
   createComment(input: $input) {
@@ -400,9 +405,13 @@ export const GetPostByIdDocument = gql`
     query GetPostById($id: ID) {
   getPostById(id: $id) {
     ...PostFragment
+    comments {
+      ...CommentFragment
+    }
   }
 }
-    ${PostFragmentFragmentDoc}`;
+    ${PostFragmentFragmentDoc}
+${CommentFragmentFragmentDoc}`;
 
 /**
  * __useGetPostByIdQuery__

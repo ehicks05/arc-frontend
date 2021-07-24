@@ -9,9 +9,6 @@ fragment PostFragment on Post {
     username
   }
   commentCount
-  comments {
-    ...CommentFragment
-  }
   netVotes
   score
 }
@@ -25,5 +22,8 @@ query GetPosts($sort: Sort) {
 query GetPostById($id: ID) {
   getPostById(id: $id) {
     ...PostFragment
+    comments {
+      ...CommentFragment
+    }
   }
 }
