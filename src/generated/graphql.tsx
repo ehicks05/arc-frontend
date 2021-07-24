@@ -35,11 +35,17 @@ export type Comment = {
 export type Mutation = {
   __typename?: 'Mutation';
   createPost?: Maybe<Post>;
+  adminCreatePost?: Maybe<Post>;
   deletePost?: Maybe<Post>;
   createComment?: Maybe<Comment>;
   deleteComment?: Maybe<Comment>;
   createUser?: Maybe<User>;
   deleteUser?: Maybe<User>;
+};
+
+
+export type MutationCreatePostArgs = {
+  input?: Maybe<CreatePostInput>;
 };
 
 
@@ -128,6 +134,12 @@ export type CreateCommentInput = {
   postId: Scalars['String'];
   parentCommentId?: Maybe<Scalars['String']>;
   level?: Maybe<Scalars['Int']>;
+  content?: Maybe<Scalars['String']>;
+};
+
+export type CreatePostInput = {
+  title: Scalars['String'];
+  link?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
 };
 
