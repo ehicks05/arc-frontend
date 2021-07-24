@@ -40,7 +40,7 @@ const Comment = ({ comment }) => {
           {comment?.author?.username || "[Removed]"}
         </Link>
         <TimeAgo
-          title={comment.createdAt}
+          title={new Date(comment.createdAt)}
           className="text-xs"
           datetime={comment.createdAt}
           opts={{ minInterval: 60 }}

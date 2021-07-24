@@ -15,7 +15,6 @@ const Posts = () => {
   const { pathname } = useLocation();
   const sort = pathToSort[pathname];
 
-  console.log(sort);
   const { data, loading, error } = useGetPostsQuery({
     variables: { sort },
   });

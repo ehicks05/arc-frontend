@@ -44,7 +44,7 @@ const PostStub = ({ post, i }) => {
             <span className="text-xs opacity-50">
               <span>Posted </span>
               <TimeAgo
-                title={post.createdAt}
+                title={new Date(post.createdAt)}
                 className="text-xs"
                 datetime={post.createdAt}
                 opts={{ minInterval: 60 }}
