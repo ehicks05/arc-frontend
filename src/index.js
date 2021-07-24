@@ -48,7 +48,12 @@ createAuth0Client({
     if (token) return { auth0Token: token };
 
     // else check if valid token exists with client already and set if so
-    const newToken = await auth0Client.getTokenSilently();
+    let newToken;
+    try {
+      newToken = await auth0Client.getTokenSilently();
+    } catch (err) {
+      console.log("make login optional: " + err);
+    }
     token = newToken;
     return { auth0Token: newToken };
   });
@@ -91,6 +96,7 @@ createAuth0Client({
           audience={process.env.REACT_APP_AUDIENCE}
           redirectUri={window.location.origin}
           auth0Client={auth0Client}
+          scope={"read:whatever"}
         >
           <QueryClientProvider client={queryClient}>
             <App />
