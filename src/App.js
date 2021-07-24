@@ -1,7 +1,15 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import { Header, Footer, Post, Posts, User, Profile } from "./components";
+import {
+  Header,
+  Footer,
+  Post,
+  Posts,
+  User,
+  Profile,
+  PostForm,
+} from "./components";
 import Test from "./components/Test";
 
 function App() {
@@ -15,6 +23,11 @@ function App() {
               exact
               path={["/", "/top", "/new"]}
               render={() => <Posts />}
+            />
+            <Route
+              exact
+              path="/posts/create"
+              render={(props) => <PostForm {...props} />}
             />
             <Route
               exact
