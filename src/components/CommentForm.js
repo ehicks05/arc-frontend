@@ -7,7 +7,7 @@ const CommentForm = ({ postId, parentComment, toggleReplyBox }) => {
   const [content, setContent] = useState("");
   const queryClient = useQueryClient();
 
-  const [createComment, { data, loading, error }] = useCreateCommentMutation();
+  const [createComment, { loading, error }] = useCreateCommentMutation();
 
   const handleClick = async () => {
     const data = {

@@ -12,7 +12,7 @@ const Comment = ({ comment }) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
   const queryClient = useQueryClient();
 
-  const [deleteComment, { data, loading, error }] = useDeleteCommentMutation();
+  const [deleteComment] = useDeleteCommentMutation();
 
   const handleClick = async (id) => {
     deleteComment({ variables: { id } });

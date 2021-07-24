@@ -29,7 +29,7 @@ const Posts = () => {
   }
 
   if (error) {
-    return <span>Error: {error}</span>;
+    return <span>Error: {JSON.stringify(error, null, 2)}</span>;
   }
 
   if (!posts.length) return "nothing to see here...";
