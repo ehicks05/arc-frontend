@@ -2,6 +2,7 @@ fragment PostFragment on Post {
   id
   title
   link
+  content
   createdAt
   updatedAt
   author {

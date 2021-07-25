@@ -200,7 +200,7 @@ export type DeleteCommentMutation = (
 
 export type PostFragmentFragment = (
   { __typename?: 'Post' }
-  & Pick<Post, 'id' | 'title' | 'link' | 'createdAt' | 'updatedAt' | 'commentCount' | 'netVotes' | 'score'>
+  & Pick<Post, 'id' | 'title' | 'link' | 'content' | 'createdAt' | 'updatedAt' | 'commentCount' | 'netVotes' | 'score'>
   & { author: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'username'>
@@ -315,6 +315,7 @@ export const PostFragmentFragmentDoc = gql`
   id
   title
   link
+  content
   createdAt
   updatedAt
   author {
