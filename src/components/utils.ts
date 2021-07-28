@@ -1,24 +1,41 @@
 import _ from "lodash";
-import { Comment } from '../generated/graphql'
 
-interface CommentWithForest extends Comment {
-  commentForest: CommentWithForest[];
+interface Comment {
+  id: string,
+  parentCommentId?: string,
+  commentForest?: Comment[];
 }
 
 const toForest = (comments: Comment[]) => {
-  const commentsById = _.keyBy(comments as CommentWithForest[], "id");
+  const copy = comments.map(c => ({ ...c }));
+  const commentsById = _.keyBy(copy, "id");
 
-  (comments as CommentWithForest[])
+  copy
+    .filter(c => c.parentCommentId)
     .forEach((comment) => {
-      if (comment.parentComment) {
-        const parent = commentsById[comment.parentComment.id];
-        commentsById[comment.parentComment.id] =
-          { ...parent, commentForest: [...(parent.commentForest || []), comment] };
-      }
+      const parent = commentsById[comment.parentCommentId!];
+      if (!parent.commentForest) parent.commentForest = [];
+      parent.commentForest.push(comment);
     });
 
   // children should be recursively nested, so only return 'root' comments
-  return Object.values(commentsById).filter((c) => !c.parentComment?.id);
+  return Object.values(commentsById).filter((c) => !c.parentCommentId);
 };
+
+// test
+const comments = [{
+  id: '1',
+}, {
+  id: '2',
+  parentCommentId: '1',
+},{
+  id: '3',
+  parentCommentId: '2',
+},{
+  id: '4',
+  parentCommentId: '3',
+}];
+
+console.log(toForest(comments));
 
 export { toForest };

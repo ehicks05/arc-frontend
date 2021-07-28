@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useQueryClient } from "react-query";
 import TimeAgo from "timeago-react";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/all";
 
 import { Button, Comments, CommentForm } from "./index";
 import { useDeleteCommentMutation } from "../generated/graphql";
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, refetchPost }) => {
   const [minimized, setMinimized] = useState(comment.deleted);
   const [showReplyForm, setShowReplyForm] = useState(false);
-  const queryClient = useQueryClient();
 
   const [deleteComment] = useDeleteCommentMutation();
 
   const handleClick = async (id) => {
-    deleteComment({ variables: { id } });
-    queryClient.invalidateQueries("posts");
+    if (window.confirm("Are you sure?")) {
+      await deleteComment({ variables: { id } });
+      await refetchPost();
+    }
   };
 
   const indent = `ml-${comment.level}`;
@@ -37,7 +37,7 @@ const Comment = ({ comment }) => {
           className={`text-xs ${!comment.author && "pointer-events-none"}`}
           to={`/users/${comment?.author?.id}`}
         >
-          {comment?.author?.username || "[Removed]"}
+          {comment?.author?.username || "[Deleted]"}
         </Link>
         <TimeAgo
           title={new Date(comment.createdAt)}
@@ -74,13 +74,17 @@ const Comment = ({ comment }) => {
                 postId={comment.postId}
                 parentComment={comment}
                 toggleReplyBox={setShowReplyForm}
+                refetchPost={refetchPost}
               />
             </div>
           )}
 
-          {comment.comments?.length > 0 && (
+          {comment.commentForest?.length > 0 && (
             <div className="mt-2">
-              <Comments comments={comment.commentForest} />
+              <Comments
+                comments={comment.commentForest}
+                refetchPost={refetchPost}
+              />
             </div>
           )}
         </>
