@@ -9,7 +9,12 @@ import { toForest } from "./utils";
 const Post = () => {
   const { id } = useParams();
 
-  const { data, loading, error } = useGetPostByIdQuery({
+  const {
+    data,
+    loading,
+    error,
+    refetch: refetchPost,
+  } = useGetPostByIdQuery({
     variables: { id },
   });
   const post = data?.getPostById;
@@ -37,10 +42,14 @@ const Post = () => {
         <div className="p-2 border dark:border-gray-600">{post.content}</div>
       </div>
       <div className="mt-2">
-        <CommentForm postId={post.id} parentCommentId={0} />
+        <CommentForm
+          postId={post.id}
+          parentCommentId={0}
+          refetchPost={refetchPost}
+        />
       </div>
       Comments:
-      <Comments comments={toForest(post.comments)} />
+      <Comments comments={toForest(post.comments)} refetchPost={refetchPost} />
     </div>
   );
 };
