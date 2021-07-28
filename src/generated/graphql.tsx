@@ -135,6 +135,30 @@ export type User = {
   updatedAt: Scalars['DateTime'];
   posts: Array<Post>;
   comments: Array<Comment>;
+  postVotes: Array<UserPostVote>;
+  commentVotes: Array<UserCommentVote>;
+};
+
+export type UserCommentVote = {
+  __typename?: 'UserCommentVote';
+  userId: Scalars['String'];
+  user: User;
+  commentId: Scalars['String'];
+  comment: Comment;
+  direction: Scalars['Int'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+};
+
+export type UserPostVote = {
+  __typename?: 'UserPostVote';
+  userId: Scalars['String'];
+  user: User;
+  postId: Scalars['String'];
+  post: Post;
+  direction: Scalars['Int'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type CreateCommentInput = {
@@ -152,23 +176,10 @@ export type CreatePostInput = {
 
 export type CommentFragmentFragment = (
   { __typename?: 'Comment' }
-  & Pick<Comment, 'id' | 'content' | 'deleted' | 'level' | 'createdAt' | 'updatedAt' | 'score'>
-  & { post: (
-    { __typename?: 'Post' }
-    & Pick<Post, 'id'>
-  ), author?: Maybe<(
+  & Pick<Comment, 'id' | 'postId' | 'content' | 'deleted' | 'level' | 'createdAt' | 'updatedAt' | 'parentCommentId' | 'score'>
+  & { author?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'username'>
-  )>, parentComment?: Maybe<(
-    { __typename?: 'Comment' }
-    & Pick<Comment, 'id'>
-  )>, comments: Array<(
-    { __typename?: 'Comment' }
-    & Pick<Comment, 'id'>
-    & { parentComment?: Maybe<(
-      { __typename?: 'Comment' }
-      & Pick<Comment, 'id'>
-    )> }
   )> }
 );
 
@@ -286,9 +297,7 @@ export type GetUserQuery = (
 export const CommentFragmentFragmentDoc = gql`
     fragment CommentFragment on Comment {
   id
-  post {
-    id
-  }
+  postId
   content
   deleted
   level
@@ -298,15 +307,7 @@ export const CommentFragmentFragmentDoc = gql`
     id
     username
   }
-  parentComment {
-    id
-  }
-  comments {
-    id
-    parentComment {
-      id
-    }
-  }
+  parentCommentId
   score
 }
     `;

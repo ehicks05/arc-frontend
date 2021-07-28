@@ -1,8 +1,6 @@
 fragment CommentFragment on Comment {
   id
-  post {
-    id
-  }
+  postId
   content
   deleted
   level
@@ -12,15 +10,7 @@ fragment CommentFragment on Comment {
     id
     username
   }
-  parentComment {
-    id
-  }
-  comments {
-    id
-    parentComment {
-      id
-    }
-  }
+  parentCommentId
   score
 }
 
