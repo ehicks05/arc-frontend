@@ -12,6 +12,10 @@ fragment CommentFragment on Comment {
   }
   parentCommentId
   score
+  netVotes
+  userVote {
+    direction
+  }
 }
 
 mutation createComment($input: createCommentInput) {

@@ -32,6 +32,8 @@ export type Comment = {
   score: Scalars['Float'];
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
+  netVotes: Scalars['Int'];
+  userVote?: Maybe<UserCommentVote>;
 };
 
 
@@ -199,10 +201,13 @@ export type CreateUserPostVoteInput = {
 
 export type CommentFragmentFragment = (
   { __typename?: 'Comment' }
-  & Pick<Comment, 'id' | 'postId' | 'content' | 'deleted' | 'level' | 'createdAt' | 'updatedAt' | 'parentCommentId' | 'score'>
+  & Pick<Comment, 'id' | 'postId' | 'content' | 'deleted' | 'level' | 'createdAt' | 'updatedAt' | 'parentCommentId' | 'score' | 'netVotes'>
   & { author?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'username'>
+  )>, userVote?: Maybe<(
+    { __typename?: 'UserCommentVote' }
+    & Pick<UserCommentVote, 'direction'>
   )> }
 );
 
@@ -361,6 +366,10 @@ export const CommentFragmentFragmentDoc = gql`
   }
   parentCommentId
   score
+  netVotes
+  userVote {
+    direction
+  }
 }
     `;
 export const PostFragmentFragmentDoc = gql`
