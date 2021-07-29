@@ -35,6 +35,11 @@ export type Comment = {
 };
 
 
+export enum Direction {
+  Up = 'UP',
+  Down = 'DOWN'
+}
+
 export type Mutation = {
   __typename?: 'Mutation';
   createPost?: Maybe<Post>;
@@ -44,6 +49,8 @@ export type Mutation = {
   deletePost?: Maybe<Post>;
   createComment?: Maybe<Comment>;
   deleteComment?: Maybe<Comment>;
+  createUserPostVote?: Maybe<UserPostVote>;
+  deleteUserPostVote?: Maybe<UserPostVote>;
   createUser?: Maybe<User>;
   deleteUser?: Maybe<User>;
 };
@@ -69,6 +76,16 @@ export type MutationDeleteCommentArgs = {
 };
 
 
+export type MutationCreateUserPostVoteArgs = {
+  input?: Maybe<CreateUserPostVoteInput>;
+};
+
+
+export type MutationDeleteUserPostVoteArgs = {
+  postId?: Maybe<Scalars['ID']>;
+};
+
+
 export type MutationDeleteUserArgs = {
   id?: Maybe<Scalars['ID']>;
 };
@@ -87,6 +104,7 @@ export type Post = {
   updatedAt: Scalars['DateTime'];
   netVotes: Scalars['Int'];
   score: Scalars['Float'];
+  userVote?: Maybe<UserPostVote>;
 };
 
 export type Query = {
@@ -174,6 +192,11 @@ export type CreatePostInput = {
   content?: Maybe<Scalars['String']>;
 };
 
+export type CreateUserPostVoteInput = {
+  postId?: Maybe<Scalars['String']>;
+  direction: Direction;
+};
+
 export type CommentFragmentFragment = (
   { __typename?: 'Comment' }
   & Pick<Comment, 'id' | 'postId' | 'content' | 'deleted' | 'level' | 'createdAt' | 'updatedAt' | 'parentCommentId' | 'score'>
@@ -215,7 +238,10 @@ export type PostFragmentFragment = (
   & { author: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'username'>
-  ) }
+  ), userVote?: Maybe<(
+    { __typename?: 'UserPostVote' }
+    & Pick<UserPostVote, 'direction'>
+  )> }
 );
 
 export type GetPostsQueryVariables = Exact<{
@@ -294,6 +320,32 @@ export type GetUserQuery = (
   )> }
 );
 
+export type CreateUserPostVoteMutationVariables = Exact<{
+  input: CreateUserPostVoteInput;
+}>;
+
+
+export type CreateUserPostVoteMutation = (
+  { __typename?: 'Mutation' }
+  & { createUserPostVote?: Maybe<(
+    { __typename?: 'UserPostVote' }
+    & Pick<UserPostVote, 'userId' | 'postId' | 'direction' | 'createdAt' | 'updatedAt'>
+  )> }
+);
+
+export type DeleteUserPostVoteMutationVariables = Exact<{
+  postId?: Maybe<Scalars['ID']>;
+}>;
+
+
+export type DeleteUserPostVoteMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteUserPostVote?: Maybe<(
+    { __typename?: 'UserPostVote' }
+    & Pick<UserPostVote, 'userId' | 'postId'>
+  )> }
+);
+
 export const CommentFragmentFragmentDoc = gql`
     fragment CommentFragment on Comment {
   id
@@ -326,6 +378,9 @@ export const PostFragmentFragmentDoc = gql`
   commentCount
   netVotes
   score
+  userVote {
+    direction
+  }
 }
     `;
 export const CreateCommentDocument = gql`
@@ -577,3 +632,74 @@ export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const CreateUserPostVoteDocument = gql`
+    mutation createUserPostVote($input: createUserPostVoteInput!) {
+  createUserPostVote(input: $input) {
+    userId
+    postId
+    direction
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type CreateUserPostVoteMutationFn = Apollo.MutationFunction<CreateUserPostVoteMutation, CreateUserPostVoteMutationVariables>;
+
+/**
+ * __useCreateUserPostVoteMutation__
+ *
+ * To run a mutation, you first call `useCreateUserPostVoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserPostVoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserPostVoteMutation, { data, loading, error }] = useCreateUserPostVoteMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateUserPostVoteMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserPostVoteMutation, CreateUserPostVoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserPostVoteMutation, CreateUserPostVoteMutationVariables>(CreateUserPostVoteDocument, options);
+      }
+export type CreateUserPostVoteMutationHookResult = ReturnType<typeof useCreateUserPostVoteMutation>;
+export type CreateUserPostVoteMutationResult = Apollo.MutationResult<CreateUserPostVoteMutation>;
+export type CreateUserPostVoteMutationOptions = Apollo.BaseMutationOptions<CreateUserPostVoteMutation, CreateUserPostVoteMutationVariables>;
+export const DeleteUserPostVoteDocument = gql`
+    mutation deleteUserPostVote($postId: ID) {
+  deleteUserPostVote(postId: $postId) {
+    userId
+    postId
+  }
+}
+    `;
+export type DeleteUserPostVoteMutationFn = Apollo.MutationFunction<DeleteUserPostVoteMutation, DeleteUserPostVoteMutationVariables>;
+
+/**
+ * __useDeleteUserPostVoteMutation__
+ *
+ * To run a mutation, you first call `useDeleteUserPostVoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteUserPostVoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteUserPostVoteMutation, { data, loading, error }] = useDeleteUserPostVoteMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useDeleteUserPostVoteMutation(baseOptions?: Apollo.MutationHookOptions<DeleteUserPostVoteMutation, DeleteUserPostVoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteUserPostVoteMutation, DeleteUserPostVoteMutationVariables>(DeleteUserPostVoteDocument, options);
+      }
+export type DeleteUserPostVoteMutationHookResult = ReturnType<typeof useDeleteUserPostVoteMutation>;
+export type DeleteUserPostVoteMutationResult = Apollo.MutationResult<DeleteUserPostVoteMutation>;
+export type DeleteUserPostVoteMutationOptions = Apollo.BaseMutationOptions<DeleteUserPostVoteMutation, DeleteUserPostVoteMutationVariables>;

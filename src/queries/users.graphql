@@ -10,3 +10,20 @@ query getUser($id: ID) {
     }
   }
 }
+
+mutation createUserPostVote($input: createUserPostVoteInput!) {
+  createUserPostVote(input: $input) {
+    userId
+    postId
+    direction
+    createdAt
+    updatedAt
+  }
+}
+
+mutation deleteUserPostVote($postId: ID) {
+  deleteUserPostVote(postId: $postId) {
+    userId
+    postId
+  }
+}

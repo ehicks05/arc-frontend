@@ -12,6 +12,9 @@ fragment PostFragment on Post {
   commentCount
   netVotes
   score
+  userVote {
+    direction
+  }
 }
 
 query GetPosts($sort: Sort) {

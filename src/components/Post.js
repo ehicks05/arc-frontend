@@ -38,7 +38,7 @@ const Post = () => {
   return (
     <div>
       <div className="">
-        <PostStub post={post} />
+        <PostStub post={post} refetchPost={refetchPost} />
         <div className="p-2 border dark:border-gray-600">{post.content}</div>
       </div>
       <div className="mt-2">

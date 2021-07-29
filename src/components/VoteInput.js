@@ -6,15 +6,9 @@ import {
   BsDot,
 } from "react-icons/all";
 
-const VoteInput = ({
-  netVotes,
-  upvoted,
-  downvoted,
-  handleUpvote,
-  handleDownvote,
-}) => {
-  const UpInput = upvoted ? BsCaretUpFill : BsCaretUp;
-  const DownInput = downvoted ? BsCaretDownFill : BsCaretDown;
+const VoteInput = ({ netVotes, direction, handleUpvote, handleDownvote }) => {
+  const UpInput = direction === 1 ? BsCaretUpFill : BsCaretUp;
+  const DownInput = direction === -1 ? BsCaretDownFill : BsCaretDown;
 
   return (
     <div className="flex flex-col align-items-center gap-1">

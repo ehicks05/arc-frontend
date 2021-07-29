@@ -1,22 +1,43 @@
-import React, { useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import React from "react";
 import { Link } from "react-router-dom";
 import TimeAgo from "timeago-react";
+import {
+  Direction,
+  useCreateUserPostVoteMutation,
+  useDeleteUserPostVoteMutation,
+  useGetPostByIdLazyQuery,
+} from "../generated/graphql";
 
 import { VoteInput } from "./index";
 
-const PostStub = ({ post, i }) => {
-  const { user } = useAuth0();
-  const [userVote, setUserVote] = useState({});
+const DIRECTION_TO_VALUE = { UP: 1, DOWN: -1 };
 
-  const upvote = (userId, postId) => {
-    console.log(user);
-    console.log(`${userId}, ${postId}`);
-    setUserVote({ upvoted: !userVote.upvoted });
-  };
-  const downvote = (userId, postId) => {
-    console.log(`${userId}, ${postId}`);
-    setUserVote({ downvoted: !userVote.downvoted });
+const PostStub = ({ post, i, refetchPost }) => {
+  const [
+    getPostById,
+    { refetch: refetchGetPostById, called: calledGetPostById },
+  ] = useGetPostByIdLazyQuery({
+    variables: { id: post.id },
+  });
+
+  const [createUserPostVote] = useCreateUserPostVoteMutation();
+  const [deleteUserPostVote] = useDeleteUserPostVoteMutation();
+
+  const handleVote = async (direction) => {
+    post.userVote?.direction &&
+    DIRECTION_TO_VALUE[direction] === post.userVote.direction
+      ? await deleteUserPostVote({
+          variables: { postId: post.id },
+        })
+      : await createUserPostVote({
+          variables: { input: { postId: post.id, direction } },
+        });
+
+    if (refetchPost) refetchPost();
+    else {
+      if (calledGetPostById) await refetchGetPostById();
+      else getPostById();
+    }
   };
 
   const bgClass =
@@ -29,10 +50,9 @@ const PostStub = ({ post, i }) => {
         )}
         <VoteInput
           netVotes={post.netVotes}
-          upvoted={userVote.upvoted}
-          downvoted={userVote.downvoted}
-          handleUpvote={() => upvote(user.sub, post.id)}
-          handleDownvote={() => downvote(user.sub, post.id)}
+          direction={post.userVote?.direction}
+          handleUpvote={() => handleVote(Direction.Up)}
+          handleDownvote={() => handleVote(Direction.Down)}
         />
         <div className="">
           <div className="text-lg">
