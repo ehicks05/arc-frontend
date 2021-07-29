@@ -4,7 +4,14 @@ import TimeAgo from "timeago-react";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/all";
 
 import { Button, Comments, CommentForm, VoteInput } from "./index";
-import { useDeleteCommentMutation, Direction } from "../generated/graphql";
+import {
+  useDeleteCommentMutation,
+  Direction,
+  useCreateUserCommentVoteMutation,
+  useDeleteUserCommentVoteMutation,
+  useGetPostByIdLazyQuery,
+} from "../generated/graphql";
+import { DIRECTION_TO_VALUE } from "./utils";
 
 const Comment = ({ comment, refetchPost }) => {
   const [minimized, setMinimized] = useState(comment.deleted);
@@ -19,7 +26,32 @@ const Comment = ({ comment, refetchPost }) => {
     }
   };
 
-  const handleVote = (direction) => {};
+  const [
+    getPostById,
+    { refetch: refetchGetPostById, called: calledGetPostById },
+  ] = useGetPostByIdLazyQuery({
+    variables: { id: comment.postId },
+  });
+
+  const [createUserCommentVote] = useCreateUserCommentVoteMutation();
+  const [deleteUserCommentVote] = useDeleteUserCommentVoteMutation();
+
+  const handleVote = async (direction) => {
+    comment.userVote?.direction &&
+    DIRECTION_TO_VALUE[direction] === comment.userVote.direction
+      ? await deleteUserCommentVote({
+          variables: { commentId: comment.id },
+        })
+      : await createUserCommentVote({
+          variables: { input: { commentId: comment.id, direction } },
+        });
+
+    if (refetchPost) refetchPost();
+    else {
+      if (calledGetPostById) await refetchGetPostById();
+      else getPostById();
+    }
+  };
 
   const bgClass =
     comment.level % 2 === 0

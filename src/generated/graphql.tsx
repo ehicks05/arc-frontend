@@ -53,6 +53,8 @@ export type Mutation = {
   deleteComment?: Maybe<Comment>;
   createUserPostVote?: Maybe<UserPostVote>;
   deleteUserPostVote?: Maybe<UserPostVote>;
+  createUserCommentVote?: Maybe<UserCommentVote>;
+  deleteUserCommentVote?: Maybe<UserCommentVote>;
   createUser?: Maybe<User>;
   deleteUser?: Maybe<User>;
 };
@@ -85,6 +87,16 @@ export type MutationCreateUserPostVoteArgs = {
 
 export type MutationDeleteUserPostVoteArgs = {
   postId?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationCreateUserCommentVoteArgs = {
+  input?: Maybe<CreateUserCommentVoteInput>;
+};
+
+
+export type MutationDeleteUserCommentVoteArgs = {
+  commentId?: Maybe<Scalars['ID']>;
 };
 
 
@@ -192,6 +204,11 @@ export type CreatePostInput = {
   title: Scalars['String'];
   link?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
+};
+
+export type CreateUserCommentVoteInput = {
+  commentId?: Maybe<Scalars['String']>;
+  direction: Direction;
 };
 
 export type CreateUserPostVoteInput = {
@@ -348,6 +365,32 @@ export type DeleteUserPostVoteMutation = (
   & { deleteUserPostVote?: Maybe<(
     { __typename?: 'UserPostVote' }
     & Pick<UserPostVote, 'userId' | 'postId'>
+  )> }
+);
+
+export type CreateUserCommentVoteMutationVariables = Exact<{
+  input: CreateUserCommentVoteInput;
+}>;
+
+
+export type CreateUserCommentVoteMutation = (
+  { __typename?: 'Mutation' }
+  & { createUserCommentVote?: Maybe<(
+    { __typename?: 'UserCommentVote' }
+    & Pick<UserCommentVote, 'userId' | 'commentId' | 'direction' | 'createdAt' | 'updatedAt'>
+  )> }
+);
+
+export type DeleteUserCommentVoteMutationVariables = Exact<{
+  commentId?: Maybe<Scalars['ID']>;
+}>;
+
+
+export type DeleteUserCommentVoteMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteUserCommentVote?: Maybe<(
+    { __typename?: 'UserCommentVote' }
+    & Pick<UserCommentVote, 'userId' | 'commentId'>
   )> }
 );
 
@@ -712,3 +755,74 @@ export function useDeleteUserPostVoteMutation(baseOptions?: Apollo.MutationHookO
 export type DeleteUserPostVoteMutationHookResult = ReturnType<typeof useDeleteUserPostVoteMutation>;
 export type DeleteUserPostVoteMutationResult = Apollo.MutationResult<DeleteUserPostVoteMutation>;
 export type DeleteUserPostVoteMutationOptions = Apollo.BaseMutationOptions<DeleteUserPostVoteMutation, DeleteUserPostVoteMutationVariables>;
+export const CreateUserCommentVoteDocument = gql`
+    mutation createUserCommentVote($input: createUserCommentVoteInput!) {
+  createUserCommentVote(input: $input) {
+    userId
+    commentId
+    direction
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type CreateUserCommentVoteMutationFn = Apollo.MutationFunction<CreateUserCommentVoteMutation, CreateUserCommentVoteMutationVariables>;
+
+/**
+ * __useCreateUserCommentVoteMutation__
+ *
+ * To run a mutation, you first call `useCreateUserCommentVoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserCommentVoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserCommentVoteMutation, { data, loading, error }] = useCreateUserCommentVoteMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateUserCommentVoteMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserCommentVoteMutation, CreateUserCommentVoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserCommentVoteMutation, CreateUserCommentVoteMutationVariables>(CreateUserCommentVoteDocument, options);
+      }
+export type CreateUserCommentVoteMutationHookResult = ReturnType<typeof useCreateUserCommentVoteMutation>;
+export type CreateUserCommentVoteMutationResult = Apollo.MutationResult<CreateUserCommentVoteMutation>;
+export type CreateUserCommentVoteMutationOptions = Apollo.BaseMutationOptions<CreateUserCommentVoteMutation, CreateUserCommentVoteMutationVariables>;
+export const DeleteUserCommentVoteDocument = gql`
+    mutation deleteUserCommentVote($commentId: ID) {
+  deleteUserCommentVote(commentId: $commentId) {
+    userId
+    commentId
+  }
+}
+    `;
+export type DeleteUserCommentVoteMutationFn = Apollo.MutationFunction<DeleteUserCommentVoteMutation, DeleteUserCommentVoteMutationVariables>;
+
+/**
+ * __useDeleteUserCommentVoteMutation__
+ *
+ * To run a mutation, you first call `useDeleteUserCommentVoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteUserCommentVoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteUserCommentVoteMutation, { data, loading, error }] = useDeleteUserCommentVoteMutation({
+ *   variables: {
+ *      commentId: // value for 'commentId'
+ *   },
+ * });
+ */
+export function useDeleteUserCommentVoteMutation(baseOptions?: Apollo.MutationHookOptions<DeleteUserCommentVoteMutation, DeleteUserCommentVoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteUserCommentVoteMutation, DeleteUserCommentVoteMutationVariables>(DeleteUserCommentVoteDocument, options);
+      }
+export type DeleteUserCommentVoteMutationHookResult = ReturnType<typeof useDeleteUserCommentVoteMutation>;
+export type DeleteUserCommentVoteMutationResult = Apollo.MutationResult<DeleteUserCommentVoteMutation>;
+export type DeleteUserCommentVoteMutationOptions = Apollo.BaseMutationOptions<DeleteUserCommentVoteMutation, DeleteUserCommentVoteMutationVariables>;

@@ -38,4 +38,7 @@ const comments = [{
 
 console.log(toForest(comments));
 
-export { toForest };
+const DIRECTION_TO_VALUE = { UP: 1, DOWN: -1 };
+
+
+export { toForest, DIRECTION_TO_VALUE };

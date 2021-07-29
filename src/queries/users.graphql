@@ -27,3 +27,20 @@ mutation deleteUserPostVote($postId: ID) {
     postId
   }
 }
+
+mutation createUserCommentVote($input: createUserCommentVoteInput!) {
+  createUserCommentVote(input: $input) {
+    userId
+    commentId
+    direction
+    createdAt
+    updatedAt
+  }
+}
+
+mutation deleteUserCommentVote($commentId: ID) {
+  deleteUserCommentVote(commentId: $commentId) {
+    userId
+    commentId
+  }
+}

@@ -9,8 +9,7 @@ import {
 } from "../generated/graphql";
 
 import { VoteInput } from "./index";
-
-const DIRECTION_TO_VALUE = { UP: 1, DOWN: -1 };
+import { DIRECTION_TO_VALUE } from "./utils";
 
 const PostStub = ({ post, i, refetchPost }) => {
   const [
