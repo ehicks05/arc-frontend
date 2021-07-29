@@ -23,7 +23,7 @@ const Posts = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Loader type="Rings" color="#00BFFF" height={256} width={256} />
+        <Loader type="Rings" color="#15eda1" height={256} width={256} />
       </div>
     );
   }
