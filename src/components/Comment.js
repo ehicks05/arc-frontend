@@ -15,7 +15,7 @@ import {
 import { DIRECTION_TO_VALUE } from "./utils";
 
 const Comment = ({ comment, refetchPost }) => {
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, user } = useAuth0();
   const [minimized, setMinimized] = useState(comment.deleted);
   const [showReplyForm, setShowReplyForm] = useState(false);
 
@@ -96,6 +96,7 @@ const Comment = ({ comment, refetchPost }) => {
                     Reply
                   </Button>
                   <Button
+                    disabled={user?.sub !== comment.author.id}
                     className="text-xs"
                     onClick={
                       isAuthenticated
