@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "react-loader-spinner";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import { useGetPostByIdQuery } from "../generated/graphql";
-import { CommentForm, Comments, PostStub } from "./index";
+import { CommentForm, Comments, PostStub, Button } from "./";
 import { toForest } from "./utils";
+import PostEditForm from "./PostEditForm";
 
 const Post = () => {
+  const { loginWithRedirect, isAuthenticated, user } = useAuth0();
   const { id } = useParams();
+  const [editMode, setEditMode] = useState(false);
 
   const {
     data,
@@ -39,7 +43,34 @@ const Post = () => {
     <div className="flex flex-col gap-4">
       <div>
         <PostStub post={post} refetchPost={refetchPost} />
-        <div className="p-2 border dark:border-gray-600">{post.content}</div>
+        <div className="p-2 border dark:border-gray-600">
+          {!editMode && (
+            <pre className="whitespace-pre-line">{post.content}</pre>
+          )}
+          {editMode && (
+            <PostEditForm
+              post={post}
+              setEditMode={setEditMode}
+              refetchPost={refetchPost}
+            />
+          )}
+        </div>
+
+        {!editMode && (
+          <div className="flex pt-1 gap-4">
+            <Button
+              disabled={user?.sub !== post.author.id}
+              className="text-xs"
+              onClick={
+                isAuthenticated
+                  ? () => setEditMode(!editMode)
+                  : loginWithRedirect
+              }
+            >
+              Edit
+            </Button>
+          </div>
+        )}
       </div>
       <div>Comments:</div>
       <CommentForm

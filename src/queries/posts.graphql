@@ -38,6 +38,12 @@ mutation createPost($input: createPostInput) {
   }
 }
 
+mutation updatePost($input: updatePostInput) {
+  updatePost(input: $input) {
+    id
+  }
+}
+
 mutation deletePost($id: ID) {
   deletePost(id: $id) {
     id

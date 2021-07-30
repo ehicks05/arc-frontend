@@ -48,6 +48,7 @@ export type Mutation = {
   adminCreatePost?: Maybe<Post>;
   adminSeed?: Maybe<Array<Maybe<Post>>>;
   adminNuke?: Maybe<Post>;
+  updatePost?: Maybe<Post>;
   deletePost?: Maybe<Post>;
   createComment?: Maybe<Comment>;
   updateComment?: Maybe<Comment>;
@@ -63,6 +64,11 @@ export type Mutation = {
 
 export type MutationCreatePostArgs = {
   input?: Maybe<CreatePostInput>;
+};
+
+
+export type MutationUpdatePostArgs = {
+  input?: Maybe<UpdatePostInput>;
 };
 
 
@@ -227,6 +233,11 @@ export type UpdateCommentInput = {
   content: Scalars['String'];
 };
 
+export type UpdatePostInput = {
+  id: Scalars['ID'];
+  content: Scalars['String'];
+};
+
 export type CommentFragmentFragment = (
   { __typename?: 'Comment' }
   & Pick<Comment, 'id' | 'postId' | 'content' | 'deleted' | 'level' | 'createdAt' | 'updatedAt' | 'parentCommentId' | 'score' | 'netVotes'>
@@ -328,6 +339,19 @@ export type CreatePostMutationVariables = Exact<{
 export type CreatePostMutation = (
   { __typename?: 'Mutation' }
   & { createPost?: Maybe<(
+    { __typename?: 'Post' }
+    & Pick<Post, 'id'>
+  )> }
+);
+
+export type UpdatePostMutationVariables = Exact<{
+  input?: Maybe<UpdatePostInput>;
+}>;
+
+
+export type UpdatePostMutation = (
+  { __typename?: 'Mutation' }
+  & { updatePost?: Maybe<(
     { __typename?: 'Post' }
     & Pick<Post, 'id'>
   )> }
@@ -665,6 +689,39 @@ export function useCreatePostMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
 export type CreatePostMutationResult = Apollo.MutationResult<CreatePostMutation>;
 export type CreatePostMutationOptions = Apollo.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
+export const UpdatePostDocument = gql`
+    mutation updatePost($input: updatePostInput) {
+  updatePost(input: $input) {
+    id
+  }
+}
+    `;
+export type UpdatePostMutationFn = Apollo.MutationFunction<UpdatePostMutation, UpdatePostMutationVariables>;
+
+/**
+ * __useUpdatePostMutation__
+ *
+ * To run a mutation, you first call `useUpdatePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePostMutation, { data, loading, error }] = useUpdatePostMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdatePostMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePostMutation, UpdatePostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument, options);
+      }
+export type UpdatePostMutationHookResult = ReturnType<typeof useUpdatePostMutation>;
+export type UpdatePostMutationResult = Apollo.MutationResult<UpdatePostMutation>;
+export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMutation, UpdatePostMutationVariables>;
 export const DeletePostDocument = gql`
     mutation deletePost($id: ID) {
   deletePost(id: $id) {
