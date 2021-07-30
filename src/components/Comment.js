@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import TimeAgo from "timeago-react";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/all";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import { Button, Comments, CommentForm, VoteInput } from "./index";
 import {
@@ -14,6 +15,7 @@ import {
 import { DIRECTION_TO_VALUE } from "./utils";
 
 const Comment = ({ comment, refetchPost }) => {
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
   const [minimized, setMinimized] = useState(comment.deleted);
   const [showReplyForm, setShowReplyForm] = useState(false);
 
@@ -85,13 +87,21 @@ const Comment = ({ comment, refetchPost }) => {
                 <div className="flex pt-1 gap-4">
                   <Button
                     className="text-xs"
-                    onClick={() => setShowReplyForm(!showReplyForm)}
+                    onClick={
+                      isAuthenticated
+                        ? () => setShowReplyForm(!showReplyForm)
+                        : loginWithRedirect
+                    }
                   >
                     Reply
                   </Button>
                   <Button
                     className="text-xs"
-                    onClick={() => handleClickDelete(comment.id)}
+                    onClick={
+                      isAuthenticated
+                        ? () => handleClickDelete(comment.id)
+                        : loginWithRedirect
+                    }
                   >
                     Delete
                   </Button>
