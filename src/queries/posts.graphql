@@ -3,6 +3,7 @@ fragment PostFragment on Post {
   title
   link
   content
+  deleted
   createdAt
   updatedAt
   author {

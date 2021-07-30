@@ -70,8 +70,13 @@ const PostStub = ({ post, i, refetchPost }) => {
               />
               <span> by </span>
             </span>
-            <Link className="text-xs ml-2" to={`/users/${post.author.id}`}>
-              {post.author.username}
+            <Link
+              className={`text-xs ml-2 ${
+                !post.author && "pointer-events-none"
+              }`}
+              to={`/users/${post?.author?.id}`}
+            >
+              {post?.author?.username || "[Deleted]"}
             </Link>
           </div>
           <Link to={`/posts/${post.id}`}>

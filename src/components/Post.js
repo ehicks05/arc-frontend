@@ -3,7 +3,10 @@ import { useParams } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { useGetPostByIdQuery } from "../generated/graphql";
+import {
+  useDeletePostMutation,
+  useGetPostByIdQuery,
+} from "../generated/graphql";
 import { CommentForm, Comments, PostStub, Button } from "./";
 import { toForest } from "./utils";
 import PostEditForm from "./PostEditForm";
@@ -12,6 +15,15 @@ const Post = () => {
   const { loginWithRedirect, isAuthenticated, user } = useAuth0();
   const { id } = useParams();
   const [editMode, setEditMode] = useState(false);
+
+  const [deletePost] = useDeletePostMutation();
+
+  const handleClickDelete = async (id) => {
+    if (window.confirm("Are you sure?")) {
+      await deletePost({ variables: { id } });
+      await refetchPost();
+    }
+  };
 
   const {
     data,
@@ -56,7 +68,7 @@ const Post = () => {
           )}
         </div>
 
-        {!editMode && (
+        {!post.deleted && !editMode && (
           <div className="flex pt-1 gap-4">
             <Button
               disabled={user?.sub !== post.author.id}
@@ -68,6 +80,17 @@ const Post = () => {
               }
             >
               Edit
+            </Button>
+            <Button
+              disabled={user?.sub !== post.author.id}
+              className="text-xs"
+              onClick={
+                isAuthenticated
+                  ? () => handleClickDelete(post.id)
+                  : loginWithRedirect
+              }
+            >
+              Delete
             </Button>
           </div>
         )}

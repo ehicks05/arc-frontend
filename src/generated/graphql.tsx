@@ -122,7 +122,8 @@ export type Post = {
   title: Scalars['String'];
   link: Scalars['String'];
   content: Scalars['String'];
-  author: User;
+  deleted: Scalars['Boolean'];
+  author?: Maybe<User>;
   authorId?: Maybe<Scalars['String']>;
   comments: Array<Comment>;
   commentCount?: Maybe<Scalars['Int']>;
@@ -291,11 +292,11 @@ export type DeleteCommentMutation = (
 
 export type PostFragmentFragment = (
   { __typename?: 'Post' }
-  & Pick<Post, 'id' | 'title' | 'link' | 'content' | 'createdAt' | 'updatedAt' | 'commentCount' | 'netVotes' | 'score'>
-  & { author: (
+  & Pick<Post, 'id' | 'title' | 'link' | 'content' | 'deleted' | 'createdAt' | 'updatedAt' | 'commentCount' | 'netVotes' | 'score'>
+  & { author?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'username'>
-  ), userVote?: Maybe<(
+  )>, userVote?: Maybe<(
     { __typename?: 'UserPostVote' }
     & Pick<UserPostVote, 'direction'>
   )> }
@@ -469,6 +470,7 @@ export const PostFragmentFragmentDoc = gql`
   title
   link
   content
+  deleted
   createdAt
   updatedAt
   author {
