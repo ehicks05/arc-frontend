@@ -24,6 +24,12 @@ mutation createComment($input: createCommentInput) {
   }
 }
 
+mutation updateComment($input: updateCommentInput) {
+  updateComment(input: $input) {
+    id
+  }
+}
+
 mutation deleteComment($id: ID) {
   deleteComment(id: $id) {
     id

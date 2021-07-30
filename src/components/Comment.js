@@ -13,11 +13,13 @@ import {
   useGetPostByIdLazyQuery,
 } from "../generated/graphql";
 import { DIRECTION_TO_VALUE } from "./utils";
+import CommentEditForm from "./CommentEditForm";
 
 const Comment = ({ comment, refetchPost }) => {
   const { loginWithRedirect, isAuthenticated, user } = useAuth0();
   const [minimized, setMinimized] = useState(comment.deleted);
   const [showReplyForm, setShowReplyForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
 
   const [deleteComment] = useDeleteCommentMutation();
 
@@ -82,8 +84,16 @@ const Comment = ({ comment, refetchPost }) => {
           />
           {!minimized && (
             <>
-              <div>{comment.content}</div>
-              {!comment.deleted && (
+              {showEditForm && (
+                <CommentEditForm
+                  comment={comment}
+                  setEditMode={setShowEditForm}
+                  refetchPost={refetchPost}
+                />
+              )}
+              {!showEditForm && <div>{comment.content}</div>}
+
+              {!comment.deleted && !showEditForm && (
                 <div className="flex pt-1 gap-4">
                   <Button
                     className="text-xs"
@@ -94,6 +104,17 @@ const Comment = ({ comment, refetchPost }) => {
                     }
                   >
                     Reply
+                  </Button>
+                  <Button
+                    disabled={user?.sub !== comment.author.id}
+                    className="text-xs"
+                    onClick={
+                      isAuthenticated
+                        ? () => setShowEditForm(!showEditForm)
+                        : loginWithRedirect
+                    }
+                  >
+                    Edit
                   </Button>
                   <Button
                     disabled={user?.sub !== comment.author.id}
@@ -138,22 +159,26 @@ const Comment = ({ comment, refetchPost }) => {
 
 const Header = ({ comment, minimized, setMinimized }) => {
   return (
-    <div className="flex gap-4">
-      <button onClick={() => setMinimized(!minimized)}>
+    <div className="flex gap-4 text-xs">
+      <button className="text-base" onClick={() => setMinimized(!minimized)}>
         {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
       </button>
       <Link
-        className={`text-xs ${!comment.author && "pointer-events-none"}`}
+        className={`${!comment.author && "pointer-events-none"}`}
         to={`/users/${comment?.author?.id}`}
       >
         {comment?.author?.username || "[Deleted]"}
       </Link>
-      <TimeAgo
-        title={new Date(comment.createdAt)}
-        className="text-xs"
-        datetime={comment.createdAt}
-        opts={{ minInterval: 60 }}
-      />
+      <span>
+        <TimeAgo
+          title={new Date(comment.createdAt)}
+          datetime={comment.createdAt}
+          opts={{ minInterval: 60 }}
+        />
+        {comment.createdAt !== comment.updatedAt && (
+          <span title={new Date(comment.updatedAt)}>*</span>
+        )}
+      </span>
     </div>
   );
 };
