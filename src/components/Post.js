@@ -36,19 +36,17 @@ const Post = () => {
   console.log(toForest(post.comments));
 
   return (
-    <div>
-      <div className="">
+    <div className="flex flex-col gap-4">
+      <div>
         <PostStub post={post} refetchPost={refetchPost} />
         <div className="p-2 border dark:border-gray-600">{post.content}</div>
       </div>
-      <div className="mt-2">
-        <CommentForm
-          postId={post.id}
-          parentCommentId={0}
-          refetchPost={refetchPost}
-        />
-      </div>
-      <div className="pt-4">Comments:</div>
+      <div>Comments:</div>
+      <CommentForm
+        postId={post.id}
+        parentCommentId={0}
+        refetchPost={refetchPost}
+      />
       <Comments comments={toForest(post.comments)} refetchPost={refetchPost} />
     </div>
   );
