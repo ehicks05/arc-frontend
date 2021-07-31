@@ -11,8 +11,8 @@ body {
   color: #111;
   background-color: #fefefe;
 
-  font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console,
-    monospace;
+  /* font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console,
+    monospace; */
 }
 @media (prefers-color-scheme: dark) {
   body {
