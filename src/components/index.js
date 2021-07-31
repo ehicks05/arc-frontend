@@ -10,7 +10,6 @@ import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 import User from "./User";
 import Auth from "./Auth";
-import Profile from "./Profile";
 import VoteInput from "./VoteInput";
 
 export {
@@ -26,6 +25,5 @@ export {
   CommentForm,
   User,
   Auth,
-  Profile,
   VoteInput,
 };

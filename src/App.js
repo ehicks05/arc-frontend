@@ -1,15 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import {
-  Header,
-  Footer,
-  Post,
-  Posts,
-  User,
-  Profile,
-  PostForm,
-} from "./components";
+import { Header, Footer, Post, Posts, User, PostForm } from "./components";
 import Test from "./components/Test";
 
 function App() {
@@ -38,11 +30,6 @@ function App() {
               exact
               path="/users/:id"
               render={(props) => <User {...props} />}
-            />
-            <Route
-              exact
-              path="/profile"
-              render={(props) => <Profile {...props} />}
             />
             <Route exact path="/test" render={(props) => <Test {...props} />} />
           </Switch>
