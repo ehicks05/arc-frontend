@@ -386,6 +386,14 @@ export type GetUserQuery = (
       & PostFragmentFragment
     )>, comments: Array<(
       { __typename?: 'Comment' }
+      & { post: (
+        { __typename?: 'Post' }
+        & Pick<Post, 'title' | 'link'>
+        & { author?: Maybe<(
+          { __typename?: 'User' }
+          & Pick<User, 'id' | 'username'>
+        )> }
+      ) }
       & CommentFragmentFragment
     )> }
   )> }
@@ -767,6 +775,14 @@ export const GetUserDocument = gql`
     }
     comments {
       ...CommentFragment
+      post {
+        title
+        link
+        author {
+          id
+          username
+        }
+      }
     }
   }
 }

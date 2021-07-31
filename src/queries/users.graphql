@@ -7,6 +7,15 @@ query getUser($id: ID) {
     }
     comments {
       ...CommentFragment
+      post {
+        id
+        title
+        link
+        author {
+          id
+          username
+        }
+      }
     }
   }
 }
