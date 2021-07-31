@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "./index";
 import { useUpdatePostMutation } from "../generated/graphql";
 
-const PostEditForm = ({ post, setEditMode, refetchPost }) => {
+const PostEditForm = ({ post, setEditMode }) => {
   const [content, setContent] = useState(post.content);
   const [updatePost, { loading, error }] = useUpdatePostMutation();
 
@@ -15,7 +15,6 @@ const PostEditForm = ({ post, setEditMode, refetchPost }) => {
         },
       },
     });
-    refetchPost();
     setEditMode(false);
   };
 

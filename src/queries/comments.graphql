@@ -20,18 +20,18 @@ fragment CommentFragment on Comment {
 
 mutation createComment($input: createCommentInput) {
   createComment(input: $input) {
-    id
+    ...CommentFragment
   }
 }
 
 mutation updateComment($input: updateCommentInput) {
   updateComment(input: $input) {
-    id
+    ...CommentFragment
   }
 }
 
 mutation deleteComment($id: ID) {
   deleteComment(id: $id) {
-    id
+    ...CommentFragment
   }
 }

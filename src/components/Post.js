@@ -54,18 +54,12 @@ const Post = () => {
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <PostStub post={post} refetchPost={refetchPost} />
+        <PostStub post={post} />
         <div className="p-2 border dark:border-gray-600">
           {!editMode && (
             <pre className="whitespace-pre-line">{post.content}</pre>
           )}
-          {editMode && (
-            <PostEditForm
-              post={post}
-              setEditMode={setEditMode}
-              refetchPost={refetchPost}
-            />
-          )}
+          {editMode && <PostEditForm post={post} setEditMode={setEditMode} />}
         </div>
 
         {!post.deleted && !editMode && (

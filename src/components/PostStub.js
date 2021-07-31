@@ -5,20 +5,12 @@ import {
   Direction,
   useCreateUserPostVoteMutation,
   useDeleteUserPostVoteMutation,
-  useGetPostByIdLazyQuery,
 } from "../generated/graphql";
 
 import { VoteInput } from "./index";
 import { DIRECTION_TO_VALUE } from "./utils";
 
-const PostStub = ({ post, i, refetchPost }) => {
-  const [
-    getPostById,
-    { refetch: refetchGetPostById, called: calledGetPostById },
-  ] = useGetPostByIdLazyQuery({
-    variables: { id: post.id },
-  });
-
+const PostStub = ({ post, i }) => {
   const [createUserPostVote] = useCreateUserPostVoteMutation();
   const [deleteUserPostVote] = useDeleteUserPostVoteMutation();
 
@@ -31,12 +23,6 @@ const PostStub = ({ post, i, refetchPost }) => {
       : await createUserPostVote({
           variables: { input: { postId: post.id, direction } },
         });
-
-    if (refetchPost) refetchPost();
-    else {
-      if (calledGetPostById) await refetchGetPostById();
-      else getPostById();
-    }
   };
 
   const bgClass =

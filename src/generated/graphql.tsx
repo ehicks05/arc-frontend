@@ -53,10 +53,10 @@ export type Mutation = {
   createComment?: Maybe<Comment>;
   updateComment?: Maybe<Comment>;
   deleteComment?: Maybe<Comment>;
-  createUserPostVote?: Maybe<UserPostVote>;
-  deleteUserPostVote?: Maybe<UserPostVote>;
-  createUserCommentVote?: Maybe<UserCommentVote>;
-  deleteUserCommentVote?: Maybe<UserCommentVote>;
+  createUserPostVote?: Maybe<Post>;
+  deleteUserPostVote?: Maybe<Post>;
+  createUserCommentVote?: Maybe<Comment>;
+  deleteUserCommentVote?: Maybe<Comment>;
   createUser?: Maybe<User>;
   deleteUser?: Maybe<User>;
 };
@@ -260,7 +260,7 @@ export type CreateCommentMutation = (
   { __typename?: 'Mutation' }
   & { createComment?: Maybe<(
     { __typename?: 'Comment' }
-    & Pick<Comment, 'id'>
+    & CommentFragmentFragment
   )> }
 );
 
@@ -273,7 +273,7 @@ export type UpdateCommentMutation = (
   { __typename?: 'Mutation' }
   & { updateComment?: Maybe<(
     { __typename?: 'Comment' }
-    & Pick<Comment, 'id'>
+    & CommentFragmentFragment
   )> }
 );
 
@@ -286,7 +286,7 @@ export type DeleteCommentMutation = (
   { __typename?: 'Mutation' }
   & { deleteComment?: Maybe<(
     { __typename?: 'Comment' }
-    & Pick<Comment, 'id'>
+    & CommentFragmentFragment
   )> }
 );
 
@@ -341,7 +341,7 @@ export type CreatePostMutation = (
   { __typename?: 'Mutation' }
   & { createPost?: Maybe<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id'>
+    & PostFragmentFragment
   )> }
 );
 
@@ -354,7 +354,7 @@ export type UpdatePostMutation = (
   { __typename?: 'Mutation' }
   & { updatePost?: Maybe<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id'>
+    & PostFragmentFragment
   )> }
 );
 
@@ -367,7 +367,7 @@ export type DeletePostMutation = (
   { __typename?: 'Mutation' }
   & { deletePost?: Maybe<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id'>
+    & PostFragmentFragment
   )> }
 );
 
@@ -399,8 +399,8 @@ export type CreateUserPostVoteMutationVariables = Exact<{
 export type CreateUserPostVoteMutation = (
   { __typename?: 'Mutation' }
   & { createUserPostVote?: Maybe<(
-    { __typename?: 'UserPostVote' }
-    & Pick<UserPostVote, 'userId' | 'postId' | 'direction' | 'createdAt' | 'updatedAt'>
+    { __typename?: 'Post' }
+    & PostFragmentFragment
   )> }
 );
 
@@ -412,8 +412,8 @@ export type DeleteUserPostVoteMutationVariables = Exact<{
 export type DeleteUserPostVoteMutation = (
   { __typename?: 'Mutation' }
   & { deleteUserPostVote?: Maybe<(
-    { __typename?: 'UserPostVote' }
-    & Pick<UserPostVote, 'userId' | 'postId'>
+    { __typename?: 'Post' }
+    & PostFragmentFragment
   )> }
 );
 
@@ -425,8 +425,8 @@ export type CreateUserCommentVoteMutationVariables = Exact<{
 export type CreateUserCommentVoteMutation = (
   { __typename?: 'Mutation' }
   & { createUserCommentVote?: Maybe<(
-    { __typename?: 'UserCommentVote' }
-    & Pick<UserCommentVote, 'userId' | 'commentId' | 'direction' | 'createdAt' | 'updatedAt'>
+    { __typename?: 'Comment' }
+    & CommentFragmentFragment
   )> }
 );
 
@@ -438,8 +438,8 @@ export type DeleteUserCommentVoteMutationVariables = Exact<{
 export type DeleteUserCommentVoteMutation = (
   { __typename?: 'Mutation' }
   & { deleteUserCommentVote?: Maybe<(
-    { __typename?: 'UserCommentVote' }
-    & Pick<UserCommentVote, 'userId' | 'commentId'>
+    { __typename?: 'Comment' }
+    & CommentFragmentFragment
   )> }
 );
 
@@ -488,10 +488,10 @@ export const PostFragmentFragmentDoc = gql`
 export const CreateCommentDocument = gql`
     mutation createComment($input: createCommentInput) {
   createComment(input: $input) {
-    id
+    ...CommentFragment
   }
 }
-    `;
+    ${CommentFragmentFragmentDoc}`;
 export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutation, CreateCommentMutationVariables>;
 
 /**
@@ -521,10 +521,10 @@ export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateComm
 export const UpdateCommentDocument = gql`
     mutation updateComment($input: updateCommentInput) {
   updateComment(input: $input) {
-    id
+    ...CommentFragment
   }
 }
-    `;
+    ${CommentFragmentFragmentDoc}`;
 export type UpdateCommentMutationFn = Apollo.MutationFunction<UpdateCommentMutation, UpdateCommentMutationVariables>;
 
 /**
@@ -554,10 +554,10 @@ export type UpdateCommentMutationOptions = Apollo.BaseMutationOptions<UpdateComm
 export const DeleteCommentDocument = gql`
     mutation deleteComment($id: ID) {
   deleteComment(id: $id) {
-    id
+    ...CommentFragment
   }
 }
-    `;
+    ${CommentFragmentFragmentDoc}`;
 export type DeleteCommentMutationFn = Apollo.MutationFunction<DeleteCommentMutation, DeleteCommentMutationVariables>;
 
 /**
@@ -661,10 +661,10 @@ export type GetPostByIdQueryResult = Apollo.QueryResult<GetPostByIdQuery, GetPos
 export const CreatePostDocument = gql`
     mutation createPost($input: createPostInput) {
   createPost(input: $input) {
-    id
+    ...PostFragment
   }
 }
-    `;
+    ${PostFragmentFragmentDoc}`;
 export type CreatePostMutationFn = Apollo.MutationFunction<CreatePostMutation, CreatePostMutationVariables>;
 
 /**
@@ -694,10 +694,10 @@ export type CreatePostMutationOptions = Apollo.BaseMutationOptions<CreatePostMut
 export const UpdatePostDocument = gql`
     mutation updatePost($input: updatePostInput) {
   updatePost(input: $input) {
-    id
+    ...PostFragment
   }
 }
-    `;
+    ${PostFragmentFragmentDoc}`;
 export type UpdatePostMutationFn = Apollo.MutationFunction<UpdatePostMutation, UpdatePostMutationVariables>;
 
 /**
@@ -727,10 +727,10 @@ export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMut
 export const DeletePostDocument = gql`
     mutation deletePost($id: ID) {
   deletePost(id: $id) {
-    id
+    ...PostFragment
   }
 }
-    `;
+    ${PostFragmentFragmentDoc}`;
 export type DeletePostMutationFn = Apollo.MutationFunction<DeletePostMutation, DeletePostMutationVariables>;
 
 /**
@@ -803,14 +803,10 @@ export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVa
 export const CreateUserPostVoteDocument = gql`
     mutation createUserPostVote($input: createUserPostVoteInput!) {
   createUserPostVote(input: $input) {
-    userId
-    postId
-    direction
-    createdAt
-    updatedAt
+    ...PostFragment
   }
 }
-    `;
+    ${PostFragmentFragmentDoc}`;
 export type CreateUserPostVoteMutationFn = Apollo.MutationFunction<CreateUserPostVoteMutation, CreateUserPostVoteMutationVariables>;
 
 /**
@@ -840,11 +836,10 @@ export type CreateUserPostVoteMutationOptions = Apollo.BaseMutationOptions<Creat
 export const DeleteUserPostVoteDocument = gql`
     mutation deleteUserPostVote($postId: ID) {
   deleteUserPostVote(postId: $postId) {
-    userId
-    postId
+    ...PostFragment
   }
 }
-    `;
+    ${PostFragmentFragmentDoc}`;
 export type DeleteUserPostVoteMutationFn = Apollo.MutationFunction<DeleteUserPostVoteMutation, DeleteUserPostVoteMutationVariables>;
 
 /**
@@ -874,14 +869,10 @@ export type DeleteUserPostVoteMutationOptions = Apollo.BaseMutationOptions<Delet
 export const CreateUserCommentVoteDocument = gql`
     mutation createUserCommentVote($input: createUserCommentVoteInput!) {
   createUserCommentVote(input: $input) {
-    userId
-    commentId
-    direction
-    createdAt
-    updatedAt
+    ...CommentFragment
   }
 }
-    `;
+    ${CommentFragmentFragmentDoc}`;
 export type CreateUserCommentVoteMutationFn = Apollo.MutationFunction<CreateUserCommentVoteMutation, CreateUserCommentVoteMutationVariables>;
 
 /**
@@ -911,11 +902,10 @@ export type CreateUserCommentVoteMutationOptions = Apollo.BaseMutationOptions<Cr
 export const DeleteUserCommentVoteDocument = gql`
     mutation deleteUserCommentVote($commentId: ID) {
   deleteUserCommentVote(commentId: $commentId) {
-    userId
-    commentId
+    ...CommentFragment
   }
 }
-    `;
+    ${CommentFragmentFragmentDoc}`;
 export type DeleteUserCommentVoteMutationFn = Apollo.MutationFunction<DeleteUserCommentVoteMutation, DeleteUserCommentVoteMutationVariables>;
 
 /**

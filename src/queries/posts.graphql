@@ -35,18 +35,18 @@ query GetPostById($id: ID) {
 
 mutation createPost($input: createPostInput) {
   createPost(input: $input) {
-    id
+    ...PostFragment
   }
 }
 
 mutation updatePost($input: updatePostInput) {
   updatePost(input: $input) {
-    id
+    ...PostFragment
   }
 }
 
 mutation deletePost($id: ID) {
   deletePost(id: $id) {
-    id
+    ...PostFragment
   }
 }

@@ -13,34 +13,24 @@ query getUser($id: ID) {
 
 mutation createUserPostVote($input: createUserPostVoteInput!) {
   createUserPostVote(input: $input) {
-    userId
-    postId
-    direction
-    createdAt
-    updatedAt
+    ...PostFragment
   }
 }
 
 mutation deleteUserPostVote($postId: ID) {
   deleteUserPostVote(postId: $postId) {
-    userId
-    postId
+    ...PostFragment
   }
 }
 
 mutation createUserCommentVote($input: createUserCommentVoteInput!) {
   createUserCommentVote(input: $input) {
-    userId
-    commentId
-    direction
-    createdAt
-    updatedAt
+    ...CommentFragment
   }
 }
 
 mutation deleteUserCommentVote($commentId: ID) {
   deleteUserCommentVote(commentId: $commentId) {
-    userId
-    commentId
+    ...CommentFragment
   }
 }

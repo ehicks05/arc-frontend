@@ -10,7 +10,6 @@ import {
   Direction,
   useCreateUserCommentVoteMutation,
   useDeleteUserCommentVoteMutation,
-  useGetPostByIdLazyQuery,
 } from "../generated/graphql";
 import { DIRECTION_TO_VALUE } from "./utils";
 import CommentEditForm from "./CommentEditForm";
@@ -30,13 +29,6 @@ const Comment = ({ comment, refetchPost }) => {
     }
   };
 
-  const [
-    getPostById,
-    { refetch: refetchGetPostById, called: calledGetPostById },
-  ] = useGetPostByIdLazyQuery({
-    variables: { id: comment.postId },
-  });
-
   const [createUserCommentVote] = useCreateUserCommentVoteMutation();
   const [deleteUserCommentVote] = useDeleteUserCommentVoteMutation();
 
@@ -49,12 +41,6 @@ const Comment = ({ comment, refetchPost }) => {
       : await createUserCommentVote({
           variables: { input: { commentId: comment.id, direction } },
         });
-
-    if (refetchPost) refetchPost();
-    else {
-      if (calledGetPostById) await refetchGetPostById();
-      else getPostById();
-    }
   };
 
   const bgClass =
