@@ -77,10 +77,9 @@ export default function Header() {
                         ${
                           location.pathname !== item.href
                             ? "text-gray-300 hover:bg-gray-700 hover:text-white"
-                            : ""
+                            : "bg-gray-900 text-white"
                         }
                         `}
-                        activeClassName={"bg-gray-900 text-white"}
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
