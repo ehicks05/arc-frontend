@@ -43,7 +43,7 @@ const User = () => {
             by{" "}
             {comment.post.author && (
               <Link to={`/users/${comment.post.author?.id}`}>
-                {comment.post.author?.id}
+                {comment.post.author?.username}
               </Link>
             )}
             {!comment.post.author && "[deleted]"}

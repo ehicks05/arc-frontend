@@ -57,7 +57,7 @@ const PostStub = ({ post, i }) => {
               <span> by </span>
             </span>
             <Link
-              className={`text-xs ml-2 ${
+              className={`text-xs ml-1 ${
                 !post.author && "pointer-events-none"
               }`}
               to={`/users/${post?.author?.id}`}
