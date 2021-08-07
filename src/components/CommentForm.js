@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "./index";
 import { useCreateCommentMutation } from "../generated/graphql";
+import {useAuth0} from '@auth0/auth0-react'
 
 const CommentForm = ({
   postId,
@@ -10,6 +11,11 @@ const CommentForm = ({
 }) => {
   const [content, setContent] = useState("");
   const [createComment, { loading, error }] = useCreateCommentMutation();
+  const {isAuthenticated, loginWithRedirect} = useAuth0();
+
+  const handleClickUnauthenticated = async () => {
+    loginWithRedirect();
+  }
 
   const handleClick = async () => {
     const data = {
@@ -28,7 +34,7 @@ const CommentForm = ({
   };
 
   if (loading) return <div>loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (error) return <div>{error.message}</div>;
 
   return (
     <div className="">
@@ -41,7 +47,7 @@ const CommentForm = ({
       <Button
         className="block"
         disabled={!content}
-        onClick={() => handleClick()}
+        onClick={isAuthenticated ? handleClick : handleClickUnauthenticated}
       >
         Submit
       </Button>
