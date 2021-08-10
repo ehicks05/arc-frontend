@@ -22,23 +22,6 @@ const toForest = (comments: Comment[]) => {
   return Object.values(commentsById).filter((c) => !c.parentCommentId);
 };
 
-// test
-const comments = [{
-  id: '1',
-}, {
-  id: '2',
-  parentCommentId: '1',
-},{
-  id: '3',
-  parentCommentId: '2',
-},{
-  id: '4',
-  parentCommentId: '3',
-}];
-
-console.log(toForest(comments));
-
 const DIRECTION_TO_VALUE = { UP: 1, DOWN: -1 };
-
 
 export { toForest, DIRECTION_TO_VALUE };
