@@ -78,7 +78,7 @@ const Comment = ({ comment, refetchPost }) => {
                 />
               )}
               {!showEditForm && (
-                <pre className="whitespace-pre-line">{comment.content}</pre>
+                <div className="whitespace-pre-line">{comment.content}</div>
               )}
 
               {!comment.deleted && !showEditForm && (

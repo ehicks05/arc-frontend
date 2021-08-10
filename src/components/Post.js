@@ -57,7 +57,7 @@ const Post = () => {
         <PostStub post={post} />
         <div className="p-2 border dark:border-gray-600">
           {!editMode && (
-            <pre className="whitespace-pre-line">{post.content}</pre>
+            <div className="whitespace-pre-line">{post.content}</div>
           )}
           {editMode && <PostEditForm post={post} setEditMode={setEditMode} />}
         </div>
