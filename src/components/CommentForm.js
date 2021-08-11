@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Button } from "./index";
 import { useCreateCommentMutation } from "../generated/graphql";
-import {useAuth0} from '@auth0/auth0-react'
+import { Auth } from "@supabase/ui";
+import AuthDialog from "./AuthDialog";
+import { useModal } from "react-modal-hook";
 
 const CommentForm = ({
   postId,
@@ -11,11 +13,15 @@ const CommentForm = ({
 }) => {
   const [content, setContent] = useState("");
   const [createComment, { loading, error }] = useCreateCommentMutation();
-  const {isAuthenticated, loginWithRedirect} = useAuth0();
+  const { user } = Auth.useUser();
+
+  const [showAuthModal, hideModal] = useModal(() => (
+    <AuthDialog isOpen hideModal={hideModal} />
+  ));
 
   const handleClickUnauthenticated = async () => {
-    loginWithRedirect();
-  }
+    showAuthModal();
+  };
 
   const handleClick = async () => {
     const data = {
@@ -47,7 +53,7 @@ const CommentForm = ({
       <Button
         className="block"
         disabled={!content}
-        onClick={isAuthenticated ? handleClick : handleClickUnauthenticated}
+        onClick={user ? handleClick : handleClickUnauthenticated}
       >
         Submit
       </Button>

@@ -7,8 +7,10 @@ import {
   HiPlus,
 } from "react-icons/all";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 import md5 from "md5";
+import AuthDialog from "./AuthDialog";
+import { useModal } from "react-modal-hook";
+import { Auth } from "@supabase/ui";
 
 const navigation = [
   { name: "Hot", href: "/" },
@@ -22,7 +24,11 @@ function classNames(...classes) {
 
 export default function Header() {
   const location = useLocation();
-  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
+  const { user } = Auth.useUser();
+
+  const [showAuthModal, hideModal] = useModal(() => (
+    <AuthDialog isOpen hideModal={hideModal} />
+  ));
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -94,13 +100,13 @@ export default function Header() {
                   className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                 >
                   <span className="sr-only">Create a Post</span>
-                  {isAuthenticated && (
+                  {user && (
                     <Link to={"/posts/create"}>
                       <HiPlus className="h-6 w-6" aria-hidden="true" />
                     </Link>
                   )}
-                  {!isAuthenticated && (
-                    <div onClick={loginWithRedirect}>
+                  {!user && (
+                    <div onClick={showAuthModal}>
                       <HiPlus className="h-6 w-6" aria-hidden="true" />
                     </div>
                   )}
@@ -121,9 +127,7 @@ export default function Header() {
                           <img
                             className="h-8 w-8 rounded-full"
                             src={`https://gravatar.com/avatar/${
-                              isAuthenticated
-                                ? md5(user.email.toLocaleLowerCase())
-                                : "0"
+                              user ? md5(user.email.toLocaleLowerCase()) : "0"
                             }?s=256`}
                             alt=""
                           />
@@ -143,12 +147,12 @@ export default function Header() {
                           static
                           className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                         >
-                          {isAuthenticated && (
+                          {user && (
                             <>
                               <Menu.Item>
                                 {({ active }) => (
                                   <Link
-                                    to={`/users/${user.sub}`}
+                                    to={`/users/${user.id}`}
                                     className={classNames(
                                       active ? "bg-gray-100" : "",
                                       "block px-4 py-2 text-sm text-gray-700"
@@ -175,7 +179,7 @@ export default function Header() {
                                 {({ active }) => (
                                   <Link
                                     to="#"
-                                    onClick={logout}
+                                    onClick={showAuthModal}
                                     className={classNames(
                                       active ? "bg-gray-100" : "",
                                       "block px-4 py-2 text-sm text-gray-700"
@@ -187,12 +191,12 @@ export default function Header() {
                               </Menu.Item>
                             </>
                           )}
-                          {!isAuthenticated && (
+                          {!user && (
                             <Menu.Item>
                               {({ active }) => (
                                 <Link
                                   to="#"
-                                  onClick={loginWithRedirect}
+                                  onClick={showAuthModal}
                                   className={classNames(
                                     active ? "bg-gray-100" : "",
                                     "block px-4 py-2 text-sm text-gray-700"

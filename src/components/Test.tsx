@@ -1,22 +1,14 @@
-import React from "react";
-import { useGetPostsQuery } from "../generated/graphql";
+import React, { useState } from "react";
+import AuthDialog from "./AuthDialog";
 
 const Test = () => {
-  const { loading, error, data } = useGetPostsQuery();
-
-  if (loading) return <div>loading...</div>;
-  if (error) return <div>{error.message}</div>;
-
-  const posts = data?.getPosts || [];
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
-      {data &&
-        posts.map((post) => (
-          <div>
-            {post?.title} - {post?.createdAt}
-          </div>
-        ))}
+      <button onClick={() => setIsOpen(!isOpen)}>toggle</button>
+
+      <AuthDialog isOpen={isOpen} hideModal={() => setIsOpen(false)} />
     </div>
   );
 };

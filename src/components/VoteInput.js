@@ -1,4 +1,6 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { Auth } from "@supabase/ui";
+import AuthDialog from "./AuthDialog";
+import { useModal } from "react-modal-hook";
 import {
   BsCaretUp,
   BsCaretUpFill,
@@ -8,7 +10,10 @@ import {
 } from "react-icons/all";
 
 const VoteInput = ({ netVotes, direction, handleUpvote, handleDownvote }) => {
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  const { user } = Auth.useUser();
+  const [showAuthModal, hideModal] = useModal(() => (
+    <AuthDialog isOpen hideModal={hideModal} />
+  ));
 
   const UpInput = direction === 1 ? BsCaretUpFill : BsCaretUp;
   const DownInput = direction === -1 ? BsCaretDownFill : BsCaretDown;
@@ -18,13 +23,13 @@ const VoteInput = ({ netVotes, direction, handleUpvote, handleDownvote }) => {
       <UpInput
         className="mx-auto"
         role="button"
-        onClick={isAuthenticated ? handleUpvote : loginWithRedirect}
+        onClick={user ? handleUpvote : showAuthModal}
       />
       <div className="mx-auto opacity-50">{netVotes || <BsDot />}</div>
       <DownInput
         className="mx-auto"
         role="button"
-        onClick={isAuthenticated ? handleDownvote : loginWithRedirect}
+        onClick={user ? handleDownvote : showAuthModal}
       />
     </div>
   );

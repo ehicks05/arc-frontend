@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import TimeAgo from "timeago-react";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/all";
-import { useAuth0 } from "@auth0/auth0-react";
+import { Auth } from "@supabase/ui";
+import AuthDialog from "./AuthDialog";
+import { useModal } from "react-modal-hook";
 
 import { Button, Comments, CommentForm, VoteInput } from "./index";
 import {
@@ -15,7 +17,10 @@ import { DIRECTION_TO_VALUE } from "./utils";
 import CommentEditForm from "./CommentEditForm";
 
 const Comment = ({ comment, refetchPost }) => {
-  const { loginWithRedirect, isAuthenticated, user } = useAuth0();
+  const { user } = Auth.useUser();
+  const [showAuthModal, hideModal] = useModal(() => (
+    <AuthDialog isOpen hideModal={hideModal} />
+  ));
   const [minimized, setMinimized] = useState(comment.deleted);
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -42,6 +47,8 @@ const Comment = ({ comment, refetchPost }) => {
           variables: { input: { commentId: comment.id, direction } },
         });
   };
+
+  const isAuthor = user?.id === comment.author?.id;
 
   const bgClass =
     comment.level % 2 === 0
@@ -86,31 +93,29 @@ const Comment = ({ comment, refetchPost }) => {
                   <Button
                     className="text-xs"
                     onClick={
-                      isAuthenticated
+                      user
                         ? () => setShowReplyForm(!showReplyForm)
-                        : loginWithRedirect
+                        : showAuthModal
                     }
                   >
                     Reply
                   </Button>
                   <Button
-                    disabled={user?.sub !== comment.author.id}
+                    disabled={!isAuthor}
                     className="text-xs"
                     onClick={
-                      isAuthenticated
+                      user
                         ? () => setShowEditForm(!showEditForm)
-                        : loginWithRedirect
+                        : showAuthModal
                     }
                   >
                     Edit
                   </Button>
                   <Button
-                    disabled={user?.sub !== comment.author.id}
+                    disabled={!isAuthor}
                     className="text-xs"
                     onClick={
-                      isAuthenticated
-                        ? () => handleClickDelete(comment.id)
-                        : loginWithRedirect
+                      user ? () => handleClickDelete(comment.id) : showAuthModal
                     }
                   >
                     Delete

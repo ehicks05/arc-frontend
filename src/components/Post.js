@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "react-loader-spinner";
-import { useAuth0 } from "@auth0/auth0-react";
+import { Auth } from "@supabase/ui";
+import AuthDialog from "./AuthDialog";
+import { useModal } from "react-modal-hook";
 
 import {
   useDeletePostMutation,
@@ -12,7 +14,10 @@ import { toForest } from "./utils";
 import PostEditForm from "./PostEditForm";
 
 const Post = () => {
-  const { loginWithRedirect, isAuthenticated, user } = useAuth0();
+  const { user } = Auth.useUser();
+  const [showAuthModal, hideModal] = useModal(() => (
+    <AuthDialog isOpen hideModal={hideModal} />
+  ));
   const { id } = useParams();
   const [editMode, setEditMode] = useState(false);
 
@@ -49,7 +54,7 @@ const Post = () => {
 
   if (!post) return <div>something went wrong...</div>;
 
-  console.log(toForest(post.comments));
+  const isAuthor = user?.id === post.author.id;
 
   return (
     <div className="flex flex-col gap-4">
@@ -63,26 +68,16 @@ const Post = () => {
         </div>
 
         {!post.deleted && !editMode && (
-          <div className="flex pt-1 gap-4">
+          <div className="flex text-xs pt-1 gap-4">
             <Button
-              disabled={user?.sub !== post.author.id}
-              className="text-xs"
-              onClick={
-                isAuthenticated
-                  ? () => setEditMode(!editMode)
-                  : loginWithRedirect
-              }
+              disabled={!isAuthor}
+              onClick={user ? () => setEditMode(!editMode) : showAuthModal}
             >
               Edit
             </Button>
             <Button
-              disabled={user?.sub !== post.author.id}
-              className="text-xs"
-              onClick={
-                isAuthenticated
-                  ? () => handleClickDelete(post.id)
-                  : loginWithRedirect
-              }
+              disabled={!isAuthor}
+              onClick={user ? () => handleClickDelete(post.id) : showAuthModal}
             >
               Delete
             </Button>
