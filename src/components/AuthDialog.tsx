@@ -22,7 +22,7 @@ const AuthDialog = ({
       <div className="flex items-center justify-center min-h-screen">
         <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
-        <div className="z-20 bg-white dark:bg-gray-800 rounded max-w-sm mx-auto">
+        <div className="z-20 bg-white rounded max-w-sm mx-auto">
           <div className="py-8 px-4 sm:px-6 lg:px-8">
             <Container supabaseClient={supabase}>
               <Auth supabaseClient={supabase} />
