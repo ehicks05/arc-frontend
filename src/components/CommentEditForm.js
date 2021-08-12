@@ -25,7 +25,7 @@ const CommentEditForm = ({ comment, setEditMode, refetchPost }) => {
   return (
     <div>
       <textarea
-        className="border dark:border-gray-600 p-1 dark:bg-gray-600 dark:text-gray-100"
+        className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-gray-600 dark:text-gray-100"
         placeholder={"add a comment"}
         value={content}
         onChange={(e) => setContent(e.target.value)}
