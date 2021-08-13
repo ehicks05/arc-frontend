@@ -1,8 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import Loader from "react-loader-spinner";
 
-import { PostStub } from "./index";
+import { PostStub, Loading } from "./index";
 import { Sort, useGetPostsQuery } from "../generated/graphql";
 
 const pathToSort = {
@@ -20,16 +19,8 @@ const Posts = () => {
   });
   const posts = data?.getPosts;
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader type="Rings" color="#15eda1" height={256} width={256} />
-      </div>
-    );
-  }
-
-  if (error) {
-    return <span>Error: {JSON.stringify(error, null, 2)}</span>;
+  if (loading || error) {
+    return <Loading loading={loading} error={error} />;
   }
 
   if (!posts.length) return "nothing to see here...";

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Loader from "react-loader-spinner";
 import { Auth } from "@supabase/ui";
 import AuthDialog from "./AuthDialog";
 import { useModal } from "react-modal-hook";
@@ -9,7 +8,7 @@ import {
   useDeletePostMutation,
   useGetPostByIdQuery,
 } from "../generated/graphql";
-import { CommentCreateForm, Comments, PostStub, Button } from "./";
+import { CommentCreateForm, Comments, PostStub, Button, Loading } from "./";
 import { toForest } from "./utils";
 import PostEditForm from "./PostEditForm";
 
@@ -48,19 +47,10 @@ const Post = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader type="Rings" color="#15eda1" height={256} width={256} />
-      </div>
-    );
+  if (loading || error) {
+    return <Loading loading={loading} error={error} />;
   }
-
-  if (error) {
-    return <span>Error: {error.message}</span>;
-  }
-
-  if (!post) return <div>something went wrong...</div>;
+  if (!post) return <div>Post not found...</div>;
 
   const isAuthor = user?.id === post.author.id;
 
