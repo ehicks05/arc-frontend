@@ -19,9 +19,7 @@ const Posts = () => {
   });
   const posts = data?.getPosts;
 
-  if (loading || error) {
-    return <Loading loading={loading} error={error} />;
-  }
+  if (loading || error) return <Loading loading={loading} error={error} />;
 
   if (!posts.length) return "nothing to see here...";
   return posts.map((post, i) => <PostStub key={i} post={post} i={i} />);

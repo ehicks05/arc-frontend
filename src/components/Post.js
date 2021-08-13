@@ -47,9 +47,7 @@ const Post = () => {
     }
   };
 
-  if (loading || error) {
-    return <Loading loading={loading} error={error} />;
-  }
+  if (loading || error) return <Loading loading={loading} error={error} />;
   if (!post) return <div>Post not found...</div>;
 
   const isAuthor = user?.id === post.author.id;

@@ -7,9 +7,7 @@ const User = () => {
   const { id } = useParams();
   const { data, loading, error } = useGetUserQuery({ variables: { id } });
 
-  if (loading || error) {
-    return <Loading loading={loading} error={error} />;
-  }
+  if (loading || error) return <Loading loading={loading} error={error} />;
 
   const user = data.getUser;
   const userItems = [...user.posts, ...user.comments].sort(

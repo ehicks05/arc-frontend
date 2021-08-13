@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CommentForm } from "./index";
+import { CommentForm, Loading } from "./index";
 import { useCreateCommentMutation } from "../generated/graphql";
 
 const CommentCreateForm = ({
@@ -27,8 +27,7 @@ const CommentCreateForm = ({
     setEditMode(false);
   };
 
-  if (loading) return <div>loading...</div>;
-  if (error) return <div>{error.message}</div>;
+  if (loading || error) return <Loading loading={loading} error={error} />;
 
   return (
     <CommentForm
