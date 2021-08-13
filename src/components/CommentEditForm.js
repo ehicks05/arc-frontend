@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Button } from "./index";
+import { CommentForm, Loading } from "./index";
 import { useUpdateCommentMutation } from "../generated/graphql";
 
 const CommentEditForm = ({ comment, setEditMode, refetchPost }) => {
   const [content, setContent] = useState(comment.content);
   const [updateComment, { loading, error }] = useUpdateCommentMutation();
 
-  const handleClick = async () => {
+  const handleSubmit = async () => {
     await updateComment({
       variables: {
         input: {
@@ -19,30 +19,15 @@ const CommentEditForm = ({ comment, setEditMode, refetchPost }) => {
     setEditMode(false);
   };
 
-  if (loading) return <div>loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading || error) return <Loading loading={loading} error={error} />;
 
   return (
-    <div>
-      <textarea
-        className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-gray-600 dark:text-gray-100"
-        placeholder={"add a comment"}
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
-      <div className="flex gap-4">
-        <Button
-          className="text-xs"
-          disabled={!content}
-          onClick={() => handleClick()}
-        >
-          Submit
-        </Button>
-        <Button className="text-xs" onClick={() => setEditMode(false)}>
-          Cancel
-        </Button>
-      </div>
-    </div>
+    <CommentForm
+      content={content}
+      setContent={setContent}
+      handleSubmit={handleSubmit}
+      setEditMode={setEditMode}
+    />
   );
 };
 

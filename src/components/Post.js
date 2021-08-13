@@ -9,7 +9,7 @@ import {
   useDeletePostMutation,
   useGetPostByIdQuery,
 } from "../generated/graphql";
-import { CommentForm, Comments, PostStub, Button } from "./";
+import { CommentCreateForm, Comments, PostStub, Button } from "./";
 import { toForest } from "./utils";
 import PostEditForm from "./PostEditForm";
 
@@ -20,6 +20,7 @@ const Post = () => {
   ));
   const { id } = useParams();
   const [editMode, setEditMode] = useState(false);
+  const [showTopLevelReply, setShowTopLevelReply] = useState(false);
   const sorts = ["BEST", "TOP", "NEW"];
   const [commentSort, setCommentSort] = useState(sorts[0]);
 
@@ -109,11 +110,21 @@ const Post = () => {
           </div>
         ))}
       </div>
-      <CommentForm
-        postId={post.id}
-        parentCommentId={0}
-        refetchPost={refetchPost}
-      />
+      {!showTopLevelReply && (
+        <div className="flex">
+          <Button onClick={() => setShowTopLevelReply(true)}>
+            Leave a comment
+          </Button>
+        </div>
+      )}
+      {showTopLevelReply && (
+        <CommentCreateForm
+          postId={post.id}
+          parentCommentId={0}
+          refetchPost={refetchPost}
+          setEditMode={setShowTopLevelReply}
+        />
+      )}
       <Comments comments={toForest(post.comments)} refetchPost={refetchPost} />
     </div>
   );

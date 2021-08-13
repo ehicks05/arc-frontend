@@ -6,7 +6,7 @@ import { Auth } from "@supabase/ui";
 import AuthDialog from "./AuthDialog";
 import { useModal } from "react-modal-hook";
 
-import { Button, Comments, CommentForm, VoteInput } from "./index";
+import { Button, Comments, CommentCreateForm, VoteInput } from "./index";
 import {
   useDeleteCommentMutation,
   Direction,
@@ -125,10 +125,10 @@ const Comment = ({ comment, refetchPost }) => {
 
               {showReplyForm && (
                 <div className="mt-2">
-                  <CommentForm
+                  <CommentCreateForm
                     postId={comment.postId}
                     parentComment={comment}
-                    toggleReplyBox={setShowReplyForm}
+                    setEditMode={setShowReplyForm}
                     refetchPost={refetchPost}
                   />
                 </div>

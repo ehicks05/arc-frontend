@@ -7,6 +7,8 @@ import Posts from "./Posts";
 import PostStub from "./PostStub";
 import Comment from "./Comment";
 import Comments from "./Comments";
+import CommentCreateForm from "./CommentCreateForm";
+import Loading from "./Loading";
 import CommentForm from "./CommentForm";
 import User from "./User";
 import VoteInput from "./VoteInput";
@@ -21,6 +23,8 @@ export {
   PostStub,
   Comment,
   Comments,
+  CommentCreateForm,
+  Loading,
   CommentForm,
   User,
   VoteInput,
