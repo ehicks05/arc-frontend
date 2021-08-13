@@ -1,3 +1,5 @@
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   darkMode: "media", // or 'media' or 'class'
@@ -16,6 +18,8 @@ module.exports = {
           800: "#0d8e61",
           900: "#0a744f",
         },
+        gray: colors.trueGray,
+        blueGray: colors.blueGray,
       },
     },
   },
