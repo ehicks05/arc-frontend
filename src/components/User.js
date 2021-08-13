@@ -44,7 +44,7 @@ const User = () => {
                   </Link>
                 )}
                 {!comment.post.author && "[deleted]"}
-                <Comment key={comment.id} comment={comment} />
+                <Comment key={comment.id} comment={comment} notInTree />
               </div>
             );
           }

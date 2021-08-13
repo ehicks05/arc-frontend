@@ -16,7 +16,7 @@ import {
 import { DIRECTION_TO_VALUE } from "./utils";
 import CommentEditForm from "./CommentEditForm";
 
-const Comment = ({ comment, refetchPost }) => {
+const Comment = ({ comment, refetchPost, notInTree }) => {
   const { user } = Auth.useUser();
   const [showAuthModal, hideModal] = useModal(() => (
     <AuthDialog isOpen hideModal={hideModal} />
@@ -51,7 +51,7 @@ const Comment = ({ comment, refetchPost }) => {
   const isAuthor = user?.id === comment.author?.id;
 
   const bgClass =
-    comment.level % 2 === 0
+    comment.level % 2 === 0 || notInTree
       ? "bg-gray-50 dark:bg-gray-900"
       : "bg-gray-100 dark:bg-gray-800";
   return (
