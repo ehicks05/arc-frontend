@@ -31,7 +31,7 @@ export default function Header() {
   ));
 
   return (
-    <Disclosure as="nav" className="bg-blueGray-800">
+    <Disclosure as="nav" className="bg-gray-50 dark:bg-gray-900">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -81,9 +81,9 @@ export default function Header() {
                         to={item.href}
                         className={`px-3 py-2 rounded-md text-sm font-medium
                         ${
-                          location.pathname !== item.href
-                            ? "text-gray-300 hover:bg-gray-700 hover:text-white"
-                            : "bg-gray-900 text-white"
+                          location.pathname === item.href
+                            ? "bg-gray-200 text-black dark:bg-gray-700 dark:text-white"
+                            : "text-gray-600 bg-gray-100 hover:bg-gray-200 hover:text-black dark:text-gray-300 dark:bg-gray-900 dark:hover:bg-gray-700 dark:hover:text-white"
                         }
                         `}
                         aria-current={item.current ? "page" : undefined}
@@ -97,7 +97,7 @@ export default function Header() {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-2">
                 <button
                   title="Create a Post"
-                  className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                  className="dark:bg-gray-800 p-1 rounded-full text-gray-400 hover:text-black dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                 >
                   <span className="sr-only">Create a Post</span>
                   {user && (
@@ -112,7 +112,7 @@ export default function Header() {
                   )}
                 </button>
 
-                <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                <button className="dark:bg-gray-800 p-1 rounded-full text-gray-400 hover:text-black dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                   <span className="sr-only">View notifications</span>
                   <HiOutlineBell className="h-6 w-6" aria-hidden="true" />
                 </button>
