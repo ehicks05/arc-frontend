@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "./index";
+import { Button, Loading } from "./index";
 import { useUpdatePostMutation } from "../generated/graphql";
 
 const PostEditForm = ({ post, setEditMode }) => {
@@ -18,13 +18,12 @@ const PostEditForm = ({ post, setEditMode }) => {
     setEditMode(false);
   };
 
-  if (loading) return <div>loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading || error) return <Loading loading={loading} error={error} />;
 
   return (
     <div>
       <textarea
-        className="border dark:border-gray-600 p-1 dark:bg-gray-600 dark:text-gray-100"
+        className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-gray-600 dark:text-gray-100"
         placeholder={"add some content"}
         value={content}
         onChange={(e) => setContent(e.target.value)}

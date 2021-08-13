@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Button } from "./index";
+import { Button, Loading } from "./index";
 import { useCreatePostMutation } from "../generated/graphql";
 
 const PostForm = () => {
@@ -13,22 +13,23 @@ const PostForm = () => {
   const [createPost, { loading, error }] = useCreatePostMutation();
 
   const handleClick = async () => {
-    const input = {
-      title,
-      link,
-      content,
-    };
-
     try {
-      const result = await createPost({ variables: { input } });
+      const result = await createPost({
+        variables: {
+          input: {
+            title,
+            link,
+            content,
+          },
+        },
+      });
       const newPostId = result?.data.createPost.id;
 
       history.push(`/posts/${newPostId}`);
     } catch (err) {}
   };
 
-  if (loading) return <div>loading...</div>;
-  if (error) return <div>{error.message}</div>;
+  if (loading || error) return <Loading loading={loading} error={error} />;
 
   return (
     <div className="">
@@ -37,7 +38,7 @@ const PostForm = () => {
         <div>
           <input
             type="text"
-            className="border dark:border-gray-600 p-1 dark:bg-gray-600 dark:text-gray-100"
+            className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-gray-600 dark:text-gray-100"
             placeholder={"add a title"}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -49,7 +50,7 @@ const PostForm = () => {
         <div>
           <input
             type="text"
-            className="border dark:border-gray-600 p-1 dark:bg-gray-600 dark:text-gray-100"
+            className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-gray-600 dark:text-gray-100"
             placeholder={"add a link (optional)"}
             value={link}
             onChange={(e) => setLink(e.target.value)}
@@ -60,7 +61,7 @@ const PostForm = () => {
         <label>Content</label>
         <div>
           <textarea
-            className="border dark:border-gray-600 p-1 dark:bg-gray-600 dark:text-gray-100"
+            className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-gray-600 dark:text-gray-100"
             placeholder={"add content"}
             value={content}
             onChange={(e) => setContent(e.target.value)}
