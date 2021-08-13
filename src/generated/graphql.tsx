@@ -36,6 +36,12 @@ export type Comment = {
   userVote?: Maybe<UserCommentVote>;
 };
 
+export enum CommentSort {
+  Best = 'BEST',
+  Top = 'TOP',
+  New = 'NEW'
+}
+
 
 export enum Direction {
   Up = 'UP',
@@ -125,13 +131,18 @@ export type Post = {
   deleted: Scalars['Boolean'];
   author?: Maybe<User>;
   authorId?: Maybe<Scalars['String']>;
-  comments: Array<Comment>;
+  comments?: Maybe<Array<Maybe<Comment>>>;
   commentCount?: Maybe<Scalars['Int']>;
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
   netVotes: Scalars['Int'];
   score: Scalars['Float'];
   userVote?: Maybe<UserPostVote>;
+};
+
+
+export type PostCommentsArgs = {
+  commentSort?: Maybe<CommentSort>;
 };
 
 export type Query = {
@@ -317,6 +328,7 @@ export type GetPostsQuery = (
 
 export type GetPostByIdQueryVariables = Exact<{
   id?: Maybe<Scalars['ID']>;
+  commentSort?: Maybe<CommentSort>;
 }>;
 
 
@@ -324,10 +336,10 @@ export type GetPostByIdQuery = (
   { __typename?: 'Query' }
   & { getPostById?: Maybe<(
     { __typename?: 'Post' }
-    & { comments: Array<(
+    & { comments?: Maybe<Array<Maybe<(
       { __typename?: 'Comment' }
       & CommentFragmentFragment
-    )> }
+    )>>> }
     & PostFragmentFragment
   )> }
 );
@@ -388,7 +400,7 @@ export type GetUserQuery = (
       { __typename?: 'Comment' }
       & { post: (
         { __typename?: 'Post' }
-        & Pick<Post, 'title' | 'link'>
+        & Pick<Post, 'id' | 'title' | 'link'>
         & { author?: Maybe<(
           { __typename?: 'User' }
           & Pick<User, 'id' | 'username'>
@@ -628,10 +640,10 @@ export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>;
 export type GetPostsLazyQueryHookResult = ReturnType<typeof useGetPostsLazyQuery>;
 export type GetPostsQueryResult = Apollo.QueryResult<GetPostsQuery, GetPostsQueryVariables>;
 export const GetPostByIdDocument = gql`
-    query GetPostById($id: ID) {
+    query GetPostById($id: ID, $commentSort: CommentSort) {
   getPostById(id: $id) {
     ...PostFragment
-    comments {
+    comments(commentSort: $commentSort) {
       ...CommentFragment
     }
   }
@@ -652,6 +664,7 @@ ${CommentFragmentFragmentDoc}`;
  * const { data, loading, error } = useGetPostByIdQuery({
  *   variables: {
  *      id: // value for 'id'
+ *      commentSort: // value for 'commentSort'
  *   },
  * });
  */
@@ -776,6 +789,7 @@ export const GetUserDocument = gql`
     comments {
       ...CommentFragment
       post {
+        id
         title
         link
         author {

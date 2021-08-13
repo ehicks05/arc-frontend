@@ -24,10 +24,10 @@ query GetPosts($sort: Sort) {
   }
 }
 
-query GetPostById($id: ID) {
+query GetPostById($id: ID, $commentSort: CommentSort) {
   getPostById(id: $id) {
     ...PostFragment
-    comments {
+    comments(commentSort: $commentSort) {
       ...CommentFragment
     }
   }
