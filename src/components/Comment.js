@@ -53,7 +53,7 @@ const Comment = ({ comment, refetchPost }) => {
   const bgClass =
     comment.level % 2 === 0
       ? "bg-gray-50 dark:bg-gray-900"
-      : "bg-white dark:bg-black";
+      : "bg-gray-100 dark:bg-gray-800";
   return (
     <div
       className={`${bgClass} p-2 border dark:border-gray-600`}
