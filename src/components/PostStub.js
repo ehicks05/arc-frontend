@@ -30,7 +30,7 @@ const PostStub = ({ post, i }) => {
       ? "bg-gray-50 dark:bg-gray-900"
       : "bg-gray-100 dark:bg-gray-800";
   return (
-    <div className={`p-2 border dark:border-gray-600 ${bgClass}`}>
+    <div className={`p-2 dark:border-gray-600 ${bgClass}`}>
       <div className="flex items-center gap-2">
         {i !== undefined && (
           <div className="text-xl opacity-50">{`${i + 1}`}</div>
