@@ -1,8 +1,9 @@
 import { Dialog } from "@headlessui/react";
 import React from "react";
 import { Auth, Button, Typography } from "@supabase/ui";
-import { useClient } from "react-supabase";
+import { useClient, useAuthStateChange } from "react-supabase";
 import { SupabaseClient } from "@supabase/supabase-js";
+import { useApolloClient } from '@apollo/client';
 
 const AuthDialog = ({
   isOpen,
@@ -12,6 +13,12 @@ const AuthDialog = ({
   hideModal: () => void;
 }) => {
   const supabase = useClient();
+  const apolloClient = useApolloClient();
+
+  useAuthStateChange((event) => {
+    console.log(event);
+    apolloClient.resetStore();
+  })
 
   return (
     <Dialog
