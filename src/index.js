@@ -30,24 +30,9 @@ const httpLink = new HttpLink({
   fetchOptions: { credentials: "same-origin" },
 });
 
-/* Set in-memory token to reduce async requests */
-let token;
-
 /* Create Apollo Link to supply token */
 const withTokenLink = setContext(() => {
-  // return token if there
-  if (token) return { authToken: token };
-
-  // else check if valid token exists with client already and set if so
-  let newToken;
-  try {
-    newToken = authClient.session().access_token;
-    console.log(newToken);
-  } catch (err) {
-    console.log("make login optional: " + err);
-  }
-  token = newToken;
-  return { authToken: newToken };
+  return { authToken: authClient.session()?.access_token };
 });
 
 /* Create Apollo Link to supply token in auth header with every gql request */
@@ -67,8 +52,8 @@ const client = new ApolloClient({
 /* Create root render function */
 const renderApp = (Component) => {
   render(
-    <ApolloProvider client={client}>
-      <Auth.UserContextProvider supabaseClient={supabase}>
+    <Auth.UserContextProvider supabaseClient={supabase}>
+      <ApolloProvider client={client}>
         <Provider value={supabase}>
           <BrowserRouter>
             <ModalProvider>
@@ -76,8 +61,8 @@ const renderApp = (Component) => {
             </ModalProvider>
           </BrowserRouter>
         </Provider>
-      </Auth.UserContextProvider>
-    </ApolloProvider>,
+      </ApolloProvider>
+    </Auth.UserContextProvider>, 
     document.getElementById("root")
   );
 };
