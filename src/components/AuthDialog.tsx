@@ -1,10 +1,11 @@
 import { Dialog } from "@headlessui/react";
-import React from "react";
-import { Auth, Button, Typography } from "@supabase/ui";
+import React, { useState } from "react";
+import { Auth, Button, Input, Typography, IconUser } from "@supabase/ui";
 import { useClient, useAuthStateChange } from "react-supabase";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { useApolloClient } from "@apollo/client";
 import useUser from "useUser";
+import { useSetUsernameMutation } from "generated/graphql";
 
 const AuthDialog = ({
   isOpen,
@@ -52,39 +53,56 @@ const Container: React.FC<{ supabaseClient: SupabaseClient; children: any }> =
   ({ supabaseClient, children }) => {
     const { user } = Auth.useUser();
     const { isRegistered } = useUser();
+    const [username, setUsername] = useState("");
+    const [setUsernameMutation, { error }] = useSetUsernameMutation();
+
+    const handleSubmit = async () => {
+      try {
+        await setUsernameMutation({ variables: { username } });
+        await supabaseClient.auth.refreshSession();
+      } catch (e) {}
+    };
+
     if (user) {
-      if (isRegistered) {
-        return (
-          <>
-            <Typography.Text>Signed in: {user.email}</Typography.Text>
-            <Typography.Text>
-              Username: {user.app_metadata.username}
-            </Typography.Text>
-            <Button block onClick={() => supabaseClient.auth.signOut()}>
-              Sign out
-            </Button>
-          </>
-        );
-      } else {
-        return (
-          <>
-            <div>
-              <Typography.Text>
-                Create a username to start posting!
-              </Typography.Text>
-            </div>
-            <div>
-              <Typography.Text>Signed in: {user.email}</Typography.Text>
-            </div>
-            <Typography.Text>
-              Username: {user.app_metadata.username}
-            </Typography.Text>
-            <Button block onClick={() => supabaseClient.auth.signOut()}>
-              Sign out
-            </Button>
-          </>
-        );
-      }
+      return (
+        <div className="flex flex-col gap-4">
+          <div>
+            <Typography.Text>Welcome {user.email}!</Typography.Text>
+          </div>
+          {!isRegistered && (
+            <>
+              <div>
+                <Typography.Text>
+                  Create a username to start posting!
+                </Typography.Text>
+              </div>
+              <Input
+                label="Username"
+                icon={<IconUser />}
+                value={username}
+                className="text-black"
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+                error={error?.message}
+              />
+              <Button block onClick={handleSubmit}>
+                Submit
+              </Button>
+              <Button
+                block
+                onClick={() => supabaseClient.auth.refreshSession()}
+              >
+                refresh
+              </Button>
+              <div className="h-12"></div>
+            </>
+          )}
+          <Button block onClick={() => supabaseClient.auth.signOut()}>
+            Sign out
+          </Button>
+        </div>
+      );
     }
     return children;
   };

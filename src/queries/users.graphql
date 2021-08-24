@@ -43,3 +43,7 @@ mutation deleteUserCommentVote($commentId: ID) {
     ...CommentFragment
   }
 }
+
+mutation setUsername($username: String) {
+  setUsername(username: $username)
+}

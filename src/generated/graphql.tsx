@@ -64,6 +64,7 @@ export type Mutation = {
   createUserCommentVote?: Maybe<Comment>;
   deleteUserCommentVote?: Maybe<Comment>;
   createUser?: Maybe<User>;
+  setUsername?: Maybe<Scalars['String']>;
   deleteUser?: Maybe<User>;
 };
 
@@ -115,6 +116,11 @@ export type MutationCreateUserCommentVoteArgs = {
 
 export type MutationDeleteUserCommentVoteArgs = {
   commentId?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationSetUsernameArgs = {
+  username?: Maybe<Scalars['String']>;
 };
 
 
@@ -345,6 +351,13 @@ export type DeleteUserCommentVoteMutationVariables = Exact<{
 
 
 export type DeleteUserCommentVoteMutation = { __typename?: 'Mutation', deleteUserCommentVote?: Maybe<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, parentCommentId?: Maybe<string>, score: number, netVotes: number, author?: Maybe<{ __typename?: 'User', id: string, username: string }>, userVote?: Maybe<{ __typename?: 'UserCommentVote', direction: number }> }> };
+
+export type SetUsernameMutationVariables = Exact<{
+  username?: Maybe<Scalars['String']>;
+}>;
+
+
+export type SetUsernameMutation = { __typename?: 'Mutation', setUsername?: Maybe<string> };
 
 export const CommentFragmentFragmentDoc = gql`
     fragment CommentFragment on Comment {
@@ -845,3 +858,34 @@ export function useDeleteUserCommentVoteMutation(baseOptions?: Apollo.MutationHo
 export type DeleteUserCommentVoteMutationHookResult = ReturnType<typeof useDeleteUserCommentVoteMutation>;
 export type DeleteUserCommentVoteMutationResult = Apollo.MutationResult<DeleteUserCommentVoteMutation>;
 export type DeleteUserCommentVoteMutationOptions = Apollo.BaseMutationOptions<DeleteUserCommentVoteMutation, DeleteUserCommentVoteMutationVariables>;
+export const SetUsernameDocument = gql`
+    mutation setUsername($username: String) {
+  setUsername(username: $username)
+}
+    `;
+export type SetUsernameMutationFn = Apollo.MutationFunction<SetUsernameMutation, SetUsernameMutationVariables>;
+
+/**
+ * __useSetUsernameMutation__
+ *
+ * To run a mutation, you first call `useSetUsernameMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetUsernameMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setUsernameMutation, { data, loading, error }] = useSetUsernameMutation({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useSetUsernameMutation(baseOptions?: Apollo.MutationHookOptions<SetUsernameMutation, SetUsernameMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetUsernameMutation, SetUsernameMutationVariables>(SetUsernameDocument, options);
+      }
+export type SetUsernameMutationHookResult = ReturnType<typeof useSetUsernameMutation>;
+export type SetUsernameMutationResult = Apollo.MutationResult<SetUsernameMutation>;
+export type SetUsernameMutationOptions = Apollo.BaseMutationOptions<SetUsernameMutation, SetUsernameMutationVariables>;
