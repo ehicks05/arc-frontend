@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import TimeAgo from "timeago-react";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/all";
-import { Auth } from "@supabase/ui";
 import AuthDialog from "./AuthDialog";
 import { useModal } from "react-modal-hook";
+import useUser from "useUser";
 
 import { Button, Comments, CommentCreateForm, VoteInput } from "./index";
 import {
@@ -17,7 +17,7 @@ import { DIRECTION_TO_VALUE } from "./utils";
 import CommentEditForm from "./CommentEditForm";
 
 const Comment = ({ comment, refetchPost, notInTree }) => {
-  const { user } = Auth.useUser();
+  const { username } = useUser();
   const [showAuthModal, hideModal] = useModal(() => (
     <AuthDialog isOpen hideModal={hideModal} />
   ));
@@ -48,7 +48,7 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
         });
   };
 
-  const isAuthor = user?.id === comment.author?.id;
+  const isAuthor = username === comment.authorId;
 
   const bgClass =
     comment.level % 2 === 0 || notInTree
@@ -93,7 +93,7 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
                   <Button
                     className="text-xs"
                     onClick={
-                      user
+                      username
                         ? () => setShowReplyForm(!showReplyForm)
                         : showAuthModal
                     }
@@ -104,7 +104,7 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
                     disabled={!isAuthor}
                     className="text-xs"
                     onClick={
-                      user
+                      username
                         ? () => setShowEditForm(!showEditForm)
                         : showAuthModal
                     }
@@ -115,7 +115,9 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
                     disabled={!isAuthor}
                     className="text-xs"
                     onClick={
-                      user ? () => handleClickDelete(comment.id) : showAuthModal
+                      username
+                        ? () => handleClickDelete(comment.id)
+                        : showAuthModal
                     }
                   >
                     Delete
@@ -157,10 +159,10 @@ const Header = ({ comment, minimized, setMinimized }) => {
         {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
       </button>
       <Link
-        className={`${!comment.author && "pointer-events-none"}`}
-        to={`/users/${comment?.author?.id}`}
+        className={`${!comment.authorId && "pointer-events-none"}`}
+        to={`/users/${comment?.authorId}`}
       >
-        {comment?.author?.username || "[Deleted]"}
+        {comment?.authorId || "[Deleted]"}
       </Link>
       <span>
         <TimeAgo

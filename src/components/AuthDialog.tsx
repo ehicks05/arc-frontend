@@ -51,9 +51,8 @@ const AuthDialog = ({
 
 const Container: React.FC<{ supabaseClient: SupabaseClient; children: any }> =
   ({ supabaseClient, children }) => {
-    const { user } = Auth.useUser();
-    const { isRegistered } = useUser();
-    const [username, setUsername] = useState("");
+    const { user, username } = useUser();
+    const [usernameField, setUsernameField] = useState("");
     const [setUsernameMutation, { error }] = useSetUsernameMutation();
 
     const handleSubmit = async () => {
@@ -69,7 +68,7 @@ const Container: React.FC<{ supabaseClient: SupabaseClient; children: any }> =
           <div>
             <Typography.Text>Welcome {user.email}!</Typography.Text>
           </div>
-          {!isRegistered && (
+          {!username && (
             <>
               <div>
                 <Typography.Text>
@@ -79,10 +78,10 @@ const Container: React.FC<{ supabaseClient: SupabaseClient; children: any }> =
               <Input
                 label="Username"
                 icon={<IconUser />}
-                value={username}
+                value={usernameField}
                 className="text-black"
                 onChange={(e) => {
-                  setUsername(e.target.value);
+                  setUsernameField(e.target.value);
                 }}
                 error={error?.message}
               />

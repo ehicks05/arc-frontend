@@ -1,4 +1,3 @@
-import { Auth } from "@supabase/ui";
 import AuthDialog from "./AuthDialog";
 import { useModal } from "react-modal-hook";
 import {
@@ -8,9 +7,10 @@ import {
   BsCaretDownFill,
   BsDot,
 } from "react-icons/all";
+import useUser from "useUser";
 
 const VoteInput = ({ netVotes, direction, handleUpvote, handleDownvote }) => {
-  const { user } = Auth.useUser();
+  const { username } = useUser();
   const [showAuthModal, hideModal] = useModal(() => (
     <AuthDialog isOpen hideModal={hideModal} />
   ));
@@ -23,13 +23,13 @@ const VoteInput = ({ netVotes, direction, handleUpvote, handleDownvote }) => {
       <UpInput
         className="mx-auto"
         role="button"
-        onClick={user ? handleUpvote : showAuthModal}
+        onClick={username ? handleUpvote : showAuthModal}
       />
       <div className="mx-auto opacity-50">{netVotes || <BsDot />}</div>
       <DownInput
         className="mx-auto"
         role="button"
-        onClick={user ? handleDownvote : showAuthModal}
+        onClick={username ? handleDownvote : showAuthModal}
       />
     </div>
   );

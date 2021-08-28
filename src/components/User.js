@@ -10,13 +10,14 @@ const User = () => {
   if (loading || error) return <Loading loading={loading} error={error} />;
 
   const user = data.getUser;
+  const { id: username } = user;
   const userItems = [...user.posts, ...user.comments].sort(
     (o1, o2) => o2.createdAt - o1.createdAt
   );
 
   return (
     <div className="flex flex-col gap-4">
-      <div>{user.username}</div>
+      <div>{username}</div>
       <div className="flex flex-col gap-4">
         {userItems.map((item) => {
           if (item.__typename === "Post") {
@@ -36,12 +37,12 @@ const User = () => {
                   </Link>
                 )}{" "}
                 by{" "}
-                {comment.post.author && (
-                  <Link to={`/users/${comment.post.author?.id}`}>
-                    {comment.post.author?.username}
+                {comment.post.authorId && (
+                  <Link to={`/users/${comment.post.authorId}`}>
+                    {comment.post.authorId}
                   </Link>
                 )}
-                {!comment.post.author && "[deleted]"}
+                {!comment.post.authorId && "[deleted]"}
                 <Comment key={comment.id} comment={comment} notInTree />
               </div>
             );

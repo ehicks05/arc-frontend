@@ -6,10 +6,7 @@ fragment PostFragment on Post {
   deleted
   createdAt
   updatedAt
-  author {
-    id
-    username
-  }
+  authorId
   commentCount
   netVotes
   score

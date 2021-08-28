@@ -1,7 +1,6 @@
 query getUser($id: ID) {
   getUser(id: $id) {
     id
-    username
     posts {
       ...PostFragment
     }
@@ -11,10 +10,7 @@ query getUser($id: ID) {
         id
         title
         link
-        author {
-          id
-          username
-        }
+        authorId
       }
     }
   }

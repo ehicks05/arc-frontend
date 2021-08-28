@@ -60,11 +60,11 @@ const PostStub = ({ post, i }) => {
             </span>
             <Link
               className={`text-xs ml-1 ${
-                !post.author && "pointer-events-none"
+                !post.authorId && "pointer-events-none"
               }`}
-              to={`/users/${post?.author?.id}`}
+              to={`/users/${post?.authorId}`}
             >
-              {post?.author?.username || "[Deleted]"}
+              {post?.authorId || "[Deleted]"}
             </Link>
           </div>
           <Link to={`/posts/${post.id}`}>

@@ -1,11 +1,11 @@
 import React from "react";
 import { Button } from "./index";
-import { Auth } from "@supabase/ui";
 import AuthDialog from "./AuthDialog";
 import { useModal } from "react-modal-hook";
+import useUser from "useUser";
 
 const CommentForm = ({ content, setContent, handleSubmit, setEditMode }) => {
-  const { user } = Auth.useUser();
+  const { username } = useUser();
 
   const [showAuthModal, hideModal] = useModal(() => (
     <AuthDialog isOpen hideModal={hideModal} />
@@ -23,7 +23,7 @@ const CommentForm = ({ content, setContent, handleSubmit, setEditMode }) => {
         <Button
           className="text-xs"
           disabled={!content}
-          onClick={user ? handleSubmit : showAuthModal}
+          onClick={username ? handleSubmit : showAuthModal}
         >
           Submit
         </Button>

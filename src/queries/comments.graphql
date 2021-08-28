@@ -6,10 +6,7 @@ fragment CommentFragment on Comment {
   level
   createdAt
   updatedAt
-  author {
-    id
-    username
-  }
+  authorId
   parentCommentId
   score
   netVotes

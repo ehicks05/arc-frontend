@@ -10,7 +10,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import md5 from "md5";
 import AuthDialog from "./AuthDialog";
 import { useModal } from "react-modal-hook";
-import { Auth } from "@supabase/ui";
+import useUser from "useUser";
 
 const navigation = [
   { name: "Hot", href: "/" },
@@ -24,7 +24,7 @@ function classNames(...classes) {
 
 export default function Header() {
   const location = useLocation();
-  const { user } = Auth.useUser();
+  const { user, username } = useUser();
 
   const [showAuthModal, hideModal] = useModal(() => (
     <AuthDialog isOpen hideModal={hideModal} />
@@ -100,12 +100,12 @@ export default function Header() {
                   className="dark:bg-gray-800 p-1 rounded-full text-gray-400 hover:text-black dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                 >
                   <span className="sr-only">Create a Post</span>
-                  {user && (
+                  {username && (
                     <Link to={"/posts/create"}>
                       <HiPlus className="h-6 w-6" aria-hidden="true" />
                     </Link>
                   )}
-                  {!user && (
+                  {!username && (
                     <div onClick={showAuthModal}>
                       <HiPlus className="h-6 w-6" aria-hidden="true" />
                     </div>
@@ -152,7 +152,7 @@ export default function Header() {
                               <Menu.Item>
                                 {({ active }) => (
                                   <Link
-                                    to={`/users/${user.id}`}
+                                    to={`/users/${username}`}
                                     className={classNames(
                                       active ? "bg-gray-100" : "",
                                       "block px-4 py-2 text-sm text-gray-700"

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Auth } from "@supabase/ui";
 import AuthDialog from "./AuthDialog";
 import { useModal } from "react-modal-hook";
 
@@ -11,9 +10,10 @@ import {
 import { CommentCreateForm, Comments, PostStub, Button, Loading } from "./";
 import { toForest } from "./utils";
 import PostEditForm from "./PostEditForm";
+import useUser from "useUser";
 
 const Post = () => {
-  const { user } = Auth.useUser();
+  const { username } = useUser();
   const [showAuthModal, hideModal] = useModal(() => (
     <AuthDialog isOpen hideModal={hideModal} />
   ));
@@ -50,7 +50,7 @@ const Post = () => {
   if (loading || error) return <Loading loading={loading} error={error} />;
   if (!post) return <div>Post not found...</div>;
 
-  const isAuthor = user?.id === post.author.id;
+  const isAuthor = username === post.authorId;
 
   return (
     <div className="flex flex-col gap-4">
@@ -67,13 +67,15 @@ const Post = () => {
           <div className="flex text-xs pt-1 gap-4">
             <Button
               disabled={!isAuthor}
-              onClick={user ? () => setEditMode(!editMode) : showAuthModal}
+              onClick={username ? () => setEditMode(!editMode) : showAuthModal}
             >
               Edit
             </Button>
             <Button
               disabled={!isAuthor}
-              onClick={user ? () => handleClickDelete(post.id) : showAuthModal}
+              onClick={
+                username ? () => handleClickDelete(post.id) : showAuthModal
+              }
             >
               Delete
             </Button>
