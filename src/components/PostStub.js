@@ -42,7 +42,7 @@ const PostStub = ({ post, i }) => {
           handleDownvote={() => handleVote(Direction.Down)}
         />
         <div className="">
-          <div className="text-lg">
+          <div className="text-sm sm:text-lg mb-1">
             <a href={post.link} target="_blank" rel="noopener noreferrer">
               {post.title}
             </a>

@@ -25,7 +25,9 @@ const VoteInput = ({ netVotes, direction, handleUpvote, handleDownvote }) => {
         role="button"
         onClick={username ? handleUpvote : showAuthModal}
       />
-      <div className="mx-auto opacity-50">{netVotes || <BsDot />}</div>
+      <div className="text-xs sm:text-base mx-auto opacity-50">
+        {netVotes || <BsDot />}
+      </div>
       <DownInput
         className="mx-auto"
         role="button"

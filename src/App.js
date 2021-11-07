@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header title={"ARC"} titleClass={null} />
-      <div className="p-4 flex-grow flex flex-col h-full">
+      <div className="sm:p-4 flex-grow flex flex-col h-full">
         <Switch>
           <Route exact path={["/", "/top", "/new"]} render={() => <Posts />} />
           <Route
