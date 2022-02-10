@@ -6,7 +6,7 @@ import {
   BsCaretDown,
   BsCaretDownFill,
   BsDot,
-} from "react-icons/all";
+} from "react-icons/bs";
 import useUser from "useUser";
 
 const VoteInput = ({ netVotes, direction, handleUpvote, handleDownvote }) => {

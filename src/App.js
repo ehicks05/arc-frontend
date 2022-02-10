@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import { Header, Footer, Post, Posts, User, PostForm } from "./components";
 import Test from "./components/Test";
@@ -9,25 +9,15 @@ function App() {
     <div className="flex flex-col min-h-screen">
       <Header title={"ARC"} titleClass={null} />
       <div className="sm:p-4 flex-grow flex flex-col h-full">
-        <Switch>
-          <Route exact path={["/", "/top", "/new"]} render={() => <Posts />} />
-          <Route
-            exact
-            path="/posts/create"
-            render={(props) => <PostForm {...props} />}
-          />
-          <Route
-            exact
-            path="/posts/:id"
-            render={(props) => <Post {...props} />}
-          />
-          <Route
-            exact
-            path="/users/:id"
-            render={(props) => <User {...props} />}
-          />
-          <Route exact path="/test" render={(props) => <Test {...props} />} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Posts />} />
+          <Route path="/top" element={<Posts />} />
+          <Route path="/new" element={<Posts />} />
+          <Route path="/posts/create" element={<PostForm />} />
+          <Route path="/posts/:id" element={<Post />} />
+          <Route path="/users/:id" element={<User />} />
+          <Route path="/test" element={<Test />} />
+        </Routes>
       </div>
       <Footer />
     </div>

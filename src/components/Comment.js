@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import TimeAgo from "timeago-react";
-import { FiMinusSquare, FiPlusSquare } from "react-icons/all";
+import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
 import AuthDialog from "./AuthDialog";
 import { useModal } from "react-modal-hook";
 import useUser from "useUser";

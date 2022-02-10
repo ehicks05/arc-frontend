@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Button, Loading } from "./index";
 import { useCreatePostMutation } from "../generated/graphql";
 
 const PostForm = () => {
-  const history = useHistory();
+  const location = useLocation();
 
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
@@ -25,7 +25,7 @@ const PostForm = () => {
       });
       const newPostId = result?.data.createPost.id;
 
-      history.push(`/posts/${newPostId}`);
+      location.push(`/posts/${newPostId}`);
     } catch (err) {}
   };
 
