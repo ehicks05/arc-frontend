@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {
   Direction,
+  PostFragmentFragment,
   useCreateUserPostVoteMutation,
   useDeleteUserPostVoteMutation,
 } from "../generated/graphql";
@@ -10,11 +11,16 @@ import { VoteInput } from "./index";
 import { DIRECTION_TO_VALUE } from "./utils";
 import { formatDistance} from "date-fns";
 
-const PostStub = ({ post, i }) => {
+interface Props {
+  post: PostFragmentFragment
+  i: number;
+}
+
+const PostStub = ({ post, i }: Props) => {
   const [createUserPostVote] = useCreateUserPostVoteMutation();
   const [deleteUserPostVote] = useDeleteUserPostVoteMutation();
 
-  const handleVote = async (direction) => {
+  const handleVote = async (direction: Direction) => {
     post.userVote?.direction &&
     DIRECTION_TO_VALUE[direction] === post.userVote.direction
       ? await deleteUserPostVote({
@@ -50,7 +56,7 @@ const PostStub = ({ post, i }) => {
           <div className="flex">
             <span className="text-xs opacity-50">
               <span>Posted </span>
-              <span className="text-xs" title={new Date(post.createdAt)}>
+              <span className="text-xs" title={new Date(post.createdAt).toLocaleString()}>
                 {formatDistance(new Date(post.createdAt), new Date(), {addSuffix: true})}
               </span>
               <span> by </span>
