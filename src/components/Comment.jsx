@@ -154,23 +154,26 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
 
 const Header = ({ comment, minimized, setMinimized }) => {
   return (
-    <div className="flex gap-4 text-xs">
+    <div className="flex gap-2 text-xs">
       <button className="text-base" onClick={() => setMinimized(!minimized)}>
         {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
       </button>
       <Link
-        className={`${!comment.authorId && "pointer-events-none"}`}
+        className={`opacity-75 ${!comment.authorId && "pointer-events-none"}`}
         to={`/users/${comment?.authorId}`}
       >
         {comment?.authorId || "[Deleted]"}
       </Link>
       <span>
-        <span className="text-xs" title={new Date(comment.createdAt)}>
+        <span className="opacity-50" title={new Date(comment.createdAt)}>
           {formatDistance(new Date(comment.createdAt), new Date())}
         </span>
         {comment.createdAt !== comment.updatedAt && (
           <span title={new Date(comment.updatedAt)}>*</span>
         )}
+      </span>
+      <span className="opacity-50">
+        {comment.netVotes} pts
       </span>
     </div>
   );

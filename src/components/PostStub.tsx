@@ -33,10 +33,10 @@ const PostStub = ({ post, i }: Props) => {
 
   const bgClass =
     i % 2 === 0
-      ? "bg-neutral-50 dark:bg-neutral-900"
-      : "bg-neutral-100 dark:bg-neutral-800";
+      ? "bg-neutral-50 dark:bg-neutral-800"
+      : "bg-neutral-100 dark:bg-neutral-800 brightness-105";
   return (
-    <div className={`p-2 dark:border-gray-600 ${bgClass}`}>
+    <div className={`px-2 py-0.5 dark:border-gray-600 ${bgClass}`}>
       <div className="flex items-center gap-2">
         {i !== undefined && (
           <div className="text-xl opacity-50">{`${i + 1}`}</div>
@@ -47,32 +47,34 @@ const PostStub = ({ post, i }: Props) => {
           handleUpvote={() => handleVote(Direction.Up)}
           handleDownvote={() => handleVote(Direction.Down)}
         />
-        <div className="">
-          <div className="text-sm sm:text-lg mb-1">
+        <div className="flex flex-col">
+          <div className="text-sm sm:text-base">
             <a href={post.link} target="_blank" rel="noopener noreferrer">
               {post.title}
             </a>
           </div>
-          <div className="flex">
+          <div className="flex gap-1 flex-wrap">
             <span className="text-xs opacity-50">
-              <span>Posted </span>
+              {post.netVotes} pts | 
+            </span>
+            <span className="text-xs opacity-50">
               <span className="text-xs" title={new Date(post.createdAt).toLocaleString()}>
-                {formatDistance(new Date(post.createdAt), new Date(), {addSuffix: true})}
+                {formatDistance(new Date(post.createdAt), new Date(), {addSuffix: true}).replace('over ', '')}
               </span>
               <span> by </span>
             </span>
             <Link
-              className={`text-xs ml-1 ${
+              className={`text-xs opacity-50 ${
                 !post.authorId && "pointer-events-none"
               }`}
               to={`/users/${post?.authorId}`}
             >
               {post?.authorId || "[Deleted]"}
             </Link>
+            <Link to={`/posts/${post.id}`}>
+              <div className="text-xs opacity-50">{`| ${post.commentCount} comments`}</div>
+            </Link>
           </div>
-          <Link to={`/posts/${post.id}`}>
-            <div className="text-xs font-bold opacity-50">{`${post.commentCount} comments`}</div>
-          </Link>
         </div>
       </div>
     </div>
