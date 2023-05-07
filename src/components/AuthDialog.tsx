@@ -1,10 +1,10 @@
 import { Dialog } from "@headlessui/react";
 import React, { useState } from "react";
 import { Auth } from "@supabase/auth-ui-react";
-import { useClient, useAuthStateChange } from "react-supabase";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { useApolloClient } from "@apollo/client";
 import useUser from "useUser";
+import { supabase } from '../supabase';
 import { useSetUsernameMutation } from "generated/graphql";
 import Button from "./Button";
 
@@ -15,10 +15,10 @@ const AuthDialog = ({
   isOpen: boolean;
   hideModal: () => void;
 }) => {
-  const supabase = useClient();
+  const supabaseClient = supabase;
   const apolloClient = useApolloClient();
 
-  useAuthStateChange((event) => {
+  supabaseClient.auth.onAuthStateChange((event) => {
     console.log(event);
     apolloClient.resetStore();
   });
@@ -32,14 +32,15 @@ const AuthDialog = ({
       <div className="flex items-center justify-center min-h-screen">
         <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
-        <div className="z-20 bg-white rounded max-w-sm mx-auto">
+        <div className="z-20 bg-neutral-800 rounded max-w-sm mx-auto">
           <div className="py-8 px-4 sm:px-6 lg:px-8">
-            <Container supabaseClient={supabase}>
-              <Auth supabaseClient={supabase} />
+            <Container supabaseClient={supabaseClient}>
+              foo
+              {/* <Auth dark supabaseClient={supabase} /> */}
             </Container>
           </div>
 
-          <div className="bg-neutral-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <div className="bg-neutral-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button onClick={hideModal}>
               Close
             </button>

@@ -8,7 +8,6 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { Provider } from "react-supabase";
 import { BrowserRouter } from "react-router-dom";
 import { ModalProvider } from "react-modal-hook";
 import { Auth } from "@supabase/auth-ui-react";
@@ -54,13 +53,11 @@ const renderApp = (Component) => {
   render(
     <Auth.UserContextProvider supabaseClient={supabase}>
       <ApolloProvider client={client}>
-        <Provider value={supabase}>
-          <BrowserRouter>
-            <ModalProvider>
-              <App />
-            </ModalProvider>
-          </BrowserRouter>
-        </Provider>
+        <BrowserRouter>
+          <ModalProvider>
+            <App />
+          </ModalProvider>
+        </BrowserRouter>
       </ApolloProvider>
     </Auth.UserContextProvider>, 
     document.getElementById("root")
