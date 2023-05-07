@@ -19,7 +19,7 @@ import "./index.css";
 const authClient = supabase.auth;
 
 const uri =
-  import.meta.env.NODE_ENV === "production"
+  import.meta.env.PROD
     ? import.meta.env.VITE_PROD_GRAPHQL_URI
     : import.meta.env.VITE_DEV_GRAPHQL_URI;
 
