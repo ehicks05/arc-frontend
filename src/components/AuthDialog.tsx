@@ -1,11 +1,12 @@
 import { Dialog } from "@headlessui/react";
 import React, { useState } from "react";
-import { Auth, Button, Input, Typography, IconUser } from "@supabase/ui";
+import { Auth } from "@supabase/auth-ui-react";
 import { useClient, useAuthStateChange } from "react-supabase";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { useApolloClient } from "@apollo/client";
 import useUser from "useUser";
 import { useSetUsernameMutation } from "generated/graphql";
+import Button from "./Button";
 
 const AuthDialog = ({
   isOpen,
@@ -39,9 +40,9 @@ const AuthDialog = ({
           </div>
 
           <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <Button type="default" onClick={hideModal}>
+            <button onClick={hideModal}>
               Close
-            </Button>
+            </button>
           </div>
         </div>
       </div>
@@ -66,40 +67,39 @@ const Container: React.FC<{ supabaseClient: SupabaseClient; children: any }> =
       return (
         <div className="flex flex-col gap-4">
           <div>
-            <Typography.Text>Welcome {user.email}!</Typography.Text>
+            <span>Welcome {user.email}!</span>
           </div>
           {!username && (
             <>
               <div>
-                <Typography.Text>
+                <span>
                   Create a username to start posting!
-                </Typography.Text>
+                </span>
               </div>
-              <Input
-                label="Username"
-                icon={<IconUser />}
+              <input
+                // label="Username"
+                // icon={<IconUser />}
                 value={usernameField}
                 className="text-black"
                 onChange={(e) => {
                   setUsernameField(e.target.value);
                 }}
-                error={error?.message}
+                // error={error?.message}
               />
-              <Button block onClick={handleSubmit}>
+              <button onClick={handleSubmit}>
                 Submit
-              </Button>
-              <Button
-                block
+              </button>
+              <button
                 onClick={() => supabaseClient.auth.refreshSession()}
               >
                 refresh
-              </Button>
+              </button>
               <div className="h-12"></div>
             </>
           )}
-          <Button block onClick={() => supabaseClient.auth.signOut()}>
+          <button onClick={() => supabaseClient.auth.signOut()}>
             Sign out
-          </Button>
+          </button>
         </div>
       );
     }
