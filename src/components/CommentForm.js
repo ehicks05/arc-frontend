@@ -14,7 +14,7 @@ const CommentForm = ({ content, setContent, handleSubmit, setEditMode }) => {
   return (
     <div>
       <textarea
-        className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-gray-600 dark:text-gray-100"
+        className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-neutral-600 dark:text-neutral-100"
         placeholder={"add a comment"}
         value={content}
         onChange={(e) => setContent(e.target.value)}

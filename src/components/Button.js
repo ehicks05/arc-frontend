@@ -9,8 +9,8 @@ const Button = ({ className, disabled, onClick, children }) => {
       dark:border-gray-600
       text-black bg-white
       dark:text-white dark:bg-black
-      hover:bg-gray-100
-      dark:hover:bg-gray-900
+      hover:bg-neutral-100
+      dark:hover:bg-neutral-900
       ${disabled && "opacity-50 cursor-default"} ${className}`}
     >
       {children}

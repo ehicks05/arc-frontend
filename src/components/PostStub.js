@@ -27,8 +27,8 @@ const PostStub = ({ post, i }) => {
 
   const bgClass =
     i % 2 === 0
-      ? "bg-gray-50 dark:bg-gray-900"
-      : "bg-gray-100 dark:bg-gray-800";
+      ? "bg-neutral-50 dark:bg-neutral-900"
+      : "bg-neutral-100 dark:bg-neutral-800";
   return (
     <div className={`p-2 dark:border-gray-600 ${bgClass}`}>
       <div className="flex items-center gap-2">

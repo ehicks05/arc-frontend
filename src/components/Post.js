@@ -91,8 +91,8 @@ const Post = () => {
             className={`px-3 py-2 rounded-md text-sm font-medium cursor-pointer
                         ${
                           sort === commentSort
-                            ? "bg-gray-200 text-black dark:bg-gray-700 dark:text-white"
-                            : "text-gray-600 bg-gray-100 hover:bg-gray-200 hover:text-black dark:text-gray-300 dark:bg-gray-900 dark:hover:bg-gray-700 dark:hover:text-white"
+                            ? "bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
+                            : "text-neutral-600 bg-neutral-100 hover:bg-neutral-200 hover:text-black dark:text-neutral-300 dark:bg-neutral-900 dark:hover:bg-neutral-700 dark:hover:text-white"
                         }
                         `}
           >

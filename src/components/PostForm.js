@@ -38,7 +38,7 @@ const PostForm = () => {
         <div>
           <input
             type="text"
-            className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-gray-600 dark:text-gray-100"
+            className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-neutral-600 dark:text-neutral-100"
             placeholder={"add a title"}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -50,7 +50,7 @@ const PostForm = () => {
         <div>
           <input
             type="text"
-            className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-gray-600 dark:text-gray-100"
+            className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-neutral-600 dark:text-neutral-100"
             placeholder={"add a link (optional)"}
             value={link}
             onChange={(e) => setLink(e.target.value)}
@@ -61,7 +61,7 @@ const PostForm = () => {
         <label>Content</label>
         <div>
           <textarea
-            className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-gray-600 dark:text-gray-100"
+            className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-neutral-600 dark:text-neutral-100"
             placeholder={"add content"}
             value={content}
             onChange={(e) => setContent(e.target.value)}
