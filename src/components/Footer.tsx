@@ -12,7 +12,11 @@ const Footer = () => {
   );
 };
 
-const Link = ({ href, children }) => {
+interface LinkProps {
+  href: string;
+  children: React.ReactNode;
+}
+const Link = ({ href, children }: LinkProps) => {
   return (
     <a
       href={href}
