@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TimeAgo from "timeago-react";
 import {
   Direction,
   useCreateUserPostVoteMutation,
@@ -9,6 +8,7 @@ import {
 
 import { VoteInput } from "./index";
 import { DIRECTION_TO_VALUE } from "./utils";
+import { formatDistance} from "date-fns";
 
 const PostStub = ({ post, i }) => {
   const [createUserPostVote] = useCreateUserPostVoteMutation();
@@ -50,12 +50,9 @@ const PostStub = ({ post, i }) => {
           <div className="flex">
             <span className="text-xs opacity-50">
               <span>Posted </span>
-              <TimeAgo
-                title={new Date(post.createdAt)}
-                className="text-xs"
-                datetime={post.createdAt}
-                opts={{ minInterval: 60 }}
-              />
+              <span className="text-xs" title={new Date(post.createdAt)}>
+                {formatDistance(new Date(post.createdAt), new Date(), {addSuffix: true})}
+              </span>
               <span> by </span>
             </span>
             <Link

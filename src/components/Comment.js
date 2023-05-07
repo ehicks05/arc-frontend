@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import TimeAgo from "timeago-react";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
 import AuthDialog from "./AuthDialog";
 import { useModal } from "react-modal-hook";
@@ -15,6 +14,7 @@ import {
 } from "../generated/graphql";
 import { DIRECTION_TO_VALUE } from "./utils";
 import CommentEditForm from "./CommentEditForm";
+import { formatDistance } from "date-fns";
 
 const Comment = ({ comment, refetchPost, notInTree }) => {
   const { username } = useUser();
@@ -165,11 +165,9 @@ const Header = ({ comment, minimized, setMinimized }) => {
         {comment?.authorId || "[Deleted]"}
       </Link>
       <span>
-        <TimeAgo
-          title={new Date(comment.createdAt)}
-          datetime={comment.createdAt}
-          opts={{ minInterval: 60 }}
-        />
+        <span className="text-xs" title={new Date(comment.createdAt)}>
+          {formatDistance(new Date(comment.createdAt), new Date())}
+        </span>
         {comment.createdAt !== comment.updatedAt && (
           <span title={new Date(comment.updatedAt)}>*</span>
         )}
