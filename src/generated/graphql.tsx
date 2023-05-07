@@ -1,10 +1,11 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -12,350 +13,348 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: any;
 };
 
 export type Comment = {
   __typename?: 'Comment';
-  id: Scalars['ID'];
-  content: Scalars['String'];
-  deleted: Scalars['Boolean'];
-  level: Scalars['Int'];
   author?: Maybe<User>;
   authorId?: Maybe<Scalars['String']>;
-  post: Post;
-  postId: Scalars['String'];
+  comments: Array<Comment>;
+  content: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  deleted: Scalars['Boolean'];
+  id: Scalars['ID'];
+  level: Scalars['Int'];
+  netVotes: Scalars['Int'];
   parentComment?: Maybe<Comment>;
   parentCommentId?: Maybe<Scalars['String']>;
-  comments: Array<Comment>;
+  post: Post;
+  postId: Scalars['String'];
   score: Scalars['Float'];
-  createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
-  netVotes: Scalars['Int'];
   userVote?: Maybe<UserCommentVote>;
 };
 
 export enum CommentSort {
   Best = 'BEST',
-  Top = 'TOP',
-  New = 'NEW'
+  New = 'NEW',
+  Top = 'TOP'
 }
 
-
 export enum Direction {
-  Up = 'UP',
-  Down = 'DOWN'
+  Down = 'DOWN',
+  Up = 'UP'
 }
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createPost?: Maybe<Post>;
-  adminSeed?: Maybe<Array<Maybe<Post>>>;
   adminNuke?: Maybe<Post>;
-  updatePost?: Maybe<Post>;
-  deletePost?: Maybe<Post>;
+  adminSeed?: Maybe<Array<Maybe<Post>>>;
   createComment?: Maybe<Comment>;
-  updateComment?: Maybe<Comment>;
-  deleteComment?: Maybe<Comment>;
-  createUserPostVote?: Maybe<Post>;
-  deleteUserPostVote?: Maybe<Post>;
+  createPost?: Maybe<Post>;
   createUserCommentVote?: Maybe<Comment>;
-  deleteUserCommentVote?: Maybe<Comment>;
-  setUsername?: Maybe<Scalars['String']>;
+  createUserPostVote?: Maybe<Post>;
+  deleteComment?: Maybe<Comment>;
+  deletePost?: Maybe<Post>;
   deleteUser?: Maybe<User>;
-};
-
-
-export type MutationCreatePostArgs = {
-  input?: Maybe<CreatePostInput>;
-};
-
-
-export type MutationUpdatePostArgs = {
-  input?: Maybe<UpdatePostInput>;
-};
-
-
-export type MutationDeletePostArgs = {
-  id?: Maybe<Scalars['ID']>;
+  deleteUserCommentVote?: Maybe<Comment>;
+  deleteUserPostVote?: Maybe<Post>;
+  setUsername?: Maybe<Scalars['String']>;
+  updateComment?: Maybe<Comment>;
+  updatePost?: Maybe<Post>;
 };
 
 
 export type MutationCreateCommentArgs = {
-  input?: Maybe<CreateCommentInput>;
+  input?: InputMaybe<CreateCommentInput>;
 };
 
 
-export type MutationUpdateCommentArgs = {
-  input?: Maybe<UpdateCommentInput>;
-};
-
-
-export type MutationDeleteCommentArgs = {
-  id?: Maybe<Scalars['ID']>;
-};
-
-
-export type MutationCreateUserPostVoteArgs = {
-  input?: Maybe<CreateUserPostVoteInput>;
-};
-
-
-export type MutationDeleteUserPostVoteArgs = {
-  postId?: Maybe<Scalars['ID']>;
+export type MutationCreatePostArgs = {
+  input?: InputMaybe<CreatePostInput>;
 };
 
 
 export type MutationCreateUserCommentVoteArgs = {
-  input?: Maybe<CreateUserCommentVoteInput>;
+  input?: InputMaybe<CreateUserCommentVoteInput>;
 };
 
 
-export type MutationDeleteUserCommentVoteArgs = {
-  commentId?: Maybe<Scalars['ID']>;
+export type MutationCreateUserPostVoteArgs = {
+  input?: InputMaybe<CreateUserPostVoteInput>;
 };
 
 
-export type MutationSetUsernameArgs = {
-  username?: Maybe<Scalars['String']>;
+export type MutationDeleteCommentArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type MutationDeletePostArgs = {
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 
 export type MutationDeleteUserArgs = {
-  id?: Maybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type MutationDeleteUserCommentVoteArgs = {
+  commentId?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type MutationDeleteUserPostVoteArgs = {
+  postId?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type MutationSetUsernameArgs = {
+  username?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationUpdateCommentArgs = {
+  input?: InputMaybe<UpdateCommentInput>;
+};
+
+
+export type MutationUpdatePostArgs = {
+  input?: InputMaybe<UpdatePostInput>;
 };
 
 export type Post = {
   __typename?: 'Post';
-  id: Scalars['ID'];
-  title: Scalars['String'];
-  link: Scalars['String'];
-  content: Scalars['String'];
-  deleted: Scalars['Boolean'];
   author?: Maybe<User>;
   authorId?: Maybe<Scalars['String']>;
-  comments?: Maybe<Array<Maybe<Comment>>>;
   commentCount?: Maybe<Scalars['Int']>;
+  comments?: Maybe<Array<Maybe<Comment>>>;
+  content: Scalars['String'];
   createdAt: Scalars['DateTime'];
-  updatedAt: Scalars['DateTime'];
+  deleted: Scalars['Boolean'];
+  id: Scalars['ID'];
+  link: Scalars['String'];
   netVotes: Scalars['Int'];
   score: Scalars['Float'];
+  title: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
   userVote?: Maybe<UserPostVote>;
 };
 
 
 export type PostCommentsArgs = {
-  commentSort?: Maybe<CommentSort>;
+  commentSort?: InputMaybe<CommentSort>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  getPosts?: Maybe<Array<Maybe<Post>>>;
-  getPostById?: Maybe<Post>;
-  getComments?: Maybe<Array<Maybe<Comment>>>;
   getCommentById?: Maybe<Comment>;
-  getUsers?: Maybe<Array<Maybe<User>>>;
-  getUser?: Maybe<User>;
+  getComments?: Maybe<Array<Maybe<Comment>>>;
   getMe?: Maybe<User>;
-};
-
-
-export type QueryGetPostsArgs = {
-  sort?: Maybe<Sort>;
-};
-
-
-export type QueryGetPostByIdArgs = {
-  id?: Maybe<Scalars['ID']>;
+  getPostById?: Maybe<Post>;
+  getPosts: Array<Post>;
+  getUser?: Maybe<User>;
+  getUsers?: Maybe<Array<Maybe<User>>>;
 };
 
 
 export type QueryGetCommentByIdArgs = {
-  id?: Maybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type QueryGetPostByIdArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type QueryGetPostsArgs = {
+  sort?: InputMaybe<Sort>;
 };
 
 
 export type QueryGetUserArgs = {
-  id?: Maybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export enum Sort {
   Hot = 'HOT',
-  Top = 'TOP',
-  New = 'NEW'
+  New = 'NEW',
+  Top = 'TOP'
 }
 
 /** A User... */
 export type User = {
   __typename?: 'User';
+  commentVotes: Array<UserCommentVote>;
+  comments: Array<Comment>;
+  createdAt: Scalars['DateTime'];
   /** username */
   id: Scalars['ID'];
-  createdAt: Scalars['DateTime'];
-  updatedAt: Scalars['DateTime'];
-  posts: Array<Post>;
-  comments: Array<Comment>;
   postVotes: Array<UserPostVote>;
-  commentVotes: Array<UserCommentVote>;
+  posts: Array<Post>;
+  updatedAt: Scalars['DateTime'];
 };
 
 export type UserCommentVote = {
   __typename?: 'UserCommentVote';
-  userId: Scalars['String'];
-  user: User;
-  commentId: Scalars['String'];
   comment: Comment;
-  direction: Scalars['Int'];
+  commentId: Scalars['String'];
   createdAt: Scalars['DateTime'];
+  direction: Scalars['Int'];
   updatedAt: Scalars['DateTime'];
+  user: User;
+  userId: Scalars['String'];
 };
 
 export type UserPostVote = {
   __typename?: 'UserPostVote';
-  userId: Scalars['String'];
-  user: User;
-  postId: Scalars['String'];
-  post: Post;
-  direction: Scalars['Int'];
   createdAt: Scalars['DateTime'];
+  direction: Scalars['Int'];
+  post: Post;
+  postId: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+  user: User;
+  userId: Scalars['String'];
 };
 
 export type CreateCommentInput = {
+  content?: InputMaybe<Scalars['String']>;
+  level?: InputMaybe<Scalars['Int']>;
+  parentCommentId?: InputMaybe<Scalars['String']>;
   postId: Scalars['String'];
-  parentCommentId?: Maybe<Scalars['String']>;
-  level?: Maybe<Scalars['Int']>;
-  content?: Maybe<Scalars['String']>;
 };
 
 export type CreatePostInput = {
+  content?: InputMaybe<Scalars['String']>;
+  link?: InputMaybe<Scalars['String']>;
   title: Scalars['String'];
-  link?: Maybe<Scalars['String']>;
-  content?: Maybe<Scalars['String']>;
 };
 
 export type CreateUserCommentVoteInput = {
-  commentId?: Maybe<Scalars['String']>;
+  commentId?: InputMaybe<Scalars['String']>;
   direction: Direction;
 };
 
 export type CreateUserPostVoteInput = {
-  postId?: Maybe<Scalars['String']>;
   direction: Direction;
+  postId?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateCommentInput = {
-  id: Scalars['ID'];
   content: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 export type UpdatePostInput = {
-  id: Scalars['ID'];
   content: Scalars['String'];
+  id: Scalars['ID'];
 };
 
-export type CommentFragmentFragment = { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: Maybe<string>, parentCommentId?: Maybe<string>, score: number, netVotes: number, userVote?: Maybe<{ __typename?: 'UserCommentVote', direction: number }> };
+export type CommentFragmentFragment = { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null };
 
 export type CreateCommentMutationVariables = Exact<{
-  input?: Maybe<CreateCommentInput>;
+  input?: InputMaybe<CreateCommentInput>;
 }>;
 
 
-export type CreateCommentMutation = { __typename?: 'Mutation', createComment?: Maybe<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: Maybe<string>, parentCommentId?: Maybe<string>, score: number, netVotes: number, userVote?: Maybe<{ __typename?: 'UserCommentVote', direction: number }> }> };
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null } | null };
 
 export type UpdateCommentMutationVariables = Exact<{
-  input?: Maybe<UpdateCommentInput>;
+  input?: InputMaybe<UpdateCommentInput>;
 }>;
 
 
-export type UpdateCommentMutation = { __typename?: 'Mutation', updateComment?: Maybe<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: Maybe<string>, parentCommentId?: Maybe<string>, score: number, netVotes: number, userVote?: Maybe<{ __typename?: 'UserCommentVote', direction: number }> }> };
+export type UpdateCommentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null } | null };
 
 export type DeleteCommentMutationVariables = Exact<{
-  id?: Maybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type DeleteCommentMutation = { __typename?: 'Mutation', deleteComment?: Maybe<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: Maybe<string>, parentCommentId?: Maybe<string>, score: number, netVotes: number, userVote?: Maybe<{ __typename?: 'UserCommentVote', direction: number }> }> };
+export type DeleteCommentMutation = { __typename?: 'Mutation', deleteComment?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null } | null };
 
-export type PostFragmentFragment = { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: Maybe<string>, commentCount?: Maybe<number>, netVotes: number, score: number, userVote?: Maybe<{ __typename?: 'UserPostVote', direction: number }> };
+export type PostFragmentFragment = { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null };
 
 export type GetPostsQueryVariables = Exact<{
-  sort?: Maybe<Sort>;
+  sort?: InputMaybe<Sort>;
 }>;
 
 
-export type GetPostsQuery = { __typename?: 'Query', getPosts?: Maybe<Array<Maybe<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: Maybe<string>, commentCount?: Maybe<number>, netVotes: number, score: number, userVote?: Maybe<{ __typename?: 'UserPostVote', direction: number }> }>>> };
+export type GetPostsQuery = { __typename?: 'Query', getPosts: Array<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null }> };
 
 export type GetPostByIdQueryVariables = Exact<{
-  id?: Maybe<Scalars['ID']>;
-  commentSort?: Maybe<CommentSort>;
+  id?: InputMaybe<Scalars['ID']>;
+  commentSort?: InputMaybe<CommentSort>;
 }>;
 
 
-export type GetPostByIdQuery = { __typename?: 'Query', getPostById?: Maybe<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: Maybe<string>, commentCount?: Maybe<number>, netVotes: number, score: number, comments?: Maybe<Array<Maybe<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: Maybe<string>, parentCommentId?: Maybe<string>, score: number, netVotes: number, userVote?: Maybe<{ __typename?: 'UserCommentVote', direction: number }> }>>>, userVote?: Maybe<{ __typename?: 'UserPostVote', direction: number }> }> };
+export type GetPostByIdQuery = { __typename?: 'Query', getPostById?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, comments?: Array<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null } | null> | null, userVote?: { __typename?: 'UserPostVote', direction: number } | null } | null };
 
 export type CreatePostMutationVariables = Exact<{
-  input?: Maybe<CreatePostInput>;
+  input?: InputMaybe<CreatePostInput>;
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost?: Maybe<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: Maybe<string>, commentCount?: Maybe<number>, netVotes: number, score: number, userVote?: Maybe<{ __typename?: 'UserPostVote', direction: number }> }> };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null } | null };
 
 export type UpdatePostMutationVariables = Exact<{
-  input?: Maybe<UpdatePostInput>;
+  input?: InputMaybe<UpdatePostInput>;
 }>;
 
 
-export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: Maybe<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: Maybe<string>, commentCount?: Maybe<number>, netVotes: number, score: number, userVote?: Maybe<{ __typename?: 'UserPostVote', direction: number }> }> };
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null } | null };
 
 export type DeletePostMutationVariables = Exact<{
-  id?: Maybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type DeletePostMutation = { __typename?: 'Mutation', deletePost?: Maybe<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: Maybe<string>, commentCount?: Maybe<number>, netVotes: number, score: number, userVote?: Maybe<{ __typename?: 'UserPostVote', direction: number }> }> };
+export type DeletePostMutation = { __typename?: 'Mutation', deletePost?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null } | null };
 
 export type GetUserQueryVariables = Exact<{
-  id?: Maybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', getUser?: Maybe<{ __typename?: 'User', id: string, posts: Array<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: Maybe<string>, commentCount?: Maybe<number>, netVotes: number, score: number, userVote?: Maybe<{ __typename?: 'UserPostVote', direction: number }> }>, comments: Array<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: Maybe<string>, parentCommentId?: Maybe<string>, score: number, netVotes: number, post: { __typename?: 'Post', id: string, title: string, link: string, authorId?: Maybe<string> }, userVote?: Maybe<{ __typename?: 'UserCommentVote', direction: number }> }> }> };
+export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', id: string, posts: Array<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null }>, comments: Array<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, post: { __typename?: 'Post', id: string, title: string, link: string, authorId?: string | null }, userVote?: { __typename?: 'UserCommentVote', direction: number } | null }> } | null };
 
 export type CreateUserPostVoteMutationVariables = Exact<{
   input: CreateUserPostVoteInput;
 }>;
 
 
-export type CreateUserPostVoteMutation = { __typename?: 'Mutation', createUserPostVote?: Maybe<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: Maybe<string>, commentCount?: Maybe<number>, netVotes: number, score: number, userVote?: Maybe<{ __typename?: 'UserPostVote', direction: number }> }> };
+export type CreateUserPostVoteMutation = { __typename?: 'Mutation', createUserPostVote?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null } | null };
 
 export type DeleteUserPostVoteMutationVariables = Exact<{
-  postId?: Maybe<Scalars['ID']>;
+  postId?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type DeleteUserPostVoteMutation = { __typename?: 'Mutation', deleteUserPostVote?: Maybe<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: Maybe<string>, commentCount?: Maybe<number>, netVotes: number, score: number, userVote?: Maybe<{ __typename?: 'UserPostVote', direction: number }> }> };
+export type DeleteUserPostVoteMutation = { __typename?: 'Mutation', deleteUserPostVote?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null } | null };
 
 export type CreateUserCommentVoteMutationVariables = Exact<{
   input: CreateUserCommentVoteInput;
 }>;
 
 
-export type CreateUserCommentVoteMutation = { __typename?: 'Mutation', createUserCommentVote?: Maybe<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: Maybe<string>, parentCommentId?: Maybe<string>, score: number, netVotes: number, userVote?: Maybe<{ __typename?: 'UserCommentVote', direction: number }> }> };
+export type CreateUserCommentVoteMutation = { __typename?: 'Mutation', createUserCommentVote?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null } | null };
 
 export type DeleteUserCommentVoteMutationVariables = Exact<{
-  commentId?: Maybe<Scalars['ID']>;
+  commentId?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type DeleteUserCommentVoteMutation = { __typename?: 'Mutation', deleteUserCommentVote?: Maybe<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: Maybe<string>, parentCommentId?: Maybe<string>, score: number, netVotes: number, userVote?: Maybe<{ __typename?: 'UserCommentVote', direction: number }> }> };
+export type DeleteUserCommentVoteMutation = { __typename?: 'Mutation', deleteUserCommentVote?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null } | null };
 
 export type SetUsernameMutationVariables = Exact<{
-  username?: Maybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type SetUsernameMutation = { __typename?: 'Mutation', setUsername?: Maybe<string> };
+export type SetUsernameMutation = { __typename?: 'Mutation', setUsername?: string | null };
 
 export const CommentFragmentFragmentDoc = gql`
     fragment CommentFragment on Comment {

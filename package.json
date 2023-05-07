@@ -43,7 +43,7 @@
     "build": "vite build",
     "dev": "vite dev",
     "serve": "vite preview",
-    "generate": "graphql-codegen --config codegen.yml"
+    "generate": "graphql-codegen --config codegen.ts"
   },
   "eslintConfig": {
     "extends": [
