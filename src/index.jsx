@@ -19,9 +19,9 @@ import "./index.css";
 const authClient = supabase.auth;
 
 const uri =
-  process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_PROD_GRAPHQL_URI
-    : process.env.REACT_APP_DEV_GRAPHQL_URI;
+  import.meta.env.NODE_ENV === "production"
+    ? import.meta.env.VITE_PROD_GRAPHQL_URI
+    : import.meta.env.VITE_DEV_GRAPHQL_URI;
 
 /* Set URI for all Apollo GraphQL requests (backend api) */
 const httpLink = new HttpLink({

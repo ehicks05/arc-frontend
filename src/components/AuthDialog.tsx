@@ -4,9 +4,9 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { SupabaseClient } from "@supabase/supabase-js";
 import { useApolloClient } from "@apollo/client";
-import useUser from "useUser";
+import useUser from "../useUser";
 import { supabase } from '../supabase';
-import { useSetUsernameMutation } from "generated/graphql";
+import { useSetUsernameMutation } from "../generated/graphql";
 // import Button from "./Button";
 
 const AuthDialog = ({

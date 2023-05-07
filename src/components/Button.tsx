@@ -1,6 +1,12 @@
 import React from "react";
 
-const Button = ({ className, disabled, onClick, children }) => {
+interface Props {
+  className?: string;
+  disabled?: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}
+const Button = ({ className, disabled, onClick, children }: Props) => {
   return (
     <button
       disabled={disabled}

@@ -7,10 +7,10 @@ import {
   useDeletePostMutation,
   useGetPostByIdQuery,
 } from "../generated/graphql";
-import { CommentCreateForm, Comments, PostStub, Button, Loading } from "./";
+import { CommentCreateForm, Comments, PostStub, Button, Loading } from ".";
 import { toForest } from "./utils";
 import PostEditForm from "./PostEditForm";
-import useUser from "useUser";
+import useUser from "../useUser";
 
 const Post = () => {
   const { username } = useUser();

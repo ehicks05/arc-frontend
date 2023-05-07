@@ -10,7 +10,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import md5 from "md5";
 import AuthDialog from "./AuthDialog";
 import { useModal } from "react-modal-hook";
-import useUser from "useUser";
+import useUser from "../useUser";
 
 const navigation = [
   { name: "Hot", href: "/" },

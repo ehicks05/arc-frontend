@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { PostStub, Loading } from "./index";
 import { Sort, useGetPostsQuery } from "../generated/graphql";
 
-const pathToSort = {
+const pathToSort: Record<string, Sort> = {
   "/": Sort.Hot,
   "/top": Sort.Top,
   "/new": Sort.New,
@@ -21,8 +21,9 @@ const Posts = () => {
 
   if (loading || error) return <Loading loading={loading} error={error} />;
 
-  if (!posts.length) return "nothing to see here...";
-  return posts.map((post, i) => <PostStub key={i} post={post} i={i} />);
+  if (!posts?.length) return <div>nothing to see here...</div>;
+  return <div>
+    {posts.map((post, i) => <PostStub key={i} post={post} i={i} />)}</div>
 };
 
 export default Posts;

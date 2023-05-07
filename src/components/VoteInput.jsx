@@ -7,7 +7,7 @@ import {
   BsCaretDownFill,
   BsDot,
 } from "react-icons/bs";
-import useUser from "useUser";
+import useUser from "../useUser";
 
 const VoteInput = ({ netVotes, direction, handleUpvote, handleDownvote }) => {
   const { username } = useUser();

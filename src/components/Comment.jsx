@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
 import AuthDialog from "./AuthDialog";
 import { useModal } from "react-modal-hook";
-import useUser from "useUser";
+import useUser from "../useUser";
 
 import { Button, Comments, CommentCreateForm, VoteInput } from "./index";
 import {

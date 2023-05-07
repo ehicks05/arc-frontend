@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "./index";
 import AuthDialog from "./AuthDialog";
 import { useModal } from "react-modal-hook";
-import useUser from "useUser";
+import useUser from "../useUser";
 
 const CommentForm = ({ content, setContent, handleSubmit, setEditMode }) => {
   const { username } = useUser();
