@@ -1,12 +1,13 @@
 import { Dialog } from "@headlessui/react";
 import React, { useState } from "react";
 import { Auth } from "@supabase/auth-ui-react";
+import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { SupabaseClient } from "@supabase/supabase-js";
 import { useApolloClient } from "@apollo/client";
 import useUser from "useUser";
 import { supabase } from '../supabase';
 import { useSetUsernameMutation } from "generated/graphql";
-import Button from "./Button";
+// import Button from "./Button";
 
 const AuthDialog = ({
   isOpen,
@@ -35,8 +36,9 @@ const AuthDialog = ({
         <div className="z-20 bg-neutral-800 rounded max-w-sm mx-auto">
           <div className="py-8 px-4 sm:px-6 lg:px-8">
             <Container supabaseClient={supabaseClient}>
-              foo
-              {/* <Auth dark supabaseClient={supabase} /> */}
+              <Auth providers={[]} theme="dark" appearance={{
+                theme: ThemeSupa
+              }} supabaseClient={supabase} />
             </Container>
           </div>
 
@@ -56,7 +58,7 @@ const Container: React.FC<{ supabaseClient: SupabaseClient; children: any }> =
     const { user, username } = useUser();
     const [usernameField, setUsernameField] = useState("");
     const [setUsernameMutation, { error }] = useSetUsernameMutation();
-
+    console.log({ error });
     const handleSubmit = async () => {
       try {
         await setUsernameMutation({ variables: { username } });
