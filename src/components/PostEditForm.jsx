@@ -18,7 +18,7 @@ const PostEditForm = ({ post, setEditMode }) => {
     setEditMode(false);
   };
 
-  if (loading || error) return <Loading loading={loading} error={error} />;
+  if (loading || error) return <Loading error={error} />;
 
   return (
     <div>

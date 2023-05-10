@@ -19,7 +19,7 @@ const CommentEditForm = ({ comment, setEditMode, refetchPost }) => {
     setEditMode(false);
   };
 
-  if (loading || error) return <Loading loading={loading} error={error} />;
+  if (loading || error) return <Loading error={error} />;
 
   return (
     <CommentForm
