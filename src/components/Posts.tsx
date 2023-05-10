@@ -14,17 +14,22 @@ const Posts = () => {
   const { pathname } = useLocation();
   const sort = pathToSort[pathname];
 
-  const { data, loading, error } = useGetPostsQuery({
+  const { data, previousData, loading, error } = useGetPostsQuery({
     variables: { sort },
   });
-  const posts = data?.getPosts;
+  const posts = data?.getPosts || previousData?.getPosts;
 
-  if (loading || error) return <Loading loading={loading} error={error} />;
-
-  return <div className="w-full sm:max-w-screen-lg sm:w-5/6 mx-auto">
-    {!posts?.length && <div>nothing to see here...</div>}
-    {posts && posts.map((post, i) => <PostStub key={i} post={post} i={i} />)}
-  </div>
+  if (posts) {
+    return (
+      <div className="w-full sm:max-w-screen-lg sm:w-5/6 mx-auto">
+        {!posts?.length && <div>nothing to see here...</div>}
+        {posts &&
+          posts.map((post, i) => <PostStub key={i} post={post} i={i} />)}
+      </div>
+    );
+  }
+  if (loading || error) return <Loading error={error} />;
+  return null;
 };
 
 export default Posts;

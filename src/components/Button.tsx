@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 interface Props {
@@ -6,18 +7,19 @@ interface Props {
   onClick: () => void;
   children: React.ReactNode;
 }
+
 const Button = ({ className, disabled, onClick, children }: Props) => {
   return (
     <button
       disabled={disabled}
       onClick={onClick}
-      className={`px-2 py-1 border
-      dark:border-gray-700
-      text-black bg-white
-      dark:text-white dark:bg-neutral-950
-      hover:bg-neutral-100
-      dark:hover:bg-neutral-900
-      ${disabled && "opacity-50 cursor-default"} ${className}`}
+      className={clsx(
+        'px-2 py-1 border',
+        'text-black bg-white hover:bg-neutral-10',
+        'dark:border-gray-700 dark:text-white dark:bg-neutral-950 dark:hover:bg-neutral-900',
+        { 'opacity-50 cursor-default': disabled },
+        className,
+      )}
     >
       {children}
     </button>

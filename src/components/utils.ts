@@ -1,13 +1,14 @@
 import _ from "lodash";
+import { CommentFragment } from "generated/graphql";
 
-interface Comment {
+export interface HydratedComment extends CommentFragment {
   id: string,
-  parentCommentId?: string,
-  commentForest?: Comment[];
+  parentCommentId?: string | null,
+  commentForest?: HydratedComment[];
 }
 
-const toForest = (comments: Comment[]) => {
-  const copy = comments.map(c => ({ ...c }));
+const toForest = (comments: CommentFragment[]): HydratedComment[] => {
+  const copy: HydratedComment[] = comments.map(c => ({ ...c }));
   const commentsById = _.keyBy(copy, "id");
 
   copy

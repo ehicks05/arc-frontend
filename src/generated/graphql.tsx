@@ -18,8 +18,8 @@ export type Scalars = {
 
 export type Comment = {
   __typename?: 'Comment';
-  author?: Maybe<User>;
-  authorId?: Maybe<Scalars['String']>;
+  author: User;
+  authorId: Scalars['String'];
   comments: Array<Comment>;
   content: Scalars['String'];
   createdAt: Scalars['DateTime'];
@@ -33,7 +33,7 @@ export type Comment = {
   postId: Scalars['String'];
   score: Scalars['Float'];
   updatedAt: Scalars['DateTime'];
-  userVote?: Maybe<UserCommentVote>;
+  userVote: UserCommentVote;
 };
 
 export enum CommentSort {
@@ -127,10 +127,10 @@ export type MutationUpdatePostArgs = {
 
 export type Post = {
   __typename?: 'Post';
-  author?: Maybe<User>;
-  authorId?: Maybe<Scalars['String']>;
-  commentCount?: Maybe<Scalars['Int']>;
-  comments?: Maybe<Array<Maybe<Comment>>>;
+  author: User;
+  authorId: Scalars['String'];
+  commentCount: Scalars['Int'];
+  comments: Array<Comment>;
   content: Scalars['String'];
   createdAt: Scalars['DateTime'];
   deleted: Scalars['Boolean'];
@@ -140,7 +140,7 @@ export type Post = {
   score: Scalars['Float'];
   title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  userVote?: Maybe<UserPostVote>;
+  userVote: UserPostVote;
 };
 
 
@@ -253,37 +253,37 @@ export type UpdatePostInput = {
   id: Scalars['ID'];
 };
 
-export type CommentFragmentFragment = { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null };
+export type CommentFragment = { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId: string, parentCommentId?: string | null, score: number, netVotes: number, userVote: { __typename?: 'UserCommentVote', direction: number } };
 
 export type CreateCommentMutationVariables = Exact<{
   input?: InputMaybe<CreateCommentInput>;
 }>;
 
 
-export type CreateCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null } | null };
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId: string, parentCommentId?: string | null, score: number, netVotes: number, userVote: { __typename?: 'UserCommentVote', direction: number } } | null };
 
 export type UpdateCommentMutationVariables = Exact<{
   input?: InputMaybe<UpdateCommentInput>;
 }>;
 
 
-export type UpdateCommentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null } | null };
+export type UpdateCommentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId: string, parentCommentId?: string | null, score: number, netVotes: number, userVote: { __typename?: 'UserCommentVote', direction: number } } | null };
 
 export type DeleteCommentMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type DeleteCommentMutation = { __typename?: 'Mutation', deleteComment?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null } | null };
+export type DeleteCommentMutation = { __typename?: 'Mutation', deleteComment?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId: string, parentCommentId?: string | null, score: number, netVotes: number, userVote: { __typename?: 'UserCommentVote', direction: number } } | null };
 
-export type PostFragmentFragment = { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null };
+export type PostFragment = { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId: string, commentCount: number, netVotes: number, score: number, userVote: { __typename?: 'UserPostVote', direction: number } };
 
 export type GetPostsQueryVariables = Exact<{
   sort?: InputMaybe<Sort>;
 }>;
 
 
-export type GetPostsQuery = { __typename?: 'Query', getPosts: Array<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null }> };
+export type GetPostsQuery = { __typename?: 'Query', getPosts: Array<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId: string, commentCount: number, netVotes: number, score: number, userVote: { __typename?: 'UserPostVote', direction: number } }> };
 
 export type GetPostByIdQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
@@ -291,63 +291,63 @@ export type GetPostByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetPostByIdQuery = { __typename?: 'Query', getPostById?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, comments?: Array<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null } | null> | null, userVote?: { __typename?: 'UserPostVote', direction: number } | null } | null };
+export type GetPostByIdQuery = { __typename?: 'Query', getPostById?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId: string, commentCount: number, netVotes: number, score: number, comments: Array<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId: string, parentCommentId?: string | null, score: number, netVotes: number, userVote: { __typename?: 'UserCommentVote', direction: number } }>, userVote: { __typename?: 'UserPostVote', direction: number } } | null };
 
 export type CreatePostMutationVariables = Exact<{
   input?: InputMaybe<CreatePostInput>;
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null } | null };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId: string, commentCount: number, netVotes: number, score: number, userVote: { __typename?: 'UserPostVote', direction: number } } | null };
 
 export type UpdatePostMutationVariables = Exact<{
   input?: InputMaybe<UpdatePostInput>;
 }>;
 
 
-export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null } | null };
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId: string, commentCount: number, netVotes: number, score: number, userVote: { __typename?: 'UserPostVote', direction: number } } | null };
 
 export type DeletePostMutationVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type DeletePostMutation = { __typename?: 'Mutation', deletePost?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null } | null };
+export type DeletePostMutation = { __typename?: 'Mutation', deletePost?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId: string, commentCount: number, netVotes: number, score: number, userVote: { __typename?: 'UserPostVote', direction: number } } | null };
 
 export type GetUserQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', id: string, posts: Array<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null }>, comments: Array<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, post: { __typename?: 'Post', id: string, title: string, link: string, authorId?: string | null }, userVote?: { __typename?: 'UserCommentVote', direction: number } | null }> } | null };
+export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', id: string, posts: Array<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId: string, commentCount: number, netVotes: number, score: number, userVote: { __typename?: 'UserPostVote', direction: number } }>, comments: Array<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId: string, parentCommentId?: string | null, score: number, netVotes: number, post: { __typename?: 'Post', id: string, title: string, link: string, authorId: string, netVotes: number, commentCount: number, createdAt: any, updatedAt: any }, userVote: { __typename?: 'UserCommentVote', direction: number } }> } | null };
 
 export type CreateUserPostVoteMutationVariables = Exact<{
   input: CreateUserPostVoteInput;
 }>;
 
 
-export type CreateUserPostVoteMutation = { __typename?: 'Mutation', createUserPostVote?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null } | null };
+export type CreateUserPostVoteMutation = { __typename?: 'Mutation', createUserPostVote?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId: string, commentCount: number, netVotes: number, score: number, userVote: { __typename?: 'UserPostVote', direction: number } } | null };
 
 export type DeleteUserPostVoteMutationVariables = Exact<{
   postId?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type DeleteUserPostVoteMutation = { __typename?: 'Mutation', deleteUserPostVote?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId?: string | null, commentCount?: number | null, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null } | null };
+export type DeleteUserPostVoteMutation = { __typename?: 'Mutation', deleteUserPostVote?: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId: string, commentCount: number, netVotes: number, score: number, userVote: { __typename?: 'UserPostVote', direction: number } } | null };
 
 export type CreateUserCommentVoteMutationVariables = Exact<{
   input: CreateUserCommentVoteInput;
 }>;
 
 
-export type CreateUserCommentVoteMutation = { __typename?: 'Mutation', createUserCommentVote?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null } | null };
+export type CreateUserCommentVoteMutation = { __typename?: 'Mutation', createUserCommentVote?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId: string, parentCommentId?: string | null, score: number, netVotes: number, userVote: { __typename?: 'UserCommentVote', direction: number } } | null };
 
 export type DeleteUserCommentVoteMutationVariables = Exact<{
   commentId?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type DeleteUserCommentVoteMutation = { __typename?: 'Mutation', deleteUserCommentVote?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId?: string | null, parentCommentId?: string | null, score: number, netVotes: number, userVote?: { __typename?: 'UserCommentVote', direction: number } | null } | null };
+export type DeleteUserCommentVoteMutation = { __typename?: 'Mutation', deleteUserCommentVote?: { __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId: string, parentCommentId?: string | null, score: number, netVotes: number, userVote: { __typename?: 'UserCommentVote', direction: number } } | null };
 
 export type SetUsernameMutationVariables = Exact<{
   username?: InputMaybe<Scalars['String']>;
@@ -356,8 +356,8 @@ export type SetUsernameMutationVariables = Exact<{
 
 export type SetUsernameMutation = { __typename?: 'Mutation', setUsername?: string | null };
 
-export const CommentFragmentFragmentDoc = gql`
-    fragment CommentFragment on Comment {
+export const CommentFragmentDoc = gql`
+    fragment Comment on Comment {
   id
   postId
   content
@@ -374,8 +374,8 @@ export const CommentFragmentFragmentDoc = gql`
   }
 }
     `;
-export const PostFragmentFragmentDoc = gql`
-    fragment PostFragment on Post {
+export const PostFragmentDoc = gql`
+    fragment Post on Post {
   id
   title
   link
@@ -395,10 +395,10 @@ export const PostFragmentFragmentDoc = gql`
 export const CreateCommentDocument = gql`
     mutation createComment($input: createCommentInput) {
   createComment(input: $input) {
-    ...CommentFragment
+    ...Comment
   }
 }
-    ${CommentFragmentFragmentDoc}`;
+    ${CommentFragmentDoc}`;
 export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutation, CreateCommentMutationVariables>;
 
 /**
@@ -428,10 +428,10 @@ export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateComm
 export const UpdateCommentDocument = gql`
     mutation updateComment($input: updateCommentInput) {
   updateComment(input: $input) {
-    ...CommentFragment
+    ...Comment
   }
 }
-    ${CommentFragmentFragmentDoc}`;
+    ${CommentFragmentDoc}`;
 export type UpdateCommentMutationFn = Apollo.MutationFunction<UpdateCommentMutation, UpdateCommentMutationVariables>;
 
 /**
@@ -461,10 +461,10 @@ export type UpdateCommentMutationOptions = Apollo.BaseMutationOptions<UpdateComm
 export const DeleteCommentDocument = gql`
     mutation deleteComment($id: ID) {
   deleteComment(id: $id) {
-    ...CommentFragment
+    ...Comment
   }
 }
-    ${CommentFragmentFragmentDoc}`;
+    ${CommentFragmentDoc}`;
 export type DeleteCommentMutationFn = Apollo.MutationFunction<DeleteCommentMutation, DeleteCommentMutationVariables>;
 
 /**
@@ -494,10 +494,10 @@ export type DeleteCommentMutationOptions = Apollo.BaseMutationOptions<DeleteComm
 export const GetPostsDocument = gql`
     query GetPosts($sort: Sort) {
   getPosts(sort: $sort) {
-    ...PostFragment
+    ...Post
   }
 }
-    ${PostFragmentFragmentDoc}`;
+    ${PostFragmentDoc}`;
 
 /**
  * __useGetPostsQuery__
@@ -529,14 +529,14 @@ export type GetPostsQueryResult = Apollo.QueryResult<GetPostsQuery, GetPostsQuer
 export const GetPostByIdDocument = gql`
     query GetPostById($id: ID, $commentSort: CommentSort) {
   getPostById(id: $id) {
-    ...PostFragment
+    ...Post
     comments(commentSort: $commentSort) {
-      ...CommentFragment
+      ...Comment
     }
   }
 }
-    ${PostFragmentFragmentDoc}
-${CommentFragmentFragmentDoc}`;
+    ${PostFragmentDoc}
+${CommentFragmentDoc}`;
 
 /**
  * __useGetPostByIdQuery__
@@ -569,10 +569,10 @@ export type GetPostByIdQueryResult = Apollo.QueryResult<GetPostByIdQuery, GetPos
 export const CreatePostDocument = gql`
     mutation createPost($input: createPostInput) {
   createPost(input: $input) {
-    ...PostFragment
+    ...Post
   }
 }
-    ${PostFragmentFragmentDoc}`;
+    ${PostFragmentDoc}`;
 export type CreatePostMutationFn = Apollo.MutationFunction<CreatePostMutation, CreatePostMutationVariables>;
 
 /**
@@ -602,10 +602,10 @@ export type CreatePostMutationOptions = Apollo.BaseMutationOptions<CreatePostMut
 export const UpdatePostDocument = gql`
     mutation updatePost($input: updatePostInput) {
   updatePost(input: $input) {
-    ...PostFragment
+    ...Post
   }
 }
-    ${PostFragmentFragmentDoc}`;
+    ${PostFragmentDoc}`;
 export type UpdatePostMutationFn = Apollo.MutationFunction<UpdatePostMutation, UpdatePostMutationVariables>;
 
 /**
@@ -635,10 +635,10 @@ export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMut
 export const DeletePostDocument = gql`
     mutation deletePost($id: ID) {
   deletePost(id: $id) {
-    ...PostFragment
+    ...Post
   }
 }
-    ${PostFragmentFragmentDoc}`;
+    ${PostFragmentDoc}`;
 export type DeletePostMutationFn = Apollo.MutationFunction<DeletePostMutation, DeletePostMutationVariables>;
 
 /**
@@ -670,21 +670,25 @@ export const GetUserDocument = gql`
   getUser(id: $id) {
     id
     posts {
-      ...PostFragment
+      ...Post
     }
     comments {
-      ...CommentFragment
+      ...Comment
       post {
         id
         title
         link
         authorId
+        netVotes
+        commentCount
+        createdAt
+        updatedAt
       }
     }
   }
 }
-    ${PostFragmentFragmentDoc}
-${CommentFragmentFragmentDoc}`;
+    ${PostFragmentDoc}
+${CommentFragmentDoc}`;
 
 /**
  * __useGetUserQuery__
@@ -716,10 +720,10 @@ export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVa
 export const CreateUserPostVoteDocument = gql`
     mutation createUserPostVote($input: createUserPostVoteInput!) {
   createUserPostVote(input: $input) {
-    ...PostFragment
+    ...Post
   }
 }
-    ${PostFragmentFragmentDoc}`;
+    ${PostFragmentDoc}`;
 export type CreateUserPostVoteMutationFn = Apollo.MutationFunction<CreateUserPostVoteMutation, CreateUserPostVoteMutationVariables>;
 
 /**
@@ -749,10 +753,10 @@ export type CreateUserPostVoteMutationOptions = Apollo.BaseMutationOptions<Creat
 export const DeleteUserPostVoteDocument = gql`
     mutation deleteUserPostVote($postId: ID) {
   deleteUserPostVote(postId: $postId) {
-    ...PostFragment
+    ...Post
   }
 }
-    ${PostFragmentFragmentDoc}`;
+    ${PostFragmentDoc}`;
 export type DeleteUserPostVoteMutationFn = Apollo.MutationFunction<DeleteUserPostVoteMutation, DeleteUserPostVoteMutationVariables>;
 
 /**
@@ -782,10 +786,10 @@ export type DeleteUserPostVoteMutationOptions = Apollo.BaseMutationOptions<Delet
 export const CreateUserCommentVoteDocument = gql`
     mutation createUserCommentVote($input: createUserCommentVoteInput!) {
   createUserCommentVote(input: $input) {
-    ...CommentFragment
+    ...Comment
   }
 }
-    ${CommentFragmentFragmentDoc}`;
+    ${CommentFragmentDoc}`;
 export type CreateUserCommentVoteMutationFn = Apollo.MutationFunction<CreateUserCommentVoteMutation, CreateUserCommentVoteMutationVariables>;
 
 /**
@@ -815,10 +819,10 @@ export type CreateUserCommentVoteMutationOptions = Apollo.BaseMutationOptions<Cr
 export const DeleteUserCommentVoteDocument = gql`
     mutation deleteUserCommentVote($commentId: ID) {
   deleteUserCommentVote(commentId: $commentId) {
-    ...CommentFragment
+    ...Comment
   }
 }
-    ${CommentFragmentFragmentDoc}`;
+    ${CommentFragmentDoc}`;
 export type DeleteUserCommentVoteMutationFn = Apollo.MutationFunction<DeleteUserCommentVoteMutation, DeleteUserCommentVoteMutationVariables>;
 
 /**

@@ -1,4 +1,4 @@
-fragment PostFragment on Post {
+fragment Post on Post {
   id
   title
   link
@@ -17,33 +17,33 @@ fragment PostFragment on Post {
 
 query GetPosts($sort: Sort) {
   getPosts(sort: $sort) {
-    ...PostFragment
+    ...Post
   }
 }
 
 query GetPostById($id: ID, $commentSort: CommentSort) {
   getPostById(id: $id) {
-    ...PostFragment
+    ...Post
     comments(commentSort: $commentSort) {
-      ...CommentFragment
+      ...Comment
     }
   }
 }
 
 mutation createPost($input: createPostInput) {
   createPost(input: $input) {
-    ...PostFragment
+    ...Post
   }
 }
 
 mutation updatePost($input: updatePostInput) {
   updatePost(input: $input) {
-    ...PostFragment
+    ...Post
   }
 }
 
 mutation deletePost($id: ID) {
   deletePost(id: $id) {
-    ...PostFragment
+    ...Post
   }
 }

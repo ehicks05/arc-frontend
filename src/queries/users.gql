@@ -2,15 +2,19 @@ query getUser($id: ID) {
   getUser(id: $id) {
     id
     posts {
-      ...PostFragment
+      ...Post
     }
     comments {
-      ...CommentFragment
+      ...Comment
       post {
         id
         title
         link
         authorId
+        netVotes
+        commentCount
+        createdAt
+        updatedAt
       }
     }
   }
@@ -18,25 +22,25 @@ query getUser($id: ID) {
 
 mutation createUserPostVote($input: createUserPostVoteInput!) {
   createUserPostVote(input: $input) {
-    ...PostFragment
+    ...Post
   }
 }
 
 mutation deleteUserPostVote($postId: ID) {
   deleteUserPostVote(postId: $postId) {
-    ...PostFragment
+    ...Post
   }
 }
 
 mutation createUserCommentVote($input: createUserCommentVoteInput!) {
   createUserCommentVote(input: $input) {
-    ...CommentFragment
+    ...Comment
   }
 }
 
 mutation deleteUserCommentVote($commentId: ID) {
   deleteUserCommentVote(commentId: $commentId) {
-    ...CommentFragment
+    ...Comment
   }
 }
 
