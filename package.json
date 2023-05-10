@@ -8,6 +8,7 @@
     "@supabase/auth-ui-react": "^0.3.6",
     "@supabase/auth-ui-shared": "^0.1.4",
     "@supabase/supabase-js": "^2.21.0",
+    "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
     "graphql": "^16.6.0",
     "md5": "^2.3.0",

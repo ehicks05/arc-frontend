@@ -12,9 +12,9 @@ const Button = ({ className, disabled, onClick, children }: Props) => {
       disabled={disabled}
       onClick={onClick}
       className={`px-2 py-1 border
-      dark:border-gray-600
+      dark:border-gray-700
       text-black bg-white
-      dark:text-white dark:bg-black
+      dark:text-white dark:bg-neutral-950
       hover:bg-neutral-100
       dark:hover:bg-neutral-900
       ${disabled && "opacity-50 cursor-default"} ${className}`}

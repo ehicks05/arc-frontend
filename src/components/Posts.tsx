@@ -21,9 +21,9 @@ const Posts = () => {
 
   if (loading || error) return <Loading loading={loading} error={error} />;
 
-  if (!posts?.length) return <div>nothing to see here...</div>;
   return <div className="w-full sm:max-w-screen-lg sm:w-5/6 mx-auto">
-    {posts.map((post, i) => <PostStub key={i} post={post} i={i} />)}
+    {!posts?.length && <div>nothing to see here...</div>}
+    {posts && posts.map((post, i) => <PostStub key={i} post={post} i={i} />)}
   </div>
 };
 

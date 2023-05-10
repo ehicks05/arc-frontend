@@ -56,7 +56,7 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
       : "bg-neutral-100 dark:bg-neutral-800";
   return (
     <div
-      className={`${bgClass} p-2 border dark:border-gray-600`}
+      className={`${bgClass} p-2 border-y dark:border-gray-800`}
       key={comment.id}
     >
       <div className="flex gap-2">
@@ -84,9 +84,11 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
                   refetchPost={refetchPost}
                 />
               )}
-              {!showEditForm && (
-                <div className="whitespace-pre-line">{comment.content}</div>
+              <div className="flex flex-col gap-4 text-sm leading-tight">
+              {!showEditForm && comment.content.split('\n').map(p => 
+                <p key={p} className="whitespace-pre-line">{p}</p>
               )}
+              </div>
 
               {!comment.deleted && !showEditForm && (
                 <div className="flex pt-1 gap-4">

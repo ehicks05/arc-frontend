@@ -13,7 +13,7 @@ import { formatDistance} from "date-fns";
 
 interface Props {
   post: PostFragmentFragment
-  i: number;
+  i?: number;
 }
 
 const PostStub = ({ post, i }: Props) => {
@@ -32,7 +32,7 @@ const PostStub = ({ post, i }: Props) => {
   };
 
   const bgClass =
-    i % 2 === 0
+    i && i % 2 === 0
       ? "bg-neutral-50 dark:bg-neutral-800"
       : "bg-neutral-100 dark:bg-neutral-800 brightness-105";
   return (
@@ -47,7 +47,7 @@ const PostStub = ({ post, i }: Props) => {
           handleUpvote={() => handleVote(Direction.Up)}
           handleDownvote={() => handleVote(Direction.Down)}
         />
-        <div className="flex flex-col">
+        <div className="flex flex-col py-1">
           <div className="text-sm sm:text-base">
             <a href={post.link} target="_blank" rel="noopener noreferrer">
               {post.title}
@@ -72,7 +72,7 @@ const PostStub = ({ post, i }: Props) => {
               {post?.authorId || "[Deleted]"}
             </Link>
             <Link to={`/posts/${post.id}`}>
-              <div className="text-xs opacity-50">{`| ${post.commentCount} comments`}</div>
+              <div className="text-xs opacity-50">{`| ${post.commentCount} comment${(post.commentCount || 0) !== 1 ? 's' : ''}`}</div>
             </Link>
           </div>
         </div>
