@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
-import { Button, Loading } from "./index";
-import { useCreatePostMutation } from "../generated/graphql";
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Button, Loading } from './index';
+import { useCreatePostMutation } from '../generated/graphql';
 
 const PostForm = () => {
   const location = useLocation();
 
-  const [title, setTitle] = useState("");
-  const [link, setLink] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState('');
+  const [link, setLink] = useState('');
+  const [content, setContent] = useState('');
 
   const [createPost, { loading, error }] = useCreatePostMutation();
 
@@ -26,7 +26,9 @@ const PostForm = () => {
       const newPostId = result?.data.createPost.id;
 
       location.push(`/posts/${newPostId}`);
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   if (loading || error) return <Loading error={error} />;
@@ -39,9 +41,9 @@ const PostForm = () => {
           <input
             type="text"
             className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-neutral-600 dark:text-neutral-100"
-            placeholder={"add a title"}
+            placeholder="add a title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={e => setTitle(e.target.value)}
           />
         </div>
       </div>
@@ -51,9 +53,9 @@ const PostForm = () => {
           <input
             type="text"
             className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-neutral-600 dark:text-neutral-100"
-            placeholder={"add a link (optional)"}
+            placeholder="add a link (optional)"
             value={link}
-            onChange={(e) => setLink(e.target.value)}
+            onChange={e => setLink(e.target.value)}
           />
         </div>
       </div>
@@ -62,9 +64,9 @@ const PostForm = () => {
         <div>
           <textarea
             className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-neutral-600 dark:text-neutral-100"
-            placeholder={"add content"}
+            placeholder="add content"
             value={content}
-            onChange={(e) => setContent(e.target.value)}
+            onChange={e => setContent(e.target.value)}
           />
         </div>
       </div>

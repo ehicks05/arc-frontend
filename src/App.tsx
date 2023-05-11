@@ -1,8 +1,8 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import { Header, Footer, Post, Posts, User, PostForm } from "./components";
-import Test from "./components/Test";
+import { Header, Footer, Post, Posts, User, PostForm } from './components';
+import Test from './components/Test';
 
 function App() {
   return (

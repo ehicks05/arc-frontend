@@ -1,15 +1,14 @@
-import AuthDialog from "./AuthDialog";
-import { useModal } from "react-modal-hook";
+import { useModal } from 'react-modal-hook';
 import {
   BsCaretUp,
   BsCaretUpFill,
   BsCaretDown,
   BsCaretDownFill,
-  BsDot,
-} from "react-icons/bs";
-import useUser from "../useUser";
+} from 'react-icons/bs';
+import AuthDialog from './AuthDialog';
+import useUser from '../useUser';
 
-const VoteInput = ({ netVotes, direction, handleUpvote, handleDownvote }) => {
+const VoteInput = ({ direction, handleUpvote, handleDownvote }) => {
   const { username } = useUser();
   const [showAuthModal, hideModal] = useModal(() => (
     <AuthDialog isOpen hideModal={hideModal} />

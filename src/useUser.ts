@@ -1,4 +1,4 @@
-import { Auth } from "@supabase/auth-ui-react";
+import { Auth } from '@supabase/auth-ui-react';
 
 const useUser = () => {
   const { session, user } = Auth.useUser();

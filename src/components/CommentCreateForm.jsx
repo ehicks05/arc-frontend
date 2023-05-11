@@ -1,14 +1,9 @@
-import React, { useState } from "react";
-import { CommentForm, Loading } from "./index";
-import { useCreateCommentMutation } from "../generated/graphql";
+import React, { useState } from 'react';
+import { CommentForm, Loading } from './index';
+import { useCreateCommentMutation } from '../generated/graphql';
 
-const CommentCreateForm = ({
-  postId,
-  parentComment,
-  setEditMode,
-  refetchPost,
-}) => {
-  const [content, setContent] = useState("");
+const CommentCreateForm = ({ postId, parentComment, setEditMode, refetchPost }) => {
+  const [content, setContent] = useState('');
   const [createComment, { loading, error }] = useCreateCommentMutation();
 
   const handleSubmit = async () => {
@@ -17,8 +12,7 @@ const CommentCreateForm = ({
         input: {
           postId,
           parentCommentId: parentComment?.id,
-          level:
-            parentComment?.level === undefined ? 0 : parentComment.level + 1,
+          level: parentComment?.level === undefined ? 0 : parentComment.level + 1,
           content,
         },
       },

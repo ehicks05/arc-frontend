@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import AuthDialog from "./AuthDialog";
-import useUser from "../useUser";
+import React, { useState } from 'react';
+import AuthDialog from './AuthDialog';
+import useUser from '../useUser';
 
 const Test = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +12,7 @@ const Test = () => {
 
       <AuthDialog isOpen={isOpen} hideModal={() => setIsOpen(false)} />
       <pre>{JSON.stringify(user, null, 2)}</pre>
-      <pre>isFullyRegistered: {username ? "true" : "false"}</pre>
+      <pre>isFullyRegistered: {username ? 'true' : 'false'}</pre>
     </div>
   );
 };

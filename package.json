@@ -2,6 +2,13 @@
   "name": "arc-frontend",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "dev": "vite dev",
+    "serve": "vite preview",
+    "generate": "graphql-codegen --config codegen.ts"
+  },
   "dependencies": {
     "@apollo/client": "^3.7.14",
     "@headlessui/react": "^1.7.14",
@@ -11,6 +18,7 @@
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
     "graphql": "^16.6.0",
+    "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -20,6 +28,7 @@
     "react-router-dom": "^6.11.1"
   },
   "devDependencies": {
+    "@ehicks05/eslint-config": "^0.1.5",
     "@graphql-codegen/cli": "^3.3.1",
     "@graphql-codegen/typescript": "^3.0.4",
     "@graphql-codegen/typescript-operations": "^3.0.4",
@@ -29,28 +38,11 @@
     "@types/react-dom": "^18.2.4",
     "@vitejs/plugin-react": "^4.0.0",
     "autoprefixer": "^10.4.14",
-    "eslint": "^8.8.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
     "postcss": "^8.4.23",
-    "prettier": "^2.5.1",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.4",
     "vite": "^4.3.5",
     "vite-plugin-svgr": "^3.2.0"
-  },
-  "scripts": {
-    "start": "vite",
-    "build": "vite build",
-    "dev": "vite dev",
-    "serve": "vite preview",
-    "generate": "graphql-codegen --config codegen.ts"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -63,6 +55,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:4000"
+  }
 }

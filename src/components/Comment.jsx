@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
-import AuthDialog from "./AuthDialog";
-import { useModal } from "react-modal-hook";
-import useUser from "../useUser";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FiMinusSquare, FiPlusSquare } from 'react-icons/fi';
+import { useModal } from 'react-modal-hook';
+import { formatDistance } from 'date-fns';
+import AuthDialog from './AuthDialog';
+import useUser from '../useUser';
 
-import { Button, Comments, CommentCreateForm, VoteInput } from "./index";
+import { Button, Comments, CommentCreateForm, VoteInput } from './index';
 import {
   useDeleteCommentMutation,
   Direction,
   useCreateUserCommentVoteMutation,
   useDeleteUserCommentVoteMutation,
-} from "../generated/graphql";
-import { DIRECTION_TO_VALUE } from "./utils";
-import CommentEditForm from "./CommentEditForm";
-import { formatDistance } from "date-fns";
+} from '../generated/graphql';
+import { DIRECTION_TO_VALUE } from './utils';
+import CommentEditForm from './CommentEditForm';
 
 const Comment = ({ comment, refetchPost, notInTree }) => {
   const { username } = useUser();
@@ -27,8 +27,8 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
 
   const [deleteComment] = useDeleteCommentMutation();
 
-  const handleClickDelete = async (id) => {
-    if (window.confirm("Are you sure?")) {
+  const handleClickDelete = async id => {
+    if (window.confirm('Are you sure?')) {
       await deleteComment({ variables: { id } });
       await refetchPost();
     }
@@ -37,38 +37,31 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
   const [createUserCommentVote] = useCreateUserCommentVoteMutation();
   const [deleteUserCommentVote] = useDeleteUserCommentVoteMutation();
 
-  const handleVote = async (direction) => {
+  const handleVote = async direction =>
     comment.userVote?.direction &&
     DIRECTION_TO_VALUE[direction] === comment.userVote.direction
-      ? await deleteUserCommentVote({
-          variables: { commentId: comment.id },
-        })
-      : await createUserCommentVote({
+      ? deleteUserCommentVote({ variables: { commentId: comment.id } })
+      : createUserCommentVote({
           variables: { input: { commentId: comment.id, direction } },
         });
-  };
 
   const isAuthor = username === comment.authorId;
 
   const bgClass =
     comment.level % 2 === 0 || notInTree
-      ? "bg-neutral-50 dark:bg-neutral-900"
-      : "bg-neutral-100 dark:bg-neutral-800";
+      ? 'bg-neutral-50 dark:bg-neutral-900'
+      : 'bg-neutral-100 dark:bg-neutral-800';
   return (
-    <div
-      className={`${bgClass} p-2 border-y dark:border-gray-800`}
-      key={comment.id}
-    >
+    <div className={`${bgClass} p-2 border-y dark:border-gray-800`} key={comment.id}>
       <div className="flex gap-2">
         {!minimized && (
           <VoteInput
-            netVotes={comment.netVotes}
             direction={comment.userVote?.direction}
             handleUpvote={() => handleVote(Direction.Up)}
             handleDownvote={() => handleVote(Direction.Down)}
           />
         )}
-        {minimized && <div className="w-4"></div>}
+        {minimized && <div className="w-4" />}
         <div className="w-full">
           <Header
             comment={comment}
@@ -85,9 +78,12 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
                 />
               )}
               <div className="flex flex-col gap-4 text-sm leading-tight">
-              {!showEditForm && comment.content.split('\n').map(p => 
-                <p key={p} className="whitespace-pre-line">{p}</p>
-              )}
+                {!showEditForm &&
+                  comment.content.split('\n').map(p => (
+                    <p key={p} className="whitespace-pre-line">
+                      {p}
+                    </p>
+                  ))}
               </div>
 
               {!comment.deleted && !showEditForm && (
@@ -106,9 +102,7 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
                     disabled={!isAuthor}
                     className="text-xs"
                     onClick={
-                      username
-                        ? () => setShowEditForm(!showEditForm)
-                        : showAuthModal
+                      username ? () => setShowEditForm(!showEditForm) : showAuthModal
                     }
                   >
                     Edit
@@ -117,9 +111,7 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
                     disabled={!isAuthor}
                     className="text-xs"
                     onClick={
-                      username
-                        ? () => handleClickDelete(comment.id)
-                        : showAuthModal
+                      username ? () => handleClickDelete(comment.id) : showAuthModal
                     }
                   >
                     Delete
@@ -154,31 +146,27 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
   );
 };
 
-const Header = ({ comment, minimized, setMinimized }) => {
-  return (
-    <div className="flex gap-2 text-xs">
-      <button className="text-base" onClick={() => setMinimized(!minimized)}>
-        {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
-      </button>
-      <Link
-        className={`opacity-75 ${!comment.authorId && "pointer-events-none"}`}
-        to={`/users/${comment?.authorId}`}
-      >
-        {comment?.authorId || "[Deleted]"}
-      </Link>
-      <span>
-        <span className="opacity-50" title={new Date(comment.createdAt)}>
-          {formatDistance(new Date(comment.createdAt), new Date())}
-        </span>
-        {comment.createdAt !== comment.updatedAt && (
-          <span title={new Date(comment.updatedAt)}>*</span>
-        )}
+const Header = ({ comment, minimized, setMinimized }) => (
+  <div className="flex gap-2 text-xs">
+    <button className="text-base" onClick={() => setMinimized(!minimized)}>
+      {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
+    </button>
+    <Link
+      className={`opacity-75 ${!comment.authorId && 'pointer-events-none'}`}
+      to={`/users/${comment?.authorId}`}
+    >
+      {comment?.authorId || '[Deleted]'}
+    </Link>
+    <span>
+      <span className="opacity-50" title={new Date(comment.createdAt)}>
+        {formatDistance(new Date(comment.createdAt), new Date())}
       </span>
-      <span className="opacity-50">
-        {comment.netVotes} pts
-      </span>
-    </div>
-  );
-};
+      {comment.createdAt !== comment.updatedAt && (
+        <span title={new Date(comment.updatedAt)}>*</span>
+      )}
+    </span>
+    <span className="opacity-50">{comment.netVotes} pts</span>
+  </div>
+);
 
 export default Comment;

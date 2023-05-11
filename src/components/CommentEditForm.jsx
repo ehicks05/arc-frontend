@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { CommentForm, Loading } from "./index";
-import { useUpdateCommentMutation } from "../generated/graphql";
+import React, { useState } from 'react';
+import { CommentForm, Loading } from './index';
+import { useUpdateCommentMutation } from '../generated/graphql';
 
 const CommentEditForm = ({ comment, setEditMode, refetchPost }) => {
   const [content, setContent] = useState(comment.content);

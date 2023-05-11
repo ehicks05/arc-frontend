@@ -1,8 +1,8 @@
-import React from "react";
-import { Button } from "./index";
-import AuthDialog from "./AuthDialog";
-import { useModal } from "react-modal-hook";
-import useUser from "../useUser";
+import React from 'react';
+import { useModal } from 'react-modal-hook';
+import { Button } from './index';
+import AuthDialog from './AuthDialog';
+import useUser from '../useUser';
 
 const CommentForm = ({ content, setContent, handleSubmit, setEditMode }) => {
   const { username } = useUser();
@@ -15,9 +15,9 @@ const CommentForm = ({ content, setContent, handleSubmit, setEditMode }) => {
     <div>
       <textarea
         className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-neutral-600 dark:text-neutral-100"
-        placeholder={"add a comment"}
+        placeholder="add a comment"
         value={content}
-        onChange={(e) => setContent(e.target.value)}
+        onChange={e => setContent(e.target.value)}
       />
       <div className="flex gap-4">
         <Button
