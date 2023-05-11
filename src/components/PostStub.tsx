@@ -39,7 +39,7 @@ const PostStub = ({ post, i }: Props) => {
     <div className={`px-2 py-0.5 dark:border-gray-600 ${bgClass}`}>
       <div className="flex items-center gap-2">
         {i !== undefined && (
-          <div className="text-xl opacity-50">{`${i + 1}`}</div>
+          <div className="opacity-50">{`${i + 1 < 10 ? '0' : ''}${i + 1}`}</div>
         )}
         <VoteInput
           netVotes={post.netVotes}
