@@ -119,7 +119,7 @@ export default function Header() {
                           <img
                             className="h-8 w-8 rounded-full"
                             src={`https://gravatar.com/avatar/${
-                              user ? md5(user.email.toLocaleLowerCase()) : '0'
+                              user ? md5(user.email?.toLocaleLowerCase()) : '0'
                             }?s=256`}
                             alt=""
                           />
@@ -137,7 +137,7 @@ export default function Header() {
                       >
                         <Menu.Items
                           static
-                          className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                          className="z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                         >
                           {user && (
                             <>

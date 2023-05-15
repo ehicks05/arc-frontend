@@ -1,4 +1,5 @@
 import React from 'react';
+import { TbMoodSad } from 'react-icons/tb';
 import { TailSpin } from 'react-loader-spinner';
 
 interface Props {
@@ -6,7 +7,15 @@ interface Props {
 }
 const Loading = ({ error }: Props) => {
   if (error) {
-    return <span>Error: {JSON.stringify(error, null, 2)}</span>;
+    const message =
+      'message' in error ? error.message : JSON.stringify(error, null, 2);
+    return (
+      <div className="flex flex-col items-center px-4 py-16 m-4 max-w-screen-md w-full mx-auto rounded bg-neutral-800">
+        <div className="text-3xl">Something went wrong.</div>
+        <div className="text-xl">{message}</div>
+        <TbMoodSad size={128} />
+      </div>
+    );
   }
 
   return (

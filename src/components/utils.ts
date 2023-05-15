@@ -2,8 +2,6 @@ import _ from 'lodash';
 import { CommentFragment } from 'generated/graphql';
 
 export interface HydratedComment extends CommentFragment {
-  id: string;
-  parentCommentId?: string | null;
   commentForest?: HydratedComment[];
 }
 

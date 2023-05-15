@@ -12,11 +12,18 @@ import {
   Direction,
   useCreateUserCommentVoteMutation,
   useDeleteUserCommentVoteMutation,
+  CommentFragment,
 } from '../generated/graphql';
-import { DIRECTION_TO_VALUE } from './utils';
+import { DIRECTION_TO_VALUE, HydratedComment } from './utils';
 import CommentEditForm from './CommentEditForm';
 
-const Comment = ({ comment, refetchPost, notInTree }) => {
+interface Props {
+  comment: HydratedComment;
+  refetchPost: () => void;
+  notInTree?: boolean;
+}
+
+const Comment = ({ comment, refetchPost, notInTree }: Props) => {
   const { username } = useUser();
   const [showAuthModal, hideModal] = useModal(() => (
     <AuthDialog isOpen hideModal={hideModal} />
@@ -27,17 +34,17 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
 
   const [deleteComment] = useDeleteCommentMutation();
 
-  const handleClickDelete = async id => {
+  const handleClickDelete = async (id: string) => {
     if (window.confirm('Are you sure?')) {
       await deleteComment({ variables: { id } });
-      await refetchPost();
+      refetchPost();
     }
   };
 
   const [createUserCommentVote] = useCreateUserCommentVoteMutation();
   const [deleteUserCommentVote] = useDeleteUserCommentVoteMutation();
 
-  const handleVote = async direction =>
+  const handleVote = async (direction: Direction) =>
     comment.userVote?.direction &&
     DIRECTION_TO_VALUE[direction] === comment.userVote.direction
       ? deleteUserCommentVote({ variables: { commentId: comment.id } })
@@ -130,7 +137,7 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
                 </div>
               )}
 
-              {comment.commentForest?.length > 0 && (
+              {comment?.commentForest && comment.commentForest.length > 0 && (
                 <div className="mt-2">
                   <Comments
                     comments={comment.commentForest}
@@ -146,7 +153,13 @@ const Comment = ({ comment, refetchPost, notInTree }) => {
   );
 };
 
-const Header = ({ comment, minimized, setMinimized }) => (
+interface HeaderProps {
+  comment: CommentFragment;
+  minimized: boolean;
+  setMinimized: (isMinimized: boolean) => void;
+}
+
+const Header = ({ comment, minimized, setMinimized }: HeaderProps) => (
   <div className="flex gap-2 text-xs">
     <button className="text-base" onClick={() => setMinimized(!minimized)}>
       {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
@@ -158,11 +171,14 @@ const Header = ({ comment, minimized, setMinimized }) => (
       {comment?.authorId || '[Deleted]'}
     </Link>
     <span>
-      <span className="opacity-50" title={new Date(comment.createdAt)}>
+      <span
+        className="opacity-50"
+        title={new Date(comment.createdAt).toLocaleString()}
+      >
         {formatDistance(new Date(comment.createdAt), new Date())}
       </span>
       {comment.createdAt !== comment.updatedAt && (
-        <span title={new Date(comment.updatedAt)}>*</span>
+        <span title={new Date(comment.updatedAt).toLocaleString()}>*</span>
       )}
     </span>
     <span className="opacity-50">{comment.netVotes} pts</span>

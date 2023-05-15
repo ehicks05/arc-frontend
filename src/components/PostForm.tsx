@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Loading } from './index';
 import { useCreatePostMutation } from '../generated/graphql';
 
 const PostForm = () => {
-  const location = useLocation();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
@@ -23,9 +23,9 @@ const PostForm = () => {
           },
         },
       });
-      const newPostId = result?.data.createPost.id;
+      const newPostId = result?.data?.createPost?.id;
 
-      location.push(`/posts/${newPostId}`);
+      navigate(`/posts/${newPostId}`);
     } catch (err) {
       console.log(err);
     }

@@ -8,7 +8,13 @@ import {
 import AuthDialog from './AuthDialog';
 import useUser from '../useUser';
 
-const VoteInput = ({ direction, handleUpvote, handleDownvote }) => {
+interface Props {
+  direction?: number;
+  handleUpvote: () => void;
+  handleDownvote: () => void;
+}
+
+const VoteInput = ({ direction, handleUpvote, handleDownvote }: Props) => {
   const { username } = useUser();
   const [showAuthModal, hideModal] = useModal(() => (
     <AuthDialog isOpen hideModal={hideModal} />
