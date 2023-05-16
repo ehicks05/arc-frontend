@@ -5,10 +5,10 @@ import { Comment, PostStub, Loading } from './index';
 import { useGetUserQuery } from '../generated/graphql';
 
 interface withCreatedAt {
-  createdAt: number;
+  createdAt: string;
 }
 const byCreatedAt = (o1: withCreatedAt, o2: withCreatedAt) =>
-  o2.createdAt - o1.createdAt;
+  o2.createdAt.localeCompare(o1.createdAt);
 
 const User = () => {
   const { id } = useParams();
@@ -17,8 +17,9 @@ const User = () => {
 
   if (user) {
     const { id: username } = user;
-    const posts = user.posts.sort(byCreatedAt);
-    const comments = user.comments.sort(byCreatedAt);
+    console.log({ user });
+    const posts = [...user.posts]?.sort(byCreatedAt) || [];
+    const comments = [...user.comments]?.sort(byCreatedAt) || [];
 
     return (
       <div className="w-full sm:max-w-screen-lg sm:w-5/6 mx-auto">
