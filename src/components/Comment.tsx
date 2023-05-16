@@ -105,24 +105,32 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
                   >
                     Reply
                   </Button>
-                  <Button
-                    disabled={!isAuthor}
-                    className="text-xs"
-                    onClick={
-                      username ? () => setShowEditForm(!showEditForm) : showAuthModal
-                    }
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    disabled={!isAuthor}
-                    className="text-xs"
-                    onClick={
-                      username ? () => handleClickDelete(comment.id) : showAuthModal
-                    }
-                  >
-                    Delete
-                  </Button>
+                  {isAuthor && (
+                    <>
+                      <Button
+                        disabled={!isAuthor}
+                        className="text-xs"
+                        onClick={
+                          username
+                            ? () => setShowEditForm(!showEditForm)
+                            : showAuthModal
+                        }
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        disabled={!isAuthor}
+                        className="text-xs"
+                        onClick={
+                          username
+                            ? () => handleClickDelete(comment.id)
+                            : showAuthModal
+                        }
+                      >
+                        Delete
+                      </Button>
+                    </>
+                  )}
                 </div>
               )}
 
