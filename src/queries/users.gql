@@ -7,14 +7,7 @@ query getUser($id: ID) {
     comments {
       ...Comment
       post {
-        id
-        title
-        link
-        authorId
-        netVotes
-        commentCount
-        createdAt
-        updatedAt
+        ...Post
       }
     }
   }

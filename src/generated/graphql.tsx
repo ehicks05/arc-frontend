@@ -319,7 +319,7 @@ export type GetUserQueryVariables = Exact<{
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', id: string, posts: Array<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId: string, commentCount: number, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null }>, comments: Array<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId: string, parentCommentId?: string | null, score: number, netVotes: number, post: { __typename?: 'Post', id: string, title: string, link: string, authorId: string, netVotes: number, commentCount: number, createdAt: any, updatedAt: any }, userVote?: { __typename?: 'UserCommentVote', direction: number } | null }> } | null };
+export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', id: string, posts: Array<{ __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId: string, commentCount: number, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null }>, comments: Array<{ __typename?: 'Comment', id: string, postId: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, authorId: string, parentCommentId?: string | null, score: number, netVotes: number, post: { __typename?: 'Post', id: string, title: string, link: string, content: string, deleted: boolean, createdAt: any, updatedAt: any, authorId: string, commentCount: number, netVotes: number, score: number, userVote?: { __typename?: 'UserPostVote', direction: number } | null }, userVote?: { __typename?: 'UserCommentVote', direction: number } | null }> } | null };
 
 export type CreateUserPostVoteMutationVariables = Exact<{
   input: CreateUserPostVoteInput;
@@ -675,14 +675,7 @@ export const GetUserDocument = gql`
     comments {
       ...Comment
       post {
-        id
-        title
-        link
-        authorId
-        netVotes
-        commentCount
-        createdAt
-        updatedAt
+        ...Post
       }
     }
   }
