@@ -66,7 +66,7 @@ const Container: React.FC<{ supabaseClient: SupabaseClient; children: any }> = (
   console.log({ error });
   const handleSubmit = async () => {
     try {
-      await setUsernameMutation({ variables: { username } });
+      await setUsernameMutation({ variables: { username: usernameField } });
       await supabaseClient.auth.refreshSession();
     } catch (e) {
       console.log(e);
