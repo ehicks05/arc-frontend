@@ -4,16 +4,21 @@ import { TbGhost } from 'react-icons/tb';
 import { Comment, PostStub, Loading } from './index';
 import { useGetUserQuery } from '../generated/graphql';
 
+interface withCreatedAt {
+  createdAt: number;
+}
+const byCreatedAt = (o1: withCreatedAt, o2: withCreatedAt) =>
+  o2.createdAt - o1.createdAt;
+
 const User = () => {
   const { id } = useParams();
-  const { data, loading, error } = useGetUserQuery({ variables: { id } });
+  const { data, loading, error, refetch } = useGetUserQuery({ variables: { id } });
   const user = data?.getUser;
 
   if (user) {
     const { id: username } = user;
-    const userItems = [...user.posts, ...user.comments].sort(
-      (o1, o2) => o2.createdAt - o1.createdAt,
-    );
+    const posts = user.posts.sort(byCreatedAt);
+    const comments = user.comments.sort(byCreatedAt);
 
     return (
       <div className="w-full sm:max-w-screen-lg sm:w-5/6 mx-auto">
@@ -25,22 +30,21 @@ const User = () => {
             </span>
           </div>
           <div className="flex flex-col gap-4">
-            {userItems.map(item => {
-              if (item.__typename === 'Post') {
-                const post = item;
-                return <PostStub key={post.id} post={post} />;
-              }
-              if (item.__typename === 'Comment') {
-                const comment = item;
-                return (
-                  <div key={comment.id}>
-                    <PostStub key={comment.post.id} post={comment.post} />
-                    <Comment key={comment.id} comment={comment} notInTree />
-                  </div>
-                );
-              }
-              return <div>unknown item type</div>;
-            })}
+            <div>Posts:</div>
+            {posts && posts.map(post => <PostStub key={post.id} post={post} />)}
+            <div>Comments:</div>
+            {comments &&
+              comments.map(comment => (
+                <div key={comment.id}>
+                  <PostStub key={comment.post.id} post={comment.post} />
+                  <Comment
+                    key={comment.id}
+                    comment={comment}
+                    notInTree
+                    refetchPost={refetch}
+                  />
+                </div>
+              ))}
           </div>
         </div>
       </div>
