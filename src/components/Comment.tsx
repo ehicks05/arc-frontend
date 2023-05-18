@@ -168,16 +168,18 @@ interface HeaderProps {
 }
 
 const Header = ({ comment, minimized, setMinimized }: HeaderProps) => (
-  <div className="flex gap-2 text-xs">
-    <button className="text-base" onClick={() => setMinimized(!minimized)}>
+  <div className="flex items-center gap-1 text-xs">
+    <button className="text-sm opacity-50" onClick={() => setMinimized(!minimized)}>
       {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
     </button>
+    <span className="opacity-50">|</span>
     <Link
-      className={`opacity-75 ${!comment.authorId && 'pointer-events-none'}`}
+      className={`opacity-50 ${!comment.authorId && 'pointer-events-none'}`}
       to={`/users/${comment?.authorId}`}
     >
       {comment?.authorId || '[Deleted]'}
     </Link>
+    <span className="opacity-50">|</span>
     <span>
       <span
         className="opacity-50"
@@ -189,6 +191,7 @@ const Header = ({ comment, minimized, setMinimized }: HeaderProps) => (
         <span title={new Date(comment.updatedAt).toLocaleString()}>*</span>
       )}
     </span>
+    <span className="opacity-50">|</span>
     <span className="opacity-50">{comment.netVotes} pts</span>
   </div>
 );
