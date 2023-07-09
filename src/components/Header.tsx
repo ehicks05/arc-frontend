@@ -119,7 +119,7 @@ export default function Header() {
                           <img
                             className="h-8 w-8 rounded-full"
                             src={`https://gravatar.com/avatar/${
-                              user ? md5(user.email?.toLocaleLowerCase()) : '0'
+                              user ? md5(user.email?.toLocaleLowerCase()) : 'null'
                             }?s=256`}
                             alt=""
                           />
