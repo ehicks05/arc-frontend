@@ -34,7 +34,7 @@ const PostForm = () => {
   if (loading || error) return <Loading error={error} />;
 
   return (
-    <div className="">
+    <div className="max-w-xl w-full mx-auto">
       <div>
         <label>Title</label>
         <div>
