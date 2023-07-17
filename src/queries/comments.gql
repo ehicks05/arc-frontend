@@ -7,6 +7,10 @@ fragment Comment on Comment {
   createdAt
   updatedAt
   authorId
+  author {
+    id
+    username
+  }
   parentCommentId
   score
   netVotes
@@ -15,13 +19,13 @@ fragment Comment on Comment {
   }
 }
 
-mutation createComment($input: createCommentInput) {
+mutation createComment($input: createCommentInput!) {
   createComment(input: $input) {
     ...Comment
   }
 }
 
-mutation updateComment($input: updateCommentInput) {
+mutation updateComment($input: updateCommentInput!) {
   updateComment(input: $input) {
     ...Comment
   }

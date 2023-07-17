@@ -7,6 +7,10 @@ fragment Post on Post {
   createdAt
   updatedAt
   authorId
+  author {
+    id
+    username
+  }
   commentCount
   netVotes
   score
@@ -30,13 +34,13 @@ query GetPostById($id: ID, $commentSort: CommentSort) {
   }
 }
 
-mutation createPost($input: createPostInput) {
+mutation createPost($input: createPostInput!) {
   createPost(input: $input) {
     ...Post
   }
 }
 
-mutation updatePost($input: updatePostInput) {
+mutation updatePost($input: updatePostInput!) {
   updatePost(input: $input) {
     ...Post
   }
