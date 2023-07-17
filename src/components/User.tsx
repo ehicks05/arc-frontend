@@ -16,7 +16,7 @@ const User = () => {
   const user = data?.getUser;
 
   if (user) {
-    const { id: username } = user;
+    const { username } = user;
     console.log({ user });
     const posts = [...user.posts]?.sort(byCreatedAt) || [];
     const comments = [...user.comments]?.sort(byCreatedAt) || [];

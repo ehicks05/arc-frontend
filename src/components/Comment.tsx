@@ -172,12 +172,12 @@ const Header = ({ comment, minimized, setMinimized }: HeaderProps) => (
     <button className="text-sm opacity-50" onClick={() => setMinimized(!minimized)}>
       {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
     </button>
-    <span className="opacity-50">|</span>
+    {/* <span className="opacity-50">|</span> */}
     <Link
       className={`opacity-50 ${!comment.authorId && 'pointer-events-none'}`}
       to={`/users/${comment?.authorId}`}
     >
-      {comment?.authorId || '[Deleted]'}
+      {comment?.author.username || '[Deleted]'}
     </Link>
     <span className="opacity-50">|</span>
     <span>

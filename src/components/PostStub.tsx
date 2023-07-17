@@ -68,7 +68,7 @@ const PostStub = ({ post, i }: Props) => {
               }`}
               to={`/users/${post?.authorId}`}
             >
-              {post?.authorId || '[Deleted]'}
+              {post?.author.username || '[Deleted]'}
             </Link>
             <Link to={`/posts/${post.id}`}>
               <div className="text-xs opacity-50">{`| ${post.commentCount} comment${
