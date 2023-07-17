@@ -7,14 +7,14 @@
     "build": "vite build",
     "dev": "vite dev",
     "serve": "vite preview",
-    "generate": "graphql-codegen --config codegen.ts"
+    "generate": "graphql-codegen --config codegen.ts --verbose"
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",
     "@headlessui/react": "^1.7.14",
-    "@supabase/auth-ui-react": "^0.3.6",
-    "@supabase/auth-ui-shared": "^0.1.4",
-    "@supabase/supabase-js": "^2.21.0",
+    "@supabase/auth-ui-react": "^0.4.2",
+    "@supabase/auth-ui-shared": "^0.1.6",
+    "@supabase/supabase-js": "^2.26.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
     "graphql": "^16.6.0",
