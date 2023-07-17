@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="flex-grow flex flex-col h-full">
+      <div className="flex-grow flex flex-col h-full sm:px-4">
         <Routes>
           <Route path="/" element={<Posts />} />
           <Route path="/top" element={<Posts />} />
