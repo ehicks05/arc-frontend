@@ -16,6 +16,7 @@ const Posts = () => {
 
   const { data, previousData, loading, error } = useGetPostsQuery({
     variables: { sort },
+    fetchPolicy: 'no-cache',
   });
   const posts = data?.getPosts || previousData?.getPosts;
 
