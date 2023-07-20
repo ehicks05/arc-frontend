@@ -1,5 +1,6 @@
 import Footer from './Footer';
 import Header from './Header';
+import BackgroundGradients from './BackgroundGradients';
 import Button from './Button';
 import Post from './Post';
 import PostForm from './PostForm';
@@ -16,6 +17,7 @@ import VoteInput from './VoteInput';
 export {
   Footer,
   Header,
+  BackgroundGradients,
   Button,
   Post,
   PostForm,

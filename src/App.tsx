@@ -1,12 +1,21 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import { Header, Footer, Post, Posts, User, PostForm } from './components';
+import {
+  Header,
+  Footer,
+  Post,
+  Posts,
+  User,
+  PostForm,
+  BackgroundGradients,
+} from './components';
 import Test from './components/Test';
 
 function App() {
   return (
     <div className="flex flex-col min-h-screen">
+      <BackgroundGradients />
       <Header />
       <div className="flex-grow flex flex-col h-full sm:px-4">
         <Routes>
