@@ -24,7 +24,7 @@ interface Props {
 }
 
 const Comment = ({ comment, refetchPost, notInTree }: Props) => {
-  const { username } = useUser();
+  const { user } = useUser();
   const [showAuthModal, hideModal] = useModal(() => (
     <AuthDialog isOpen hideModal={hideModal} />
   ));
@@ -52,7 +52,7 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
           variables: { input: { commentId: comment.id, direction } },
         });
 
-  const isAuthor = username === comment.authorId;
+  const isAuthor = user?.id === comment.authorId;
 
   const bgClass =
     comment.level % 2 === 0 || notInTree
@@ -98,9 +98,7 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
                   <Button
                     className="text-xs"
                     onClick={
-                      username
-                        ? () => setShowReplyForm(!showReplyForm)
-                        : showAuthModal
+                      user ? () => setShowReplyForm(!showReplyForm) : showAuthModal
                     }
                   >
                     Reply
@@ -111,9 +109,7 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
                         disabled={!isAuthor}
                         className="text-xs"
                         onClick={
-                          username
-                            ? () => setShowEditForm(!showEditForm)
-                            : showAuthModal
+                          user ? () => setShowEditForm(!showEditForm) : showAuthModal
                         }
                       >
                         Edit
@@ -122,9 +118,7 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
                         disabled={!isAuthor}
                         className="text-xs"
                         onClick={
-                          username
-                            ? () => handleClickDelete(comment.id)
-                            : showAuthModal
+                          user ? () => handleClickDelete(comment.id) : showAuthModal
                         }
                       >
                         Delete
@@ -168,31 +162,27 @@ interface HeaderProps {
 }
 
 const Header = ({ comment, minimized, setMinimized }: HeaderProps) => (
-  <div className="flex items-center gap-1 text-xs">
-    <button className="text-sm opacity-50" onClick={() => setMinimized(!minimized)}>
+  <div className="flex items-center gap-1 text-xs opacity-50">
+    <button className="text-sm" onClick={() => setMinimized(!minimized)}>
       {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
     </button>
-    {/* <span className="opacity-50">|</span> */}
     <Link
-      className={`opacity-50 ${!comment.authorId && 'pointer-events-none'}`}
+      className={`${!comment.authorId && 'pointer-events-none'}`}
       to={`/users/${comment?.authorId}`}
     >
       {comment?.author.username || '[Deleted]'}
     </Link>
-    <span className="opacity-50">|</span>
+    <span>|</span>
     <span>
-      <span
-        className="opacity-50"
-        title={new Date(comment.createdAt).toLocaleString()}
-      >
+      <span title={new Date(comment.createdAt).toLocaleString()}>
         {formatDistance(new Date(comment.createdAt), new Date())}
       </span>
       {comment.createdAt !== comment.updatedAt && (
         <span title={new Date(comment.updatedAt).toLocaleString()}>*</span>
       )}
     </span>
-    <span className="opacity-50">|</span>
-    <span className="opacity-50">{comment.netVotes} pts</span>
+    <span>|</span>
+    <span>{comment.netVotes} pts</span>
   </div>
 );
 

@@ -15,7 +15,7 @@ import PostEditForm from './PostEditForm';
 import useUser from '../useUser';
 
 const Post = () => {
-  const { username } = useUser();
+  const { user } = useUser();
   const [showAuthModal, hideModal] = useModal(() => (
     <AuthDialog isOpen hideModal={hideModal} />
   ));
@@ -50,7 +50,7 @@ const Post = () => {
   };
 
   if (post) {
-    const isAuthor = username === post.authorId;
+    const isAuthor = user?.id === post.authorId;
 
     return (
       <div className="flex flex-col gap-4 w-full sm:max-w-screen-lg sm:w-5/6 mx-auto">
@@ -73,13 +73,13 @@ const Post = () => {
             <div className="flex text-xs px-2 pt-1 gap-4">
               <Button
                 disabled={!isAuthor}
-                onClick={username ? () => setEditMode(!editMode) : showAuthModal}
+                onClick={user ? () => setEditMode(!editMode) : showAuthModal}
               >
                 Edit
               </Button>
               <Button
                 disabled={!isAuthor}
-                onClick={username ? () => handleClickDelete(post.id) : showAuthModal}
+                onClick={user ? () => handleClickDelete(post.id) : showAuthModal}
               >
                 Delete
               </Button>
@@ -115,7 +115,6 @@ const Post = () => {
         {showTopLevelReply && (
           <CommentCreateForm
             postId={post.id}
-            parentComment={0}
             refetchPost={refetchPost}
             setEditMode={setShowTopLevelReply}
           />
