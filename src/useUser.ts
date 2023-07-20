@@ -4,10 +4,10 @@ import { useGetUserQuery } from './generated/graphql';
 const useUser = () => {
   const { session, user } = Auth.useUser();
 
-  const { data } = useGetUserQuery({ variables: { id: user?.id } });
+  const { data, loading, error } = useGetUserQuery({ variables: { id: user?.id } });
   const username = data?.getUser?.username;
 
-  return { session, user, username };
+  return { session, user, username, loading, error };
 };
 
 export default useUser;
