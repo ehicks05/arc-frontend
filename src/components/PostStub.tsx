@@ -26,12 +26,8 @@ const PostStub = ({ post, i }: Props) => {
       ? deleteUserPostVote({ variables: { postId: post.id } })
       : createUserPostVote({ variables: { input: { postId: post.id, direction } } });
 
-  const bgClass =
-    i && i % 2 === 0
-      ? 'bg-neutral-50 dark:bg-neutral-800'
-      : 'bg-neutral-100 dark:bg-neutral-800 brightness-105';
   return (
-    <div className={`px-2 py-0.5 dark:border-gray-600 ${bgClass}`}>
+    <div className="px-2 py-0.5 bg-neutral-100 dark:bg-neutral-800">
       <div className="flex items-center gap-2">
         {i !== undefined && (
           <div className="opacity-50">{`${i + 1 < 10 ? '0' : ''}${i + 1}`}</div>
@@ -43,9 +39,12 @@ const PostStub = ({ post, i }: Props) => {
         />
         <div className="flex flex-col py-1">
           <div className="text-sm sm:text-base">
-            <a href={post.link} target="_blank" rel="noopener noreferrer">
-              {post.title}
-            </a>
+            {post.link && (
+              <a href={post.link} target="_blank" rel="noopener noreferrer">
+                {post.title}
+              </a>
+            )}
+            {!post.link && <Link to={`/posts/${post.id}`}>{post.title}</Link>}
           </div>
           <div className="flex gap-1 flex-wrap">
             <span className="text-xs opacity-50">{post.netVotes} pts |</span>
@@ -68,7 +67,7 @@ const PostStub = ({ post, i }: Props) => {
               }`}
               to={`/users/${post?.authorId}`}
             >
-              {post?.author.username || '[Deleted]'}
+              {post?.author?.username || '[Deleted]'}
             </Link>
             <Link to={`/posts/${post.id}`}>
               <div className="text-xs opacity-50">{`| ${post.commentCount} comment${

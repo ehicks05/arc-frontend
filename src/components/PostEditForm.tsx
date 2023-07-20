@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Loading } from './index';
-import { Post, useUpdatePostMutation } from '../generated/graphql';
+import { PostFragment, useUpdatePostMutation } from '../generated/graphql';
 
 interface Props {
-  post: Post;
+  post: PostFragment;
   setEditMode: (isEditMode: boolean) => void;
 }
 
