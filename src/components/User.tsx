@@ -30,7 +30,7 @@ const User = () => {
               {username}
             </span>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col">
             <div>Posts:</div>
             {posts && posts.map(post => <PostStub key={post.id} post={post} />)}
             <div>Comments:</div>

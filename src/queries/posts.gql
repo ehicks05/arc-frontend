@@ -19,8 +19,8 @@ fragment Post on Post {
   }
 }
 
-query GetPosts($sort: Sort) {
-  getPosts(sort: $sort) {
+query GetPosts($sort: Sort, $offset: Int) {
+  getPosts(sort: $sort, offset: $offset) {
     ...Post
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { PostStub, Loading } from './index';
+import { PostStub, Loading, Button, Card } from './index';
 import { Sort, useGetPostsQuery } from '../generated/graphql';
 
 const pathToSort: Record<string, Sort> = {
@@ -14,18 +14,30 @@ const Posts = () => {
   const { pathname } = useLocation();
   const sort = pathToSort[pathname];
 
-  const { data, previousData, loading, error } = useGetPostsQuery({
+  const { data, loading, error, fetchMore } = useGetPostsQuery({
     variables: { sort },
-    fetchPolicy: 'no-cache',
+    notifyOnNetworkStatusChange: true,
   });
-  const posts = data?.getPosts || previousData?.getPosts;
+  const posts = data?.getPosts;
+
+  const handleFetchMore = () => {
+    fetchMore({ variables: { sort, offset: posts?.length } });
+  };
 
   if (posts) {
     return (
       <div className="w-full sm:max-w-screen-lg sm:w-5/6 mx-auto">
-        {!posts?.length && <div>nothing to see here...</div>}
-        {posts &&
-          posts.map((post, i) => <PostStub key={post.id} post={post} i={i} />)}
+        {!posts?.length && <Card>nothing to see here...</Card>}
+        {posts?.length !== 0 && (
+          <>
+            {posts.map((post, i) => (
+              <PostStub key={post.id} post={post} i={i} />
+            ))}
+            <Button disabled={loading} onClick={handleFetchMore}>
+              More...
+            </Button>
+          </>
+        )}
       </div>
     );
   }

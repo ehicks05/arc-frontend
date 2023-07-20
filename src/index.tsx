@@ -44,7 +44,29 @@ const authLink = setContext((_, { headers, authToken }) => ({
 /* Create Apollo Client */
 const client = new ApolloClient({
   link: ApolloLink.from([withTokenLink, authLink, httpLink]),
-  cache: new InMemoryCache({}),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          // getPosts: offsetLimitPagination(),
+          getPosts: {
+            keyArgs: ['sort'],
+            // @ts-expect-error offset
+            merge(existing, incoming, { args: { offset = 0 } }) {
+              // Slicing is necessary because the existing data is
+              // immutable, and frozen in development.
+              const merged = existing ? existing.slice(0) : [];
+              // eslint-disable-next-line no-plusplus
+              for (let i = 0; i < incoming.length; ++i) {
+                merged[offset + i] = incoming[i];
+              }
+              return merged;
+            },
+          },
+        },
+      },
+    },
+  }),
 });
 
 /* Create root render function */
