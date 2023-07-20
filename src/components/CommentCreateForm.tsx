@@ -4,7 +4,7 @@ import { CommentFragment, useCreateCommentMutation } from '../generated/graphql'
 
 interface Props {
   postId: string;
-  parentComment: CommentFragment;
+  parentComment?: CommentFragment;
   setEditMode: (isEdit: boolean) => void;
   refetchPost: () => void;
 }
@@ -24,7 +24,7 @@ const CommentCreateForm = ({
         input: {
           postId,
           parentCommentId: parentComment?.id,
-          level: parentComment?.level === undefined ? 0 : parentComment.level + 1,
+          level: (parentComment?.level || 0) + 1,
           content,
         },
       },

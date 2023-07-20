@@ -2,10 +2,10 @@ import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { HiOutlineBell, HiOutlineMenu, HiOutlineX, HiPlus } from 'react-icons/hi';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import md5 from 'md5';
 import { useModal } from 'react-modal-hook';
 import AuthDialog from './AuthDialog';
 import useUser from '../useUser';
+import { toGravatarUrl } from './utils';
 
 const navigation = [
   { name: 'Hot', href: '/' },
@@ -13,7 +13,7 @@ const navigation = [
   { name: 'New', href: '/new' },
 ];
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
@@ -26,7 +26,7 @@ export default function Header() {
   ));
 
   return (
-    <Disclosure as="nav" className="bg-neutral-50 dark:bg-neutral-900">
+    <Disclosure as="nav" className="">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -78,7 +78,9 @@ export default function Header() {
                             : 'text-neutral-600 bg-neutral-100 hover:bg-neutral-200 hover:text-black dark:text-neutral-300 dark:bg-neutral-900 dark:hover:bg-neutral-700 dark:hover:text-white'
                         }
                         `}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={
+                          location.pathname === item.href ? 'page' : undefined
+                        }
                       >
                         {item.name}
                       </NavLink>
@@ -118,9 +120,7 @@ export default function Header() {
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-8 w-8 rounded-full"
-                            src={`https://gravatar.com/avatar/${
-                              user ? md5(user.email?.toLocaleLowerCase()) : 'null'
-                            }?s=256`}
+                            src={toGravatarUrl(user?.email)}
                             alt=""
                           />
                         </Menu.Button>
@@ -144,7 +144,7 @@ export default function Header() {
                               <Menu.Item>
                                 {({ active }) => (
                                   <Link
-                                    to={`/users/${username}`}
+                                    to={`/users/${user.id}`}
                                     className={classNames(
                                       active ? 'bg-neutral-100' : '',
                                       'block px-4 py-2 text-sm text-neutral-700',
@@ -222,8 +222,7 @@ export default function Header() {
                       : ''
                   }
                   `}
-                  activeClassName="bg-neutral-900 text-white"
-                  aria-current={item.current ? 'page' : undefined}
+                  aria-current={location.pathname === item.href ? 'page' : undefined}
                 >
                   {item.name}
                 </NavLink>
