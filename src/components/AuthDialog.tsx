@@ -60,7 +60,7 @@ const Container: React.FC<{ supabaseClient: SupabaseClient; children: any }> = (
   supabaseClient,
   children,
 }) => {
-  const { user, username } = useUser();
+  const { user, username, loading } = useUser();
   const [usernameField, setUsernameField] = useState('');
   const [setUsernameMutation, { error }] = useSetUsernameMutation();
 
@@ -76,6 +76,10 @@ const Container: React.FC<{ supabaseClient: SupabaseClient; children: any }> = (
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsernameField(e.target.value);
   };
+
+  if (loading) {
+    return 'Loading...';
+  }
 
   if (user) {
     return (
