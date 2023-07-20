@@ -2,6 +2,7 @@ import Footer from './Footer';
 import Header from './Header';
 import BackgroundGradients from './BackgroundGradients';
 import Button from './Button';
+import Card from './Card';
 import Post from './Post';
 import PostForm from './PostForm';
 import Posts from './Posts';
@@ -19,6 +20,7 @@ export {
   Header,
   BackgroundGradients,
   Button,
+  Card,
   Post,
   PostForm,
   Posts,
