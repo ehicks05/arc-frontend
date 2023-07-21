@@ -2,7 +2,6 @@ import { Dialog as HUIDialog } from '@headlessui/react';
 import React, { ReactNode, useState } from 'react';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { SupabaseClient } from '@supabase/supabase-js';
 import { useApolloClient } from '@apollo/client';
 import useUser from '../useUser';
 import { supabase } from '../supabase';
@@ -67,14 +66,17 @@ const UsernameForm = () => {
   );
 };
 
-const Container: React.FC<{
-  supabaseClient: SupabaseClient;
-  children: any;
-}> = ({ supabaseClient, children }) => {
+const AuthDialogContent = () => {
   const { user, username, loading } = useUser();
+  const apolloClient = useApolloClient();
+
+  supabase.auth.onAuthStateChange(event => {
+    console.log(event);
+    apolloClient.resetStore();
+  });
 
   if (loading) {
-    return 'Loading...';
+    return <div>'Loading...'</div>;
   }
 
   if (user) {
@@ -83,42 +85,31 @@ const Container: React.FC<{
         <div>Welcome {username || user.email}!</div>
         {!username && <UsernameForm />}
         <div className="h-12" />
-        <Button onClick={() => supabaseClient.auth.signOut()}>Sign out</Button>
+        <Button onClick={() => supabase.auth.signOut()}>Sign out</Button>
       </div>
     );
   }
-  return children;
-};
-
-const AuthDialog = ({
-  isOpen,
-  hideModal,
-}: {
-  isOpen: boolean;
-  hideModal: () => void;
-}) => {
-  const supabaseClient = supabase;
-  const apolloClient = useApolloClient();
-
-  supabaseClient.auth.onAuthStateChange(event => {
-    console.log(event);
-    apolloClient.resetStore();
-  });
-
   return (
-    <Dialog isOpen={isOpen} onClose={hideModal}>
-      <Container supabaseClient={supabaseClient}>
-        <Auth
-          providers={[]}
-          theme="dark"
-          appearance={{
-            theme: ThemeSupa,
-          }}
-          supabaseClient={supabase}
-        />
-      </Container>
-    </Dialog>
+    <Auth
+      providers={[]}
+      theme="dark"
+      appearance={{
+        theme: ThemeSupa,
+      }}
+      supabaseClient={supabase}
+    />
   );
 };
+
+interface AuthDialogProps {
+  isOpen: boolean;
+  hideModal: () => void;
+}
+
+const AuthDialog = ({ isOpen, hideModal }: AuthDialogProps) => (
+  <Dialog isOpen={isOpen} onClose={hideModal}>
+    <AuthDialogContent />
+  </Dialog>
+);
 
 export default AuthDialog;
