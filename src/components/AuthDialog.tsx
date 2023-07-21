@@ -35,37 +35,6 @@ const Dialog = ({ isOpen, onClose, children }: DialogProps) => (
   </HUIDialog>
 );
 
-const AuthDialog = ({
-  isOpen,
-  hideModal,
-}: {
-  isOpen: boolean;
-  hideModal: () => void;
-}) => {
-  const supabaseClient = supabase;
-  const apolloClient = useApolloClient();
-
-  supabaseClient.auth.onAuthStateChange(event => {
-    console.log(event);
-    apolloClient.resetStore();
-  });
-
-  return (
-    <Dialog isOpen={isOpen} onClose={hideModal}>
-      <Container supabaseClient={supabaseClient}>
-        <Auth
-          providers={[]}
-          theme="dark"
-          appearance={{
-            theme: ThemeSupa,
-          }}
-          supabaseClient={supabase}
-        />
-      </Container>
-    </Dialog>
-  );
-};
-
 const UsernameForm = () => {
   const [usernameField, setUsernameField] = useState('');
   const [setUsernameMutation, { error }] = useSetUsernameMutation();
@@ -98,10 +67,10 @@ const UsernameForm = () => {
   );
 };
 
-const Container: React.FC<{ supabaseClient: SupabaseClient; children: any }> = ({
-  supabaseClient,
-  children,
-}) => {
+const Container: React.FC<{
+  supabaseClient: SupabaseClient;
+  children: any;
+}> = ({ supabaseClient, children }) => {
   const { user, username, loading } = useUser();
 
   if (loading) {
@@ -119,6 +88,37 @@ const Container: React.FC<{ supabaseClient: SupabaseClient; children: any }> = (
     );
   }
   return children;
+};
+
+const AuthDialog = ({
+  isOpen,
+  hideModal,
+}: {
+  isOpen: boolean;
+  hideModal: () => void;
+}) => {
+  const supabaseClient = supabase;
+  const apolloClient = useApolloClient();
+
+  supabaseClient.auth.onAuthStateChange(event => {
+    console.log(event);
+    apolloClient.resetStore();
+  });
+
+  return (
+    <Dialog isOpen={isOpen} onClose={hideModal}>
+      <Container supabaseClient={supabaseClient}>
+        <Auth
+          providers={[]}
+          theme="dark"
+          appearance={{
+            theme: ThemeSupa,
+          }}
+          supabaseClient={supabase}
+        />
+      </Container>
+    </Dialog>
+  );
 };
 
 export default AuthDialog;
