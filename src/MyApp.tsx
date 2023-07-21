@@ -2,10 +2,10 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import { Header, Footer } from './layout';
-import { Post, Posts, User, PostForm, BackgroundGradients } from './components';
-import Test from './components/Test';
+import { Post, Posts, User, PostForm } from '@/app';
+import { BackgroundGradients } from './components';
 
-function App() {
+function MyApp() {
   return (
     <div className="flex flex-col min-h-screen">
       <BackgroundGradients />
@@ -18,7 +18,6 @@ function App() {
           <Route path="/posts/create" element={<PostForm />} />
           <Route path="/posts/:id" element={<Post />} />
           <Route path="/users/:id" element={<User />} />
-          <Route path="/test" element={<Test />} />
         </Routes>
       </div>
       <Footer />
@@ -26,4 +25,4 @@ function App() {
   );
 }
 
-export default App;
+export default MyApp;

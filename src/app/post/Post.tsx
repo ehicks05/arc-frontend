@@ -2,17 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useModal } from 'react-modal-hook';
 import clsx from 'clsx';
-import AuthDialog from './AuthDialog';
 
 import {
   CommentSort,
   useDeletePostMutation,
   useGetPostByIdQuery,
-} from '../generated/graphql';
-import { CommentCreateForm, Comments, PostStub, Button, Loading } from '.';
+} from '@/generated/graphql';
+import {
+  AuthDialog,
+  CommentCreateForm,
+  Comments,
+  PostStub,
+  Button,
+  Loading,
+} from '@/components';
+import { useUser } from '@/hooks';
 import { toForest } from './utils';
 import PostEditForm from './PostEditForm';
-import useUser from '../useUser';
 
 const Post = () => {
   const { user } = useUser();

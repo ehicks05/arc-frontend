@@ -1,9 +1,9 @@
 import React from 'react';
-import { CommentFragment } from 'generated/graphql';
-import { Comment } from './index';
+import { Comment } from '.';
+import { HydratedComment } from '@/types';
 
 interface Props {
-  comments: CommentFragment[];
+  comments: HydratedComment[];
   refetchPost: () => void;
 }
 

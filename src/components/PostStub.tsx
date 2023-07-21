@@ -6,10 +6,10 @@ import {
   PostFragment,
   useCreateUserPostVoteMutation,
   useDeleteUserPostVoteMutation,
-} from '../generated/graphql';
+} from '@/generated/graphql';
 
-import { VoteInput } from './index';
-import { DIRECTION_TO_VALUE } from './utils';
+import { VoteInput } from '.';
+import { DIRECTION_TO_VALUE } from '@/constants';
 
 interface Props {
   post: PostFragment;

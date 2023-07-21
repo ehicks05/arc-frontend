@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Loading } from './index';
-import { useCreatePostMutation } from '../generated/graphql';
+import { Button, Loading } from '@/components';
+import { useCreatePostMutation } from '@/generated/graphql';
 
 const PostForm = () => {
   const navigate = useNavigate();

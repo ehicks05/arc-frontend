@@ -1,8 +1,7 @@
 import React from 'react';
 import { useModal } from 'react-modal-hook';
-import { Button } from './index';
-import AuthDialog from './AuthDialog';
-import useUser from '../useUser';
+import { AuthDialog, Button } from '.';
+import useUser from '@/hooks/useUser';
 
 interface Props {
   content: string;

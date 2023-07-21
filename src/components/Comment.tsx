@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { FiMinusSquare, FiPlusSquare } from 'react-icons/fi';
 import { useModal } from 'react-modal-hook';
 import { formatDistance } from 'date-fns';
-import AuthDialog from './AuthDialog';
-import useUser from '../useUser';
+import { HydratedComment } from '@/types';
+import { AuthDialog, CommentEditForm } from '@/components';
+import { useUser } from '@/hooks';
 
 import { Button, Comments, CommentCreateForm, VoteInput } from './index';
 import {
@@ -13,9 +14,8 @@ import {
   useCreateUserCommentVoteMutation,
   useDeleteUserCommentVoteMutation,
   CommentFragment,
-} from '../generated/graphql';
-import { DIRECTION_TO_VALUE, HydratedComment } from './utils';
-import CommentEditForm from './CommentEditForm';
+} from '@/generated/graphql';
+import { DIRECTION_TO_VALUE } from '@/constants';
 
 interface Props {
   comment: HydratedComment;
@@ -170,7 +170,7 @@ const Header = ({ comment, minimized, setMinimized }: HeaderProps) => (
       className={`${!comment.authorId && 'pointer-events-none'}`}
       to={`/users/${comment?.authorId}`}
     >
-      {comment?.author.username || '[Deleted]'}
+      {comment?.author?.username || '[Deleted]'}
     </Link>
     <span>|</span>
     <span>

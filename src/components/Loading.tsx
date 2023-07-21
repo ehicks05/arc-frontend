@@ -1,7 +1,7 @@
 import React from 'react';
 import { TbMoodSad } from 'react-icons/tb';
 import { TailSpin } from 'react-loader-spinner';
-import Card from './Card';
+import { Card } from '.';
 
 interface Props {
   error?: any;

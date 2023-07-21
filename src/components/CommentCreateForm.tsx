@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { CommentForm, Loading } from './index';
-import { CommentFragment, useCreateCommentMutation } from '../generated/graphql';
+import { CommentForm, Loading } from '.';
+import { CommentFragment, useCreateCommentMutation } from '@/generated/graphql';
 
 interface Props {
   postId: string;

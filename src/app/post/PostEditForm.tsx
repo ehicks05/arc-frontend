@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Loading } from './index';
-import { PostFragment, useUpdatePostMutation } from '../generated/graphql';
+import { Button, Loading } from '@/components/index';
+import { PostFragment, useUpdatePostMutation } from '@/generated/graphql';
 
 interface Props {
   post: PostFragment;

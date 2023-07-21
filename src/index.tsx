@@ -13,7 +13,7 @@ import { ModalProvider } from 'react-modal-hook';
 import { Auth } from '@supabase/auth-ui-react';
 
 import { supabase } from './supabase';
-import App from './App';
+import App from './MyApp';
 import './index.css';
 
 const authClient = supabase.auth;

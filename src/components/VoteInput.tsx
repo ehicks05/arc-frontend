@@ -5,8 +5,8 @@ import {
   BsCaretDown,
   BsCaretDownFill,
 } from 'react-icons/bs';
-import AuthDialog from './AuthDialog';
-import useUser from '../useUser';
+import { AuthDialog } from '.';
+import useUser from '@/hooks/useUser';
 
 interface Props {
   direction?: number;

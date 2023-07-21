@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useApolloClient } from '@apollo/client';
-import useUser from '../useUser';
-import { supabase } from '../supabase';
-import { useSetUsernameMutation } from '../generated/graphql';
-import Button from './Button';
-import Dialog from './Dialog';
+import { useUser } from '@/hooks';
+import { supabase } from '@/supabase';
+import { useSetUsernameMutation } from '@/generated/graphql';
+import { Button, Dialog } from '.';
 
 const UsernameForm = () => {
   const [usernameField, setUsernameField] = useState('');

@@ -1,33 +1,29 @@
+import AuthDialog from './AuthDialog';
 import BackgroundGradients from './BackgroundGradients';
 import Button from './Button';
 import Card from './Card';
-import Dialog from './Dialog';
-import Post from './Post';
-import PostForm from './PostForm';
-import Posts from './Posts';
-import PostStub from './PostStub';
 import Comment from './Comment';
-import Comments from './Comments';
 import CommentCreateForm from './CommentCreateForm';
-import Loading from './Loading';
+import CommentEditForm from './CommentEditForm';
 import CommentForm from './CommentForm';
-import User from './User';
+import Comments from './Comments';
+import Dialog from './Dialog';
+import Loading from './Loading';
+import PostStub from './PostStub';
 import VoteInput from './VoteInput';
 
 export {
+  AuthDialog,
   BackgroundGradients,
   Button,
   Card,
-  Dialog,
-  Post,
-  PostForm,
-  Posts,
-  PostStub,
   Comment,
-  Comments,
   CommentCreateForm,
-  Loading,
+  CommentEditForm,
   CommentForm,
-  User,
+  Comments,
+  Dialog,
+  Loading,
+  PostStub,
   VoteInput,
 };
