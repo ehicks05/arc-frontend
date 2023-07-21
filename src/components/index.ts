@@ -3,6 +3,7 @@ import Header from './Header';
 import BackgroundGradients from './BackgroundGradients';
 import Button from './Button';
 import Card from './Card';
+import Dialog from './Dialog';
 import Post from './Post';
 import PostForm from './PostForm';
 import Posts from './Posts';
@@ -21,6 +22,7 @@ export {
   BackgroundGradients,
   Button,
   Card,
+  Dialog,
   Post,
   PostForm,
   Posts,
