@@ -1,6 +1,6 @@
 import React from 'react';
 
-const repoUrl = 'https://www.github.com/hicks-team/arc/';
+const repoUrl = 'https://www.github.com/ehicks05/arc-frontend/';
 const siteUrl = 'https://ehicks.net';
 
 const Footer = () => (

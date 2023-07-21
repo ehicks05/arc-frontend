@@ -3,9 +3,9 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { HiOutlineBell, HiOutlineMenu, HiOutlineX, HiPlus } from 'react-icons/hi';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useModal } from 'react-modal-hook';
-import AuthDialog from './AuthDialog';
+import AuthDialog from '../components/AuthDialog';
 import useUser from '../useUser';
-import { toGravatarUrl } from './utils';
+import { toGravatarUrl } from '../components/utils';
 
 const navigation = [
   { name: 'Hot', href: '/' },

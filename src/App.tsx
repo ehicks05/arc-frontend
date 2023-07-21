@@ -1,15 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import {
-  Header,
-  Footer,
-  Post,
-  Posts,
-  User,
-  PostForm,
-  BackgroundGradients,
-} from './components';
+import { Header, Footer } from './layout';
+import { Post, Posts, User, PostForm, BackgroundGradients } from './components';
 import Test from './components/Test';
 
 function App() {

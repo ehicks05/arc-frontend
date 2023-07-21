@@ -1,5 +1,3 @@
-import Footer from './Footer';
-import Header from './Header';
 import BackgroundGradients from './BackgroundGradients';
 import Button from './Button';
 import Card from './Card';
@@ -17,8 +15,6 @@ import User from './User';
 import VoteInput from './VoteInput';
 
 export {
-  Footer,
-  Header,
   BackgroundGradients,
   Button,
   Card,
