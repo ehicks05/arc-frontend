@@ -45,11 +45,13 @@ const AuthDialogContent = () => {
 
   supabase.auth.onAuthStateChange(event => {
     console.log(event);
-    apolloClient.resetStore();
+    if (['SIGNED_IN', 'SIGNED_OUT'].includes(event)) {
+      apolloClient.resetStore();
+    }
   });
 
   if (loading) {
-    return <div>'Loading...'</div>;
+    return <div>Loading...</div>;
   }
 
   if (user) {

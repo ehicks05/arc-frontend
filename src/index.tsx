@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {
   ApolloClient,
   ApolloLink,
@@ -69,20 +69,16 @@ const client = new ApolloClient({
   }),
 });
 
-/* Create root render function */
-const renderApp = (Component: () => JSX.Element) => {
-  render(
-    <Auth.UserContextProvider supabaseClient={supabase}>
-      <ApolloProvider client={client}>
-        <BrowserRouter>
-          <ModalProvider>
-            <Component />
-          </ModalProvider>
-        </BrowserRouter>
-      </ApolloProvider>
-    </Auth.UserContextProvider>,
-    document.getElementById('root'),
-  );
-};
-
-renderApp(App);
+const container = document.getElementById('root');
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(
+  <Auth.UserContextProvider supabaseClient={supabase}>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <ModalProvider>
+          <App />
+        </ModalProvider>
+      </BrowserRouter>
+    </ApolloProvider>
+  </Auth.UserContextProvider>,
+);
