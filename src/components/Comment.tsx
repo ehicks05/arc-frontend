@@ -84,9 +84,9 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
                   refetchPost={refetchPost}
                 />
               )}
-              <div className="flex flex-col gap-2.5 text-sm dark:text-neutral-200">
+              <div className="flex flex-col gap-5 text-sm dark:text-neutral-200">
                 {!showEditForm &&
-                  comment.content.split('\n').map(p => (
+                  comment.content.split(/\n\n/).map(p => (
                     <p key={p} className="whitespace-pre-line">
                       {p}
                     </p>

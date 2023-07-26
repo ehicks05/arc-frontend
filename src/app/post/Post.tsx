@@ -63,9 +63,9 @@ const Post = () => {
         <div>
           <PostStub post={post} />
           <div className="p-2 border-y dark:border-gray-800">
-            <div className="flex flex-col gap-2.5 text-sm">
+            <div className="flex flex-col gap-5 text-sm">
               {!editMode &&
-                post.content.split('\n').map(p => (
+                post.content.split(/\n\n/).map(p => (
                   <p key={p} className="whitespace-pre-line">
                     {p}
                   </p>
@@ -75,7 +75,7 @@ const Post = () => {
             {editMode && <PostEditForm post={post} setEditMode={setEditMode} />}
           </div>
 
-          {!post.deleted && !editMode && (
+          {!post.deleted && !editMode && user?.id === post.authorId && (
             <div className="flex text-xs px-2 pt-1 gap-4">
               <Button
                 disabled={!isAuthor}
