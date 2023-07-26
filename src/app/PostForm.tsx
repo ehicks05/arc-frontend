@@ -62,6 +62,7 @@ const PostForm = () => {
         <label>Content</label>
         <div>
           <TextareaAutosize
+            minRows={3}
             className="w-full p-1 border dark:border-gray-600 dark:bg-neutral-800 dark:text-neutral-100"
             placeholder="add content"
             value={content}

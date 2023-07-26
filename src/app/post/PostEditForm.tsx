@@ -29,6 +29,7 @@ const PostEditForm = ({ post, setEditMode }: Props) => {
   return (
     <div>
       <TextareaAutosize
+        minRows={3}
         className="w-full text-sm dark:bg-neutral-800 dark:text-neutral-100"
         placeholder="add some content"
         value={content}
