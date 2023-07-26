@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 import { useNavigate } from 'react-router-dom';
 import { Button, Loading } from '@/components';
 import { useCreatePostMutation } from '@/generated/graphql';
@@ -34,13 +35,12 @@ const PostForm = () => {
   if (loading || error) return <Loading error={error} />;
 
   return (
-    <div className="max-w-xl w-full mx-auto">
+    <div className="max-w-4xl w-full mx-auto">
       <div>
         <label>Title</label>
         <div>
-          <input
-            type="text"
-            className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-neutral-600 dark:text-neutral-100"
+          <TextareaAutosize
+            className="w-full p-1 border dark:border-gray-600 dark:bg-neutral-800 dark:text-neutral-100"
             placeholder="add a title"
             value={title}
             onChange={e => setTitle(e.target.value)}
@@ -50,9 +50,8 @@ const PostForm = () => {
       <div>
         <label>Link</label>
         <div>
-          <input
-            type="text"
-            className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-neutral-600 dark:text-neutral-100"
+          <TextareaAutosize
+            className="w-full p-1 border dark:border-gray-600 dark:bg-neutral-800 dark:text-neutral-100"
             placeholder="add a link (optional)"
             value={link}
             onChange={e => setLink(e.target.value)}
@@ -62,8 +61,8 @@ const PostForm = () => {
       <div>
         <label>Content</label>
         <div>
-          <textarea
-            className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-neutral-600 dark:text-neutral-100"
+          <TextareaAutosize
+            className="w-full p-1 border dark:border-gray-600 dark:bg-neutral-800 dark:text-neutral-100"
             placeholder="add content"
             value={content}
             onChange={e => setContent(e.target.value)}

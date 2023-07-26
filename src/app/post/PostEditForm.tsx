@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 import { Button, Loading } from '@/components/index';
 import { PostFragment, useUpdatePostMutation } from '@/generated/graphql';
 
@@ -27,13 +28,13 @@ const PostEditForm = ({ post, setEditMode }: Props) => {
 
   return (
     <div>
-      <textarea
-        className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-neutral-600 dark:text-neutral-100"
+      <TextareaAutosize
+        className="w-full text-sm dark:bg-neutral-800 dark:text-neutral-100"
         placeholder="add some content"
         value={content}
         onChange={e => setContent(e.target.value)}
       />
-      <div className="flex gap-4">
+      <div className="flex text-xs pt-1 gap-4">
         <Button
           className="text-xs"
           disabled={!content}

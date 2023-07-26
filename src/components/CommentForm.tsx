@@ -1,7 +1,8 @@
 import React from 'react';
 import { useModal } from 'react-modal-hook';
-import { AuthDialog, Button } from '.';
+import TextareaAutosize from 'react-textarea-autosize';
 import useUser from '@/hooks/useUser';
+import { AuthDialog, Button } from '.';
 
 interface Props {
   content: string;
@@ -10,6 +11,7 @@ interface Props {
   setEditMode: (isEdit: boolean) => void;
 }
 
+/** Used by both CommentCreateForm and CommentEditForm  */
 const CommentForm = ({ content, setContent, handleSubmit, setEditMode }: Props) => {
   const { username } = useUser();
 
@@ -19,8 +21,8 @@ const CommentForm = ({ content, setContent, handleSubmit, setEditMode }: Props) 
 
   return (
     <div>
-      <textarea
-        className="w-full max-w-prose p-1 border dark:border-gray-600 dark:bg-neutral-600 dark:text-neutral-100"
+      <TextareaAutosize
+        className="w-full text-sm dark:bg-neutral-800 dark:text-neutral-200"
         placeholder="add a comment"
         value={content}
         onChange={e => setContent(e.target.value)}

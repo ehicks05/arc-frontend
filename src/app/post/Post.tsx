@@ -63,7 +63,7 @@ const Post = () => {
         <div>
           <PostStub post={post} />
           <div className="p-2 border-y dark:border-gray-800">
-            <div className="flex flex-col gap-4 text-sm leading-tight">
+            <div className="flex flex-col gap-2.5 text-sm">
               {!editMode &&
                 post.content.split('\n').map(p => (
                   <p key={p} className="whitespace-pre-line">
