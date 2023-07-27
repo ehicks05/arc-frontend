@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useModal } from 'react-modal-hook';
 import clsx from 'clsx';
+import * as Select from '@radix-ui/react-select';
 
 import {
   CommentSort,
@@ -92,23 +93,44 @@ const Post = () => {
           </div>
         </div>
         <div className="flex px-2">
-          {Object.entries(CommentSort).map(([label, name]) => (
-            <div
-              key={name}
-              onClick={() => setCommentSort(name)}
-              className={clsx(
-                'px-4 py-2 text-sm font-medium cursor-pointer first:rounded-l last:rounded-r',
-                {
-                  'bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white':
-                    name === commentSort,
-                  'text-neutral-600 bg-neutral-100 hover:bg-neutral-200 hover:text-black dark:text-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-600 dark:hover:text-white':
-                    name !== commentSort,
-                },
-              )}
-            >
-              {label}
-            </div>
-          ))}
+          <Select.Root onValueChange={v => setCommentSort(v)}>
+            <Select.Trigger>
+              <Button>
+                <Select.Value>Sort</Select.Value>
+                <Select.Icon className="ml-2" />
+              </Button>
+            </Select.Trigger>
+
+            <Select.Portal>
+              <Select.Content position="popper">
+                <Select.ScrollUpButton />
+                <Select.Viewport>
+                  {Object.entries(CommentSort).map(([label, name]) => (
+                    // <div key={name}>
+                    <Select.Item
+                      className={clsx(
+                        'px-4 py-2 text-sm font-medium cursor-pointer first:rounded-l last:rounded-r',
+                        {
+                          'bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white':
+                            name === commentSort,
+                          'text-neutral-600 bg-neutral-100 hover:bg-neutral-200 hover:text-black dark:text-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-600 dark:hover:text-white':
+                            name !== commentSort,
+                        },
+                      )}
+                      value={name}
+                      key={name}
+                    >
+                      <Select.ItemText>{label}</Select.ItemText>
+                      <Select.ItemIndicator />
+                    </Select.Item>
+                    // </div>
+                  ))}
+                </Select.Viewport>
+                <Select.ScrollDownButton />
+                <Select.Arrow />
+              </Select.Content>
+            </Select.Portal>
+          </Select.Root>
         </div>
         {!showTopLevelReply && (
           <div className="flex px-2">

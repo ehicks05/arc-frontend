@@ -12,6 +12,7 @@
   "dependencies": {
     "@apollo/client": "^3.7.14",
     "@headlessui/react": "^1.7.14",
+    "@radix-ui/react-select": "^1.2.2",
     "@supabase/auth-ui-react": "^0.4.2",
     "@supabase/auth-ui-shared": "^0.1.6",
     "@supabase/supabase-js": "^2.26.0",
