@@ -35,16 +35,16 @@ const PostEditForm = ({ post, setEditMode }: Props) => {
         value={content}
         onChange={e => setContent(e.target.value)}
       />
-      <div className="flex text-xs pt-1 gap-4">
+      <div className="flex text-xs gap-4">
+        <Button className="text-xs" onClick={() => setEditMode(false)}>
+          Cancel
+        </Button>
         <Button
           className="text-xs"
           disabled={!content}
           onClick={() => handleClick()}
         >
           Submit
-        </Button>
-        <Button className="text-xs" onClick={() => setEditMode(false)}>
-          Cancel
         </Button>
       </div>
     </div>

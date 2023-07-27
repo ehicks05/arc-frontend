@@ -73,24 +73,23 @@ const Post = () => {
             </div>
 
             {editMode && <PostEditForm post={post} setEditMode={setEditMode} />}
+            {!editMode && !post.deleted && user?.id === post.authorId && (
+              <div className="flex text-xs pt-1 gap-4">
+                <Button
+                  disabled={!isAuthor}
+                  onClick={user ? () => setEditMode(!editMode) : showAuthModal}
+                >
+                  Edit
+                </Button>
+                <Button
+                  disabled={!isAuthor}
+                  onClick={user ? () => handleClickDelete(post.id) : showAuthModal}
+                >
+                  Delete
+                </Button>
+              </div>
+            )}
           </div>
-
-          {!post.deleted && !editMode && user?.id === post.authorId && (
-            <div className="flex text-xs px-2 pt-1 gap-4">
-              <Button
-                disabled={!isAuthor}
-                onClick={user ? () => setEditMode(!editMode) : showAuthModal}
-              >
-                Edit
-              </Button>
-              <Button
-                disabled={!isAuthor}
-                onClick={user ? () => handleClickDelete(post.id) : showAuthModal}
-              >
-                Delete
-              </Button>
-            </div>
-          )}
         </div>
         <div className="flex px-2">
           {Object.entries(CommentSort).map(([label, name]) => (
