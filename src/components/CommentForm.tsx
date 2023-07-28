@@ -20,7 +20,7 @@ const CommentForm = ({ content, setContent, handleSubmit, setEditMode }: Props) 
   ));
 
   return (
-    <div>
+    <div className="w-full">
       <TextareaAutosize
         minRows={3}
         className="w-full text-sm dark:bg-neutral-800 dark:text-neutral-200"
