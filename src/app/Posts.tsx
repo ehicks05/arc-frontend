@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { TbMoodEmpty } from 'react-icons/tb';
 import { PostStub, Loading, Button, Card } from '@/components';
 import { Sort, useGetPostsQuery } from '@/generated/graphql';
 
@@ -27,7 +28,12 @@ const Posts = () => {
   if (posts) {
     return (
       <div className="w-full sm:max-w-screen-lg sm:w-5/6 mx-auto">
-        {!posts?.length && <Card>nothing to see here...</Card>}
+        {!posts?.length && (
+          <Card>
+            <TbMoodEmpty size={128} />
+            No posts found.
+          </Card>
+        )}
         {posts?.length !== 0 && (
           <>
             {posts.map((post, i) => (

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useModal } from 'react-modal-hook';
 import clsx from 'clsx';
 import * as Select from '@radix-ui/react-select';
+import { CgSleep } from 'react-icons/cg';
 
 import {
   CommentSort,
@@ -16,6 +17,7 @@ import {
   PostStub,
   Button,
   Loading,
+  Card,
 } from '@/components';
 import { useUser } from '@/hooks';
 import { toForest } from './utils';
@@ -60,7 +62,7 @@ const Post = () => {
     const isAuthor = user?.id === post.authorId;
 
     return (
-      <div className="flex flex-col gap-4 w-full sm:max-w-screen-lg sm:w-5/6 mx-auto">
+      <div className="flex flex-col gap-4 w-full sm:max-w-screen-lg max-w-prose mx-auto">
         <div>
           <PostStub post={post} />
           <div className="p-2 border-y dark:border-gray-800">
@@ -92,12 +94,30 @@ const Post = () => {
             )}
           </div>
         </div>
+
         <div className="flex px-2">
-          <Select.Root onValueChange={v => setCommentSort(v)}>
+          {!showTopLevelReply && (
+            <Button onClick={() => setShowTopLevelReply(true)}>
+              Leave a comment
+            </Button>
+          )}
+          {showTopLevelReply && (
+            <CommentCreateForm
+              postId={post.id}
+              refetchPost={refetchPost}
+              setEditMode={setShowTopLevelReply}
+            />
+          )}
+        </div>
+
+        <div className="flex px-2">
+          <Select.Root onValueChange={v => setCommentSort(v as CommentSort)}>
             <Select.Trigger>
               <Button>
-                <Select.Value>Sort</Select.Value>
-                <Select.Icon className="ml-2" />
+                <Select.Value>
+                  <span className="text-sm">Sort</span>
+                </Select.Value>
+                <Select.Icon className="ml-2 text-xs" />
               </Button>
             </Select.Trigger>
 
@@ -106,16 +126,9 @@ const Post = () => {
                 <Select.ScrollUpButton />
                 <Select.Viewport>
                   {Object.entries(CommentSort).map(([label, name]) => (
-                    // <div key={name}>
                     <Select.Item
                       className={clsx(
-                        'px-4 py-2 text-sm font-medium cursor-pointer first:rounded-l last:rounded-r',
-                        {
-                          'bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white':
-                            name === commentSort,
-                          'text-neutral-600 bg-neutral-100 hover:bg-neutral-200 hover:text-black dark:text-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-600 dark:hover:text-white':
-                            name !== commentSort,
-                        },
+                        'px-4 py-2 text-sm font-medium cursor-pointer text-neutral-600 bg-neutral-100 hover:bg-neutral-200 hover:text-black dark:text-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-600 dark:hover:text-white',
                       )}
                       value={name}
                       key={name}
@@ -123,7 +136,6 @@ const Post = () => {
                       <Select.ItemText>{label}</Select.ItemText>
                       <Select.ItemIndicator />
                     </Select.Item>
-                    // </div>
                   ))}
                 </Select.Viewport>
                 <Select.ScrollDownButton />
@@ -132,22 +144,14 @@ const Post = () => {
             </Select.Portal>
           </Select.Root>
         </div>
-        {!showTopLevelReply && (
-          <div className="flex px-2">
-            <Button onClick={() => setShowTopLevelReply(true)}>
-              Leave a comment
-            </Button>
-          </div>
-        )}
-        {showTopLevelReply && (
-          <CommentCreateForm
-            postId={post.id}
-            refetchPost={refetchPost}
-            setEditMode={setShowTopLevelReply}
-          />
-        )}
         {post.comments && (
           <Comments comments={toForest(post.comments)} refetchPost={refetchPost} />
+        )}
+        {post.comments.length === 0 && (
+          <Card>
+            <CgSleep size={128} />
+            No comments found.
+          </Card>
         )}
       </div>
     );
