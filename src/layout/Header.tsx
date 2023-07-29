@@ -8,7 +8,7 @@ import { AuthDialog } from '@/components';
 import { useUser } from '@/hooks';
 import { supabase } from '@/supabase';
 
-const navigation = [
+const NAV_LINKS = [
   { name: 'Hot', href: '/' },
   { name: 'Top', href: '/top' },
   { name: 'New', href: '/new' },
@@ -34,6 +34,27 @@ const Logo = () => (
   </div>
 );
 
+const NonMobileLinks = () => {
+  const location = useLocation();
+
+  return (
+    <div className="hidden sm:ml-6 sm:flex space-x-4">
+      {NAV_LINKS.map(item => {
+        const isActive = location.pathname === item.href;
+        const isActiveClasses = isActive
+          ? 'bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white'
+          : 'text-neutral-600 bg-neutral-100 hover:bg-neutral-200 hover:text-black dark:text-neutral-300 dark:bg-neutral-900 dark:hover:bg-neutral-700 dark:hover:text-white';
+        const classes = `px-3 py-2 rounded-md text-sm font-medium ${isActiveClasses}`;
+        return (
+          <NavLink key={item.name} to={item.href} className={classes}>
+            {item.name}
+          </NavLink>
+        );
+      })}
+    </div>
+  );
+};
+
 export default function Header() {
   const location = useLocation();
   const { user, username } = useUser();
@@ -53,29 +74,7 @@ export default function Header() {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <Logo />
-                <div className="hidden sm:block sm:ml-6">
-                  <div className="flex space-x-4">
-                    {navigation.map(item => (
-                      <NavLink
-                        end
-                        key={item.name}
-                        to={item.href}
-                        className={`px-3 py-2 rounded-md text-sm font-medium
-                        ${
-                          location.pathname === item.href
-                            ? 'bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white'
-                            : 'text-neutral-600 bg-neutral-100 hover:bg-neutral-200 hover:text-black dark:text-neutral-300 dark:bg-neutral-900 dark:hover:bg-neutral-700 dark:hover:text-white'
-                        }
-                        `}
-                        aria-current={
-                          location.pathname === item.href ? 'page' : undefined
-                        }
-                      >
-                        {item.name}
-                      </NavLink>
-                    ))}
-                  </div>
-                </div>
+                <NonMobileLinks />
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-2">
                 <button
@@ -178,7 +177,7 @@ export default function Header() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {navigation.map(item => (
+              {NAV_LINKS.map(item => (
                 <NavLink
                   end
                   key={item.name}
