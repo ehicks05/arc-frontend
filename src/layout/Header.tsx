@@ -13,10 +13,6 @@ const navigation = [
   { name: 'New', href: '/new' },
 ];
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
-
 export default function Header() {
   const location = useLocation();
   const { user, username } = useUser();
@@ -137,62 +133,41 @@ export default function Header() {
                       >
                         <Menu.Items
                           static
-                          className="z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                          className="z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 text-sm bg-white dark:bg-neutral-700 dark:text-neutral-100 ring-1 ring-black ring-opacity-5 focus:outline-none"
                         >
                           {user && (
                             <>
                               <Menu.Item>
-                                {({ active }) => (
-                                  <Link
-                                    to={`/users/${user.id}`}
-                                    className={classNames(
-                                      active ? 'bg-neutral-100' : '',
-                                      'block px-4 py-2 text-sm text-neutral-700',
-                                    )}
-                                  >
-                                    Your Profile
-                                  </Link>
-                                )}
+                                <Link
+                                  to={`/users/${user.id}`}
+                                  className="block px-4 py-2"
+                                >
+                                  Your Profile
+                                </Link>
                               </Menu.Item>
                               <Menu.Item>
-                                {({ active }) => (
-                                  <Link
-                                    to="/settings"
-                                    className={classNames(
-                                      active ? 'bg-neutral-100' : '',
-                                      'block px-4 py-2 text-sm text-neutral-700',
-                                    )}
-                                  >
-                                    Settings
-                                  </Link>
-                                )}
+                                <Link to="/settings" className="block px-4 py-2">
+                                  Settings
+                                </Link>
                               </Menu.Item>
                               <Menu.Item>
-                                {({ active }) => (
-                                  <Link
-                                    to="#"
-                                    onClick={showAuthModal}
-                                    className={classNames(
-                                      active ? 'bg-neutral-100' : '',
-                                      'block px-4 py-2 text-sm text-neutral-700',
-                                    )}
-                                  >
-                                    Log Out
-                                  </Link>
-                                )}
+                                <Link
+                                  to="#"
+                                  onClick={showAuthModal}
+                                  className="block px-4 py-2"
+                                >
+                                  Log Out
+                                </Link>
                               </Menu.Item>
                             </>
                           )}
                           {!user && (
                             <Menu.Item>
-                              {({ active }) => (
+                              {() => (
                                 <Link
                                   to="#"
                                   onClick={showAuthModal}
-                                  className={classNames(
-                                    active ? 'bg-neutral-100' : '',
-                                    'block px-4 py-2 text-sm text-neutral-700',
-                                  )}
+                                  className="block px-4 py-2"
                                 >
                                   Log In
                                 </Link>
@@ -216,11 +191,7 @@ export default function Header() {
                   key={item.name}
                   to={item.href}
                   className={`block px-3 py-2 rounded-md text-base font-medium
-                  ${
-                    location.pathname !== item.href
-                      ? 'text-neutral-300 hover:bg-neutral-700 hover:text-white'
-                      : ''
-                  }
+                  ${location.pathname !== item.href ? 'text-neutral-300' : ''}
                   `}
                   aria-current={location.pathname === item.href ? 'page' : undefined}
                 >
