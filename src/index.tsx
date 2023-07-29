@@ -1,3 +1,4 @@
+import './index.css';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import {
@@ -14,7 +15,6 @@ import { Auth } from '@supabase/auth-ui-react';
 
 import { supabase } from './supabase';
 import App from './MyApp';
-import './index.css';
 
 const authClient = supabase.auth;
 
