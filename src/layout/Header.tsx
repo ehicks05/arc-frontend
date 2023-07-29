@@ -24,6 +24,15 @@ const MobileMenuButton = ({ open }: { open: boolean }) => (
   </Disclosure.Button>
 );
 
+const Logo = () => (
+  <div className="flex-shrink-0 flex items-center">
+    <Link to="/">
+      <img className="inline h-8 w-auto" src="/lightningbolt.svg" alt="logo" />
+      <img className="hidden lg:inline h-8 w-auto" src="/name.svg" alt="logo" />
+    </Link>
+  </div>
+);
+
 export default function Header() {
   const location = useLocation();
   const { user, username } = useUser();
@@ -42,27 +51,7 @@ export default function Header() {
                 <MobileMenuButton open={open} />
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex-shrink-0 flex items-center">
-                  <Link to="/">
-                    <img
-                      className="block lg:hidden h-8 w-auto"
-                      src="/lightningbolt.svg"
-                      alt="Workflow"
-                    />
-                  </Link>
-                  <Link to="/">
-                    <img
-                      className="hidden lg:inline h-8 w-auto"
-                      src="/lightningbolt.svg"
-                      alt="Workflow"
-                    />
-                    <img
-                      className="hidden lg:inline h-8 w-auto"
-                      src="/name.svg"
-                      alt="Workflow"
-                    />
-                  </Link>
-                </div>
+                <Logo />
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     {navigation.map(item => (
