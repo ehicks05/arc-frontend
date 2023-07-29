@@ -40,8 +40,8 @@ const UsernameForm = () => {
   );
 };
 
-const AuthDialogContent = () => {
-  const { user, username, loading } = useUser();
+const AuthDialogContent = ({ hideModal }: { hideModal: () => void }) => {
+  const { session, user, username, loading } = useUser();
   const apolloClient = useApolloClient();
   const { isDarkMode } = useDarkMode();
 
@@ -49,6 +49,9 @@ const AuthDialogContent = () => {
     console.log(event);
     if (['SIGNED_IN', 'SIGNED_OUT'].includes(event)) {
       apolloClient.resetStore();
+    }
+    if (event === 'SIGNED_IN' && session) {
+      hideModal();
     }
   });
 
@@ -85,7 +88,7 @@ interface AuthDialogProps {
 
 const AuthDialog = ({ isOpen, hideModal }: AuthDialogProps) => (
   <Dialog isOpen={isOpen} onClose={hideModal}>
-    <AuthDialogContent />
+    <AuthDialogContent hideModal={hideModal} />
   </Dialog>
 );
 
