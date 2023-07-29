@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useApolloClient } from '@apollo/client';
+import { useDarkMode } from 'usehooks-ts';
 import { useUser } from '@/hooks';
 import { supabase } from '@/supabase';
 import { useSetUsernameMutation } from '@/generated/graphql';
@@ -42,6 +43,7 @@ const UsernameForm = () => {
 const AuthDialogContent = () => {
   const { user, username, loading } = useUser();
   const apolloClient = useApolloClient();
+  const { isDarkMode } = useDarkMode();
 
   supabase.auth.onAuthStateChange(event => {
     console.log(event);
@@ -67,7 +69,7 @@ const AuthDialogContent = () => {
   return (
     <Auth
       providers={[]}
-      theme="dark"
+      theme={isDarkMode ? 'dark' : 'default'}
       appearance={{
         theme: ThemeSupa,
       }}
