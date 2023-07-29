@@ -55,9 +55,77 @@ const NonMobileLinks = () => {
   );
 };
 
+const ProfileMenu = ({ showAuthModal }: { showAuthModal: () => void }) => {
+  const { user } = useUser();
+  const signOut = () => supabase.auth.signOut();
+
+  return (
+    <Menu as="div" className="ml-3 relative">
+      {({ open }) => (
+        <>
+          <div>
+            <Menu.Button className="bg-neutral-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+              <span className="sr-only">Open user menu</span>
+              <img
+                className="h-8 w-8 rounded-full"
+                src={toGravatarUrl(user?.email)}
+                alt=""
+              />
+            </Menu.Button>
+          </div>
+          <Transition
+            show={open}
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items
+              static
+              className="z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 text-sm bg-white dark:bg-neutral-700 dark:text-neutral-100 ring-1 ring-black ring-opacity-5 focus:outline-none"
+            >
+              {user && (
+                <>
+                  <Menu.Item>
+                    <Link to={`/users/${user.id}`} className="block px-4 py-2">
+                      Your Profile
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <Link to="/settings" className="block px-4 py-2">
+                      Settings
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <Link to="#" onClick={signOut} className="block px-4 py-2">
+                      Sign Out
+                    </Link>
+                  </Menu.Item>
+                </>
+              )}
+              {!user && (
+                <Menu.Item>
+                  {() => (
+                    <Link to="#" onClick={showAuthModal} className="block px-4 py-2">
+                      Sign In
+                    </Link>
+                  )}
+                </Menu.Item>
+              )}
+            </Menu.Items>
+          </Transition>
+        </>
+      )}
+    </Menu>
+  );
+};
+
 export default function Header() {
   const location = useLocation();
-  const { user, username } = useUser();
+  const { username } = useUser();
 
   const [showAuthModal, hideModal] = useModal(() => (
     <AuthDialog isOpen hideModal={hideModal} />
@@ -99,78 +167,7 @@ export default function Header() {
                   <HiOutlineBell className="h-6 w-6" aria-hidden="true" />
                 </button>
 
-                {/* Profile dropdown */}
-                <Menu as="div" className="ml-3 relative">
-                  {({ open }) => (
-                    <>
-                      <div>
-                        <Menu.Button className="bg-neutral-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                          <span className="sr-only">Open user menu</span>
-                          <img
-                            className="h-8 w-8 rounded-full"
-                            src={toGravatarUrl(user?.email)}
-                            alt=""
-                          />
-                        </Menu.Button>
-                      </div>
-                      <Transition
-                        show={open}
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
-                      >
-                        <Menu.Items
-                          static
-                          className="z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 text-sm bg-white dark:bg-neutral-700 dark:text-neutral-100 ring-1 ring-black ring-opacity-5 focus:outline-none"
-                        >
-                          {user && (
-                            <>
-                              <Menu.Item>
-                                <Link
-                                  to={`/users/${user.id}`}
-                                  className="block px-4 py-2"
-                                >
-                                  Your Profile
-                                </Link>
-                              </Menu.Item>
-                              <Menu.Item>
-                                <Link to="/settings" className="block px-4 py-2">
-                                  Settings
-                                </Link>
-                              </Menu.Item>
-                              <Menu.Item>
-                                <Link
-                                  to="#"
-                                  onClick={() => supabase.auth.signOut()}
-                                  className="block px-4 py-2"
-                                >
-                                  Sign Out
-                                </Link>
-                              </Menu.Item>
-                            </>
-                          )}
-                          {!user && (
-                            <Menu.Item>
-                              {() => (
-                                <Link
-                                  to="#"
-                                  onClick={showAuthModal}
-                                  className="block px-4 py-2"
-                                >
-                                  Sign In
-                                </Link>
-                              )}
-                            </Menu.Item>
-                          )}
-                        </Menu.Items>
-                      </Transition>
-                    </>
-                  )}
-                </Menu>
+                <ProfileMenu showAuthModal={showAuthModal} />
               </div>
             </div>
           </div>
