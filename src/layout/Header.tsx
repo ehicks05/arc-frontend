@@ -6,6 +6,7 @@ import { useModal } from 'react-modal-hook';
 import { toGravatarUrl } from '@/utils/gravatar';
 import { AuthDialog } from '@/components';
 import { useUser } from '@/hooks';
+import { supabase } from '@/supabase';
 
 const navigation = [
   { name: 'Hot', href: '/' },
@@ -145,10 +146,10 @@ export default function Header() {
                               <Menu.Item>
                                 <Link
                                   to="#"
-                                  onClick={showAuthModal}
+                                  onClick={() => supabase.auth.signOut()}
                                   className="block px-4 py-2"
                                 >
-                                  Log Out
+                                  Sign Out
                                 </Link>
                               </Menu.Item>
                             </>
@@ -161,7 +162,7 @@ export default function Header() {
                                   onClick={showAuthModal}
                                   className="block px-4 py-2"
                                 >
-                                  Log In
+                                  Sign In
                                 </Link>
                               )}
                             </Menu.Item>
