@@ -1,6 +1,12 @@
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { HiOutlineBell, HiOutlineMenu, HiOutlineX, HiPlus } from 'react-icons/hi';
+import {
+  HiOutlineBell,
+  HiOutlineMenu,
+  HiOutlineUser,
+  HiOutlineX,
+  HiPlus,
+} from 'react-icons/hi';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useModal } from 'react-modal-hook';
 import { toGravatarUrl } from '@/utils/gravatar';
@@ -60,19 +66,23 @@ const ProfileMenu = ({ showAuthModal }: { showAuthModal: () => void }) => {
   const signOut = () => supabase.auth.signOut();
 
   return (
-    <Menu as="div" className="ml-3 relative">
+    <Menu as="div" className="relative">
       {({ open }) => (
         <>
-          <div>
-            <Menu.Button className="bg-neutral-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-              <span className="sr-only">Open user menu</span>
+          <Menu.Button className="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+            {!user?.email && (
+              <button className="dark:bg-neutral-800 p-1 rounded-full text-neutral-400 hover:text-black dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                <HiOutlineUser className="h-6 w-6" />
+              </button>
+            )}
+            {user?.email && (
               <img
                 className="h-8 w-8 rounded-full"
                 src={toGravatarUrl(user?.email)}
-                alt=""
+                alt="avatar"
               />
-            </Menu.Button>
-          </div>
+            )}
+          </Menu.Button>
           <Transition
             show={open}
             as={Fragment}
