@@ -71,9 +71,9 @@ const ProfileMenu = ({ showAuthModal }: { showAuthModal: () => void }) => {
         <>
           <Menu.Button className="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
             {!user?.email && (
-              <button className="dark:bg-neutral-800 p-1 rounded-full text-neutral-400 hover:text-black dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+              <div className="dark:bg-neutral-800 p-1 rounded-full text-neutral-400 hover:text-black dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                 <HiOutlineUser className="h-6 w-6" />
-              </button>
+              </div>
             )}
             {user?.email && (
               <img
