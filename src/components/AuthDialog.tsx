@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useApolloClient } from '@apollo/client';
@@ -6,7 +6,7 @@ import { useDarkMode } from 'usehooks-ts';
 import { useUser } from '@/hooks';
 import { supabase } from '@/supabase';
 import { useSetUsernameMutation } from '@/generated/graphql';
-import { Button, Dialog } from '.';
+import { Button, Dialog, Loading } from '.';
 
 const UsernameForm = () => {
   const [usernameField, setUsernameField] = useState('');
@@ -41,44 +41,48 @@ const UsernameForm = () => {
 };
 
 const AuthDialogContent = ({ hideModal }: { hideModal: () => void }) => {
-  const { session, user, username, loading } = useUser();
+  const { user, username, loading } = useUser();
   const apolloClient = useApolloClient();
   const { isDarkMode } = useDarkMode();
+  const [signedInEventFired, setSignedInEventFired] = useState(false);
 
   supabase.auth.onAuthStateChange(event => {
-    console.log(event);
     if (['SIGNED_IN', 'SIGNED_OUT'].includes(event)) {
       apolloClient.resetStore();
     }
-    if (event === 'SIGNED_IN' && session) {
-      hideModal();
+    if (event === 'SIGNED_IN') {
+      setSignedInEventFired(true);
     }
   });
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    if (signedInEventFired && username) {
+      hideModal();
+    }
+  }, [signedInEventFired, username, hideModal]);
 
-  if (user) {
+  if (!loading && user && !username) {
     return (
       <div className="flex flex-col gap-4">
         <div>Welcome {username || user.email}!</div>
         {!username && <UsernameForm />}
-        <div className="h-12" />
-        <Button onClick={() => supabase.auth.signOut()}>Sign out</Button>
       </div>
     );
   }
-  return (
-    <Auth
-      providers={[]}
-      theme={isDarkMode ? 'dark' : 'default'}
-      appearance={{
-        theme: ThemeSupa,
-      }}
-      supabaseClient={supabase}
-    />
-  );
+  if (!user) {
+    return (
+      <Auth
+        providers={[]}
+        theme={isDarkMode ? 'dark' : 'default'}
+        appearance={{
+          theme: ThemeSupa,
+        }}
+        supabaseClient={supabase}
+      />
+    );
+  }
+
+  return <Loading />;
 };
 
 interface AuthDialogProps {
