@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useModal } from 'react-modal-hook';
-import clsx from 'clsx';
-import * as Select from '@radix-ui/react-select';
 import { CgSleep } from 'react-icons/cg';
-
 import {
   CommentSort,
   useDeletePostMutation,
@@ -22,6 +19,7 @@ import {
 import { useUser } from '@/hooks';
 import { toForest } from './utils';
 import PostEditForm from './PostEditForm';
+import CommentSortSelect from './CommentSortSelect';
 
 const Post = () => {
   const { user } = useUser();
@@ -113,40 +111,7 @@ const Post = () => {
           )}
         </div>
 
-        <div className="flex px-2">
-          <Select.Root onValueChange={v => setCommentSort(v as CommentSort)}>
-            <Select.Trigger>
-              <Button>
-                <Select.Value>
-                  <span className="text-sm">Sort</span>
-                </Select.Value>
-                <Select.Icon className="ml-2 text-xs" />
-              </Button>
-            </Select.Trigger>
-
-            <Select.Portal>
-              <Select.Content position="popper">
-                <Select.ScrollUpButton />
-                <Select.Viewport>
-                  {Object.entries(CommentSort).map(([label, name]) => (
-                    <Select.Item
-                      className={clsx(
-                        'px-4 py-2 text-sm font-medium cursor-pointer text-neutral-600 bg-neutral-100 hover:bg-neutral-200 hover:text-black dark:text-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-600 dark:hover:text-white',
-                      )}
-                      value={name}
-                      key={name}
-                    >
-                      <Select.ItemText>{label}</Select.ItemText>
-                      <Select.ItemIndicator />
-                    </Select.Item>
-                  ))}
-                </Select.Viewport>
-                <Select.ScrollDownButton />
-                <Select.Arrow />
-              </Select.Content>
-            </Select.Portal>
-          </Select.Root>
-        </div>
+        <CommentSortSelect value={commentSort} onChange={setCommentSort} />
         {post.comments && (
           <Comments comments={toForest(post.comments)} refetchPost={refetchPost} />
         )}
