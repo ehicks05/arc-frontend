@@ -30,7 +30,7 @@ const Post = () => {
   ));
   const { id } = useParams();
   const [editMode, setEditMode] = useState(false);
-  const [showTopLevelReply, setShowTopLevelReply] = useState(false);
+  const [isEditTopLevelComment, setIsEditTopLevelComment] = useState(true);
 
   const [commentSort, setCommentSort] = useState<CommentSort>(CommentSort.Best);
 
@@ -95,17 +95,20 @@ const Post = () => {
           </div>
         </div>
 
-        <div className="flex px-2">
-          {!showTopLevelReply && (
-            <Button onClick={() => setShowTopLevelReply(true)}>
+        <div className="flex">
+          {!isEditTopLevelComment && (
+            <Button
+              className="text-sm"
+              onClick={() => setIsEditTopLevelComment(true)}
+            >
               Leave a comment
             </Button>
           )}
-          {showTopLevelReply && (
+          {isEditTopLevelComment && (
             <CommentCreateForm
               postId={post.id}
               refetchPost={refetchPost}
-              setEditMode={setShowTopLevelReply}
+              setEditMode={setIsEditTopLevelComment}
             />
           )}
         </div>
