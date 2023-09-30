@@ -32,20 +32,29 @@ const User = () => {
           </div>
           <div className="flex flex-col">
             <div>Posts:</div>
-            {posts && posts.map(post => <PostStub key={post.id} post={post} />)}
+            {posts && (
+              <div className="flex flex-col gap-4">
+                {posts.map(post => (
+                  <PostStub key={post.id} post={post} />
+                ))}
+              </div>
+            )}
             <div>Comments:</div>
-            {comments &&
-              comments.map(comment => (
-                <div key={comment.id}>
-                  <PostStub key={comment.post.id} post={comment.post} />
-                  <Comment
-                    key={comment.id}
-                    comment={comment}
-                    notInTree
-                    refetchPost={refetch}
-                  />
-                </div>
-              ))}
+            {comments && (
+              <div className="flex flex-col gap-4">
+                {comments.map(comment => (
+                  <div key={comment.id}>
+                    <PostStub key={comment.post.id} post={comment.post} />
+                    <Comment
+                      key={comment.id}
+                      comment={comment}
+                      notInTree
+                      refetchPost={refetch}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
