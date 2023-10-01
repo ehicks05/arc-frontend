@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useNavigate } from 'react-router-dom';
+import { useApolloClient } from '@apollo/client';
 import { Button, Loading } from '@/components';
 import { useCreatePostMutation } from '@/generated/graphql';
 
@@ -12,6 +13,7 @@ const PostForm = () => {
   const [content, setContent] = useState('');
 
   const [createPost, { loading, error }] = useCreatePostMutation();
+  const { resetStore } = useApolloClient();
 
   const handleClick = async () => {
     try {
@@ -25,7 +27,7 @@ const PostForm = () => {
         },
       });
       const newPostId = result?.data?.createPost?.id;
-
+      await resetStore();
       navigate(`/posts/${newPostId}`);
     } catch (err) {
       console.log(err);
