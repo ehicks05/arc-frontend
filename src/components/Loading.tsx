@@ -13,7 +13,9 @@ const Loading = ({ error }: Props) => {
     return (
       <Card>
         <div className="text-center text-3xl">Something went wrong.</div>
-        <div className="text-center text-xl">{message}</div>
+        <div className="text-xs">
+          <pre className="whitespace-pre-wrap">{message}</pre>
+        </div>
         <TbMoodSad size={128} />
       </Card>
     );
