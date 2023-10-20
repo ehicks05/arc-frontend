@@ -3,23 +3,23 @@ import { useLocation } from 'react-router-dom';
 
 import { TbMoodEmpty } from 'react-icons/tb';
 import { PostStub, Loading, Button, Card } from '@/components';
-import { Sort, useGetPostsQuery } from '@/generated/graphql';
+import { PostSort, usePostsQuery } from '@/generated/graphql';
 
-const pathToSort: Record<string, Sort> = {
-  '/': Sort.Hot,
-  '/top': Sort.Top,
-  '/new': Sort.New,
+const pathToSort: Record<string, PostSort> = {
+  '/': PostSort.Hot,
+  '/top': PostSort.Top,
+  '/new': PostSort.New,
 };
 
 const Posts = () => {
   const { pathname } = useLocation();
   const sort = pathToSort[pathname];
 
-  const { data, loading, error, fetchMore } = useGetPostsQuery({
+  const { data, loading, error, fetchMore } = usePostsQuery({
     variables: { sort },
     notifyOnNetworkStatusChange: true,
   });
-  const posts = data?.getPosts;
+  const posts = data?.posts;
 
   const handleFetchMore = () => {
     fetchMore({ variables: { sort, offset: posts?.length } });

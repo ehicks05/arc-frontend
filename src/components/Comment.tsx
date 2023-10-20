@@ -10,7 +10,7 @@ import { useUser } from '@/hooks';
 import { Button, Comments, CommentCreateForm, VoteInput } from './index';
 import {
   useDeleteCommentMutation,
-  Direction,
+  VoteDirection,
   useCreateUserCommentVoteMutation,
   useDeleteUserCommentVoteMutation,
   CommentFragment,
@@ -36,7 +36,7 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
 
   const handleClickDelete = async (id: string) => {
     if (window.confirm('Are you sure?')) {
-      await deleteComment({ variables: { id } });
+      await deleteComment({ variables: { input: { id } } });
       refetchPost();
     }
   };
@@ -44,15 +44,15 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
   const [createUserCommentVote] = useCreateUserCommentVoteMutation();
   const [deleteUserCommentVote] = useDeleteUserCommentVoteMutation();
 
-  const handleVote = async (direction: Direction) =>
+  const handleVote = async (direction: VoteDirection) =>
     comment.userVote?.direction &&
     DIRECTION_TO_VALUE[direction] === comment.userVote.direction
-      ? deleteUserCommentVote({ variables: { commentId: comment.id } })
+      ? deleteUserCommentVote({ variables: { input: { commentId: comment.id } } })
       : createUserCommentVote({
           variables: { input: { commentId: comment.id, direction } },
         });
 
-  const isAuthor = user?.id === comment.authorId;
+  const isAuthor = user?.id === comment.author?.id;
 
   const bgClass =
     comment.level % 2 === 0 || notInTree
@@ -64,8 +64,8 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
         {!minimized && (
           <VoteInput
             direction={comment.userVote?.direction}
-            handleUpvote={() => handleVote(Direction.Up)}
-            handleDownvote={() => handleVote(Direction.Down)}
+            handleUpvote={() => handleVote(VoteDirection.Up)}
+            handleDownvote={() => handleVote(VoteDirection.Down)}
           />
         )}
         {minimized && <div className="w-4" />}
@@ -131,7 +131,7 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
               {showReplyForm && (
                 <div className="mt-2">
                   <CommentCreateForm
-                    postId={comment.postId}
+                    postId={comment.post.id}
                     parentComment={comment}
                     setEditMode={setShowReplyForm}
                     refetchPost={refetchPost}
@@ -167,8 +167,8 @@ const Header = ({ comment, minimized, setMinimized }: HeaderProps) => (
       {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
     </button>
     <Link
-      className={`${!comment.authorId && 'pointer-events-none'}`}
-      to={`/users/${comment?.authorId}`}
+      className={`${!comment.author?.id && 'pointer-events-none'}`}
+      to={`/users/${comment?.author?.id}`}
     >
       {comment?.author?.username || '[Deleted]'}
     </Link>

@@ -1,18 +1,23 @@
 fragment Comment on Comment {
   id
-  postId
+  post {
+    id
+  }
   content
   deleted
   level
   createdAt
   updatedAt
-  authorId
   author {
     id
     username
   }
-  parentCommentId
-  score
+  parentComment {
+    id
+  }
+  score {
+    score
+  }
   netVotes
   userVote {
     direction
@@ -31,8 +36,8 @@ mutation updateComment($input: updateCommentInput!) {
   }
 }
 
-mutation deleteComment($id: ID) {
-  deleteComment(id: $id) {
+mutation deleteComment($input: deleteCommentInput!) {
+  deleteComment(input: $input) {
     ...Comment
   }
 }

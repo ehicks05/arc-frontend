@@ -1,14 +1,14 @@
 import { Auth } from '@supabase/auth-ui-react';
-import { useGetUserQuery } from '@/generated/graphql';
+import { useUserQuery } from '@/generated/graphql';
 
 const useUser = () => {
   const { session, user } = Auth.useUser();
 
-  const { data, loading, error } = useGetUserQuery({
-    variables: { id: user?.id },
+  const { data, loading, error } = useUserQuery({
+    variables: { id: user?.id || '' },
     skip: !user,
   });
-  const username = data?.getUser?.username;
+  const username = data?.user?.username;
 
   return { session, user, username, loading, error };
 };

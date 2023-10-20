@@ -14,7 +14,9 @@ const UsernameForm = () => {
 
   const handleSubmit = async () => {
     try {
-      await setUsernameMutation({ variables: { username: usernameField } });
+      await setUsernameMutation({
+        variables: { input: { username: usernameField } },
+      });
       await supabase.auth.refreshSession();
     } catch (e) {
       console.log(e);

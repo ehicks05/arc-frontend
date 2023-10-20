@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Button, Loading } from '@/components/index';
-import { PostFragment, useUpdatePostMutation } from '@/generated/graphql';
+import { PostDetailFragment, useUpdatePostMutation } from '@/generated/graphql';
 
 interface Props {
-  post: PostFragment;
+  post: PostDetailFragment;
   setEditMode: (isEditMode: boolean) => void;
 }
 

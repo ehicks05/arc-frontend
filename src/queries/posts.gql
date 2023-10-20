@@ -1,53 +1,60 @@
-fragment Post on Post {
+fragment PostStub on Post {
   id
   title
   link
-  content
   deleted
   createdAt
   updatedAt
-  authorId
   author {
     id
     username
   }
   commentCount
   netVotes
-  score
+  score {
+    score
+  }
   userVote {
     direction
   }
 }
 
-query GetPosts($sort: Sort, $offset: Int) {
-  getPosts(sort: $sort, offset: $offset) {
-    ...Post
+fragment PostDetail on Post {
+  ...PostStub
+  content
+  comments {
+    ...Comment
   }
 }
 
-query GetPostById($id: ID, $commentSort: CommentSort) {
-  getPostById(id: $id) {
-    ...Post
-    comments(commentSort: $commentSort) {
-      ...Comment
-    }
+query Posts($sort: PostSort, $offset: Int) {
+  posts(sort: $sort, offset: $offset) {
+    ...PostStub
+  }
+}
+
+query Post($id: String!) {
+  post(id: $id) {
+    ...PostDetail
   }
 }
 
 mutation createPost($input: createPostInput!) {
   createPost(input: $input) {
-    ...Post
+    ...PostStub
+    content
   }
 }
 
 mutation updatePost($input: updatePostInput!) {
   updatePost(input: $input) {
-    ...Post
+    ...PostStub
+    content
   }
 }
 
-mutation deletePost($id: ID) {
-  deletePost(id: $id) {
-    ...Post
+mutation deletePost($input: deletePostInput!) {
+  deletePost(input: $input) {
+    ...PostStub
   }
 }

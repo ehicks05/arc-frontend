@@ -17,6 +17,7 @@ const PostForm = () => {
 
   const handleClick = async () => {
     try {
+      await resetStore();
       const result = await createPost({
         variables: {
           input: {
@@ -27,7 +28,6 @@ const PostForm = () => {
         },
       });
       const newPostId = result?.data?.createPost?.id;
-      await resetStore();
       navigate(`/posts/${newPostId}`);
     } catch (err) {
       console.log(err);

@@ -1,14 +1,14 @@
-query getUser($id: ID) {
-  getUser(id: $id) {
+query User($id: String!) {
+  user(id: $id) {
     id
     username
     posts {
-      ...Post
+      ...PostDetail
     }
     comments {
       ...Comment
       post {
-        ...Post
+        ...PostStub
       }
     }
   }
@@ -16,28 +16,55 @@ query getUser($id: ID) {
 
 mutation createUserPostVote($input: createUserPostVoteInput!) {
   createUserPostVote(input: $input) {
-    ...Post
+    post {
+      id
+      netVotes
+      userVote {
+        direction
+      }
+    }
   }
 }
 
-mutation deleteUserPostVote($postId: ID) {
-  deleteUserPostVote(postId: $postId) {
-    ...Post
+mutation deleteUserPostVote($input: deleteUserPostVoteInput!) {
+  deleteUserPostVote(input: $input) {
+    post {
+      id
+      netVotes
+      userVote {
+        direction
+      }
+    }
   }
 }
 
 mutation createUserCommentVote($input: createUserCommentVoteInput!) {
   createUserCommentVote(input: $input) {
-    ...Comment
+    comment {
+      id
+      netVotes
+      userVote {
+        direction
+      }
+    }
   }
 }
 
-mutation deleteUserCommentVote($commentId: ID) {
-  deleteUserCommentVote(commentId: $commentId) {
-    ...Comment
+mutation deleteUserCommentVote($input: deleteUserCommentVoteInput!) {
+  deleteUserCommentVote(input: $input) {
+    comment {
+      id
+      netVotes
+      userVote {
+        direction
+      }
+    }
   }
 }
 
-mutation setUsername($username: String) {
-  setUsername(username: $username)
+mutation setUsername($input: setUsernameInput!) {
+  setUsername(input: $input) {
+    id
+    username
+  }
 }

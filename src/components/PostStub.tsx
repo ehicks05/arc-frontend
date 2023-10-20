@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { formatDistance } from 'date-fns';
 import {
-  Direction,
-  PostFragment,
+  VoteDirection,
+  PostStubFragment,
   useCreateUserPostVoteMutation,
   useDeleteUserPostVoteMutation,
 } from '@/generated/graphql';
@@ -12,7 +12,7 @@ import { VoteInput } from '.';
 import { DIRECTION_TO_VALUE } from '@/constants';
 
 interface Props {
-  post: PostFragment;
+  post: PostStubFragment;
   i?: number;
 }
 
@@ -20,11 +20,13 @@ const PostStub = ({ post, i }: Props) => {
   const [createUserPostVote] = useCreateUserPostVoteMutation();
   const [deleteUserPostVote] = useDeleteUserPostVoteMutation();
 
-  const handleVote = async (direction: Direction) =>
+  const handleVote = async (direction: VoteDirection) =>
     post.userVote?.direction &&
     DIRECTION_TO_VALUE[direction] === post.userVote.direction
-      ? deleteUserPostVote({ variables: { postId: post.id } })
-      : createUserPostVote({ variables: { input: { postId: post.id, direction } } });
+      ? deleteUserPostVote({ variables: { input: { postId: post.id } } })
+      : createUserPostVote({
+          variables: { input: { postId: post.id, direction } },
+        });
 
   return (
     <div className="px-2 py-0.5 bg-neutral-100 dark:bg-neutral-800">
@@ -34,8 +36,8 @@ const PostStub = ({ post, i }: Props) => {
         )}
         <VoteInput
           direction={post.userVote?.direction}
-          handleUpvote={() => handleVote(Direction.Up)}
-          handleDownvote={() => handleVote(Direction.Down)}
+          handleUpvote={() => handleVote(VoteDirection.Up)}
+          handleDownvote={() => handleVote(VoteDirection.Down)}
         />
         <div className="flex flex-col py-1">
           <div className="text-sm sm:text-base">
@@ -63,9 +65,9 @@ const PostStub = ({ post, i }: Props) => {
             </span>
             <Link
               className={`text-xs opacity-50 ${
-                !post.authorId && 'pointer-events-none'
+                !post.author?.id && 'pointer-events-none'
               }`}
-              to={`/users/${post?.authorId}`}
+              to={`/users/${post?.author?.id}`}
             >
               {post?.author?.username || '[Deleted]'}
             </Link>

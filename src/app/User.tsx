@@ -1,8 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { TbGhost } from 'react-icons/tb';
-import { Comment, PostStub, Loading } from '@/components';
-import { useGetUserQuery } from '@/generated/graphql';
+import { Comment, PostStub, Loading, Card } from '@/components';
+import { useUserQuery } from '@/generated/graphql';
 
 interface withCreatedAt {
   createdAt: string;
@@ -11,9 +11,10 @@ const byCreatedAt = (o1: withCreatedAt, o2: withCreatedAt) =>
   o2.createdAt.localeCompare(o1.createdAt);
 
 const User = () => {
-  const { id } = useParams();
-  const { data, loading, error, refetch } = useGetUserQuery({ variables: { id } });
-  const user = data?.getUser;
+  const params = useParams();
+  const id = params.id || '';
+  const { data, loading, error, refetch } = useUserQuery({ variables: { id } });
+  const user = data?.user;
 
   if (user) {
     const { username } = user;
@@ -30,31 +31,37 @@ const User = () => {
               {username}
             </span>
           </div>
-          <div className="flex flex-col">
-            <div>Posts:</div>
-            {posts && (
-              <div className="flex flex-col gap-4">
-                {posts.map(post => (
-                  <PostStub key={post.id} post={post} />
-                ))}
-              </div>
-            )}
-            <div>Comments:</div>
-            {comments && (
-              <div className="flex flex-col gap-4">
-                {comments.map(comment => (
-                  <div key={comment.id}>
-                    <PostStub key={comment.post.id} post={comment.post} />
-                    <Comment
-                      key={comment.id}
-                      comment={comment}
-                      notInTree
-                      refetchPost={refetch}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-2">
+              <div className="text-lg">Posts</div>
+              {posts && (
+                <div className="flex flex-col gap-4">
+                  {posts.map(post => (
+                    <PostStub key={post.id} post={post} />
+                  ))}
+                </div>
+              )}
+              {!posts && <Card>No posts found</Card>}
+            </div>
+            <div className="flex flex-col gap-2">
+              <div className="text-lg">Comments</div>
+              {comments && (
+                <div className="flex flex-col gap-4">
+                  {comments.map(comment => (
+                    <div key={comment.id}>
+                      <PostStub key={comment.post.id} post={comment.post} />
+                      <Comment
+                        key={comment.id}
+                        comment={comment}
+                        notInTree
+                        refetchPost={refetch}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {!comments && <Card>No comments found</Card>}
+            </div>
           </div>
         </div>
       </div>

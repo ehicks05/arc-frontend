@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useModal } from 'react-modal-hook';
 import { CgSleep } from 'react-icons/cg';
+import { sortBy } from 'lodash';
 import {
   CommentSort,
   useDeletePostMutation,
-  useGetPostByIdQuery,
+  usePostQuery,
 } from '@/generated/graphql';
 import {
   AuthDialog,
@@ -26,7 +27,8 @@ const Post = () => {
   const [showAuthModal, hideModal] = useModal(() => (
     <AuthDialog isOpen hideModal={hideModal} />
   ));
-  const { id } = useParams();
+  const params = useParams();
+  const id = params.id || '';
   const [editMode, setEditMode] = useState(false);
   const [isEditTopLevelComment, setIsEditTopLevelComment] = useState(true);
 
@@ -39,25 +41,29 @@ const Post = () => {
     loading,
     error,
     refetch: refetchPost,
-  } = useGetPostByIdQuery({
-    variables: { id, commentSort },
+  } = usePostQuery({
+    variables: { id },
   });
-  const post = data?.getPostById || previousData?.getPostById;
-
-  useEffect(() => {
-    const effect = async () => refetchPost({ id, commentSort });
-    effect();
-  }, [id, commentSort, refetchPost]);
+  const post = data?.post || previousData?.post;
+  const comments = sortBy(post?.comments, c =>
+    commentSort === CommentSort.Best
+      ? c.score.score
+      : commentSort === CommentSort.Top
+      ? c.netVotes
+      : commentSort === CommentSort.New
+      ? c.createdAt
+      : c.score.score,
+  ).reverse();
 
   const handleClickDelete = async (id: string) => {
     if (window.confirm('Are you sure?')) {
-      await deletePost({ variables: { id } });
+      await deletePost({ variables: { input: { id } } });
       await refetchPost();
     }
   };
 
   if (post) {
-    const isAuthor = user?.id === post.authorId;
+    const isAuthor = user?.id === post.author?.id;
 
     return (
       <div className="flex flex-col gap-4 w-full sm:max-w-screen-lg max-w-prose mx-auto">
@@ -74,7 +80,7 @@ const Post = () => {
             </div>
 
             {editMode && <PostEditForm post={post} setEditMode={setEditMode} />}
-            {!editMode && !post.deleted && user?.id === post.authorId && (
+            {!editMode && !post.deleted && user?.id === post.author?.id && (
               <div className="flex text-xs pt-1 gap-4">
                 <Button
                   disabled={!isAuthor}
@@ -95,27 +101,32 @@ const Post = () => {
 
         <div className="flex">
           {!isEditTopLevelComment && (
-            <Button
-              className="text-sm"
-              onClick={() => setIsEditTopLevelComment(true)}
-            >
-              Leave a comment
-            </Button>
+            <div className="flex w-full justify-between">
+              <Button
+                className="text-sm"
+                onClick={() => setIsEditTopLevelComment(true)}
+              >
+                Leave a comment
+              </Button>
+              <CommentSortSelect value={commentSort} onChange={setCommentSort} />
+            </div>
           )}
           {isEditTopLevelComment && (
-            <CommentCreateForm
-              postId={post.id}
-              refetchPost={refetchPost}
-              setEditMode={setIsEditTopLevelComment}
-            />
+            <div className="flex w-full flex-col gap-4">
+              <CommentCreateForm
+                postId={post.id}
+                refetchPost={refetchPost}
+                setEditMode={setIsEditTopLevelComment}
+              />
+              <CommentSortSelect value={commentSort} onChange={setCommentSort} />
+            </div>
           )}
         </div>
 
-        <CommentSortSelect value={commentSort} onChange={setCommentSort} />
-        {post.comments && (
-          <Comments comments={toForest(post.comments)} refetchPost={refetchPost} />
+        {comments.length !== 0 && (
+          <Comments comments={toForest(comments)} refetchPost={refetchPost} />
         )}
-        {post.comments.length === 0 && (
+        {comments.length === 0 && (
           <Card>
             <CgSleep size={128} />
             No comments found.

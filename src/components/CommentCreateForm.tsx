@@ -19,6 +19,7 @@ const CommentCreateForm = ({
   const [createComment, { loading, error }] = useCreateCommentMutation();
 
   const handleSubmit = async () => {
+    setEditMode(false);
     await createComment({
       variables: {
         input: {
@@ -30,7 +31,6 @@ const CommentCreateForm = ({
       },
     });
     refetchPost();
-    setEditMode(false);
   };
 
   if (loading || error) return <Loading error={error} />;
