@@ -163,9 +163,6 @@ interface HeaderProps {
 
 const Header = ({ comment, minimized, setMinimized }: HeaderProps) => (
   <div className="flex items-center gap-1 text-xs opacity-50">
-    <button className="text-sm" onClick={() => setMinimized(!minimized)}>
-      {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
-    </button>
     <Link
       className={`${!comment.author?.id && 'pointer-events-none'}`}
       to={`/users/${comment?.author?.id}`}
@@ -183,6 +180,9 @@ const Header = ({ comment, minimized, setMinimized }: HeaderProps) => (
     </span>
     <span>|</span>
     <span>{comment.netVotes} pts</span>
+    <button className="text-sm" onClick={() => setMinimized(!minimized)}>
+      {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
+    </button>
   </div>
 );
 

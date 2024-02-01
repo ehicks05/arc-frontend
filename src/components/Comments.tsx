@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Comments = ({ comments, refetchPost }: Props) => (
-  <div className="flex flex-col gap-2">
+  <div className="flex flex-col">
     {comments &&
       comments.map(comment => (
         <Comment
