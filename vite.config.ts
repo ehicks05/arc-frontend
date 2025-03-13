@@ -28,5 +28,11 @@ export default createApp({
         tsconfigPaths()
       ],
     },
+    {
+      name: "api",
+      type: "http",
+      handler: "./api/api.ts",
+      base: "/api",
+    },
   ]
 })
