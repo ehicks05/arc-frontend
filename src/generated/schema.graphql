@@ -80,6 +80,7 @@ type Query {
   me: User
   post(id: String!): Post
   posts(offset: Int, sort: PostSort): [Post!]
+  test: String
   user(id: String!): User
   users: [User!]
 }

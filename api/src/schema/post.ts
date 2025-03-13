@@ -91,6 +91,13 @@ builder.queryField('post', t =>
   }),
 );
 
+builder.queryField('test', t =>
+  t.string({
+    resolve: async (query, root, args) =>
+      (await prisma.post.findFirst())?.title,
+  }),
+);
+
 const createPostInput = builder.inputType('createPostInput', {
   fields: t => ({
     title: t.string({ required: true }),
