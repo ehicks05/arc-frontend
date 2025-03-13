@@ -5,7 +5,6 @@ export default eventHandler(async event => {
   const url = getRequestURL(event);
   const body = await readRawBody(event, false);
 
-  console.time('yoga');
   const response = await yoga.fetch(
     url,
     {
@@ -15,7 +14,6 @@ export default eventHandler(async event => {
     },
     // ctx
   );
-  console.timeEnd('yoga');
 
   return response.json();
 });

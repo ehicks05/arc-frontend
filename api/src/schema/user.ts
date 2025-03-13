@@ -40,16 +40,11 @@ builder.queryField('user', t =>
     type: 'User',
     nullable: true,
     args: { id: t.arg.string({ required: true }) },
-    resolve: async (query, root, args, ctx) => {
-      console.time('user');
-      const result = await prisma.user.findUnique({
+    resolve: async (query, root, args, ctx) =>
+      prisma.user.findUnique({
         ...query,
         where: { id: args.id },
-      });
-      console.timeEnd('user');
-
-      return result;
-    },
+      }),
   }),
 );
 
