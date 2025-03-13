@@ -1,5 +1,5 @@
+import { CgSpinner } from 'react-icons/cg';
 import { TbMoodSad } from 'react-icons/tb';
-import { TailSpin } from 'react-loader-spinner';
 import { Card } from '.';
 
 interface Props {
@@ -22,7 +22,7 @@ const Loading = ({ error }: Props) => {
 
   return (
     <div className="flex items-center justify-center flex-grow">
-      <TailSpin color="rgb(16 178 121)" />
+      <CgSpinner size={96} className="animate-spin text-caribbean-green-600" />
     </div>
   );
 };
