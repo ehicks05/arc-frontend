@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 generator pothos {
@@ -57,6 +58,7 @@ model PostScore {
   postId String @unique @map("post_id")
   post   Post   @relation(fields: [postId], references: [id])
 
+  @@index([postId])
   @@index([score])
   @@map("post_score")
 }
@@ -68,6 +70,7 @@ model CommentScore {
   commentId String  @unique @map("comment_id")
   comment   Comment @relation(fields: [commentId], references: [id])
 
+  @@index([commentId])
   @@index([score])
   @@map("comment_score")
 }
@@ -95,6 +98,7 @@ model Comment {
   parentComment Comment? @relation("CommentToComment", fields: [parentCommentId], references: [id])
 
   @@index([authorId])
+  @@index([postId])
   @@map("comment")
 }
 
@@ -109,6 +113,7 @@ model UserPostVote {
   post Post @relation(fields: [postId], references: [id])
 
   @@id([userId, postId])
+  @@index([postId])
   @@map("user_post_vote")
 }
 
@@ -123,5 +128,6 @@ model UserCommentVote {
   comment Comment @relation(fields: [commentId], references: [id])
 
   @@id([userId, commentId])
+  @@index([commentId])
   @@map("user_comment_vote")
 }
