@@ -1,5 +1,8 @@
 import type { IncomingHttpHeaders, IncomingMessage } from 'node:http';
-import { useJWT } from '@graphql-yoga/plugin-jwt';
+import {
+  createInlineSigningKeyProvider,
+  useJWT,
+} from '@graphql-yoga/plugin-jwt';
 import { useResponseCache } from '@graphql-yoga/plugin-response-cache';
 import { createYoga } from 'graphql-yoga';
 import jwt from 'jsonwebtoken';
@@ -28,10 +31,13 @@ export const yoga = createYoga({
   },
   plugins: [
     useJWT({
-      issuer: `${process.env.SUPABASE_URL}/auth/v1`,
-      signingKey: JWT_SECRET,
-      audience: 'authenticated',
-      algorithms: ['HS256'],
+      signingKeyProviders: [createInlineSigningKeyProvider(JWT_SECRET)],
+      tokenVerification: {
+        issuer: `${process.env.SUPABASE_URL}/auth/v1`,
+        audience: 'authenticated',
+        algorithms: ['HS256'],
+      },
+      reject: { missingToken: false },
     }),
     useResponseCache({
       // cache based on the authentication header
