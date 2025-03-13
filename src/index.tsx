@@ -51,7 +51,6 @@ const client = new ApolloClient({
           // getPosts: offsetLimitPagination(),
           getPosts: {
             keyArgs: ['sort'],
-            // @ts-expect-error offset
             merge(existing, incoming, { args: { offset = 0 } }) {
               // Slicing is necessary because the existing data is
               // immutable, and frozen in development.
