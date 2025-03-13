@@ -1,0 +1,170 @@
+type Comment {
+  author: User!
+  comments: [Comment!]!
+  content: String!
+  createdAt: DateTime!
+  deleted: Boolean!
+  id: ID!
+  level: Int!
+  netVotes: Int!
+  parentComment: Comment
+  post: Post!
+  score: CommentScore!
+  updatedAt: DateTime!
+  userVote: UserCommentVote
+}
+
+type CommentScore {
+  comment: Comment!
+  id: ID!
+  score: Float!
+}
+
+enum CommentSort {
+  BEST
+  NEW
+  TOP
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+type Mutation {
+  createComment(input: createCommentInput!): Comment!
+  createPost(input: createPostInput!): Post!
+  createUserCommentVote(input: createUserCommentVoteInput!): UserCommentVote!
+  createUserPostVote(input: createUserPostVoteInput!): UserPostVote!
+  deleteComment(input: deleteCommentInput!): Comment!
+  deletePost(input: deletePostInput!): Post!
+  deleteUser(input: deleteUserInput!): User!
+  deleteUserCommentVote(input: deleteUserCommentVoteInput!): UserCommentVote!
+  deleteUserPostVote(input: deleteUserPostVoteInput!): UserPostVote!
+  setUsername(input: setUsernameInput!): User!
+  updateComment(input: updateCommentInput!): Comment!
+  updatePost(input: updatePostInput!): Post!
+}
+
+type Post {
+  author: User!
+  commentCount: Int!
+  comments(commentSort: CommentSort): [Comment!]!
+  content: String!
+  createdAt: DateTime!
+  deleted: Boolean!
+  id: ID!
+  link: String!
+  netVotes: Int!
+  score: PostScore!
+  title: String!
+  updatedAt: DateTime!
+  userVote: UserPostVote
+}
+
+type PostScore {
+  id: ID!
+  post: Post!
+  score: Float!
+}
+
+enum PostSort {
+  HOT
+  NEW
+  TOP
+}
+
+type Query {
+  comment(id: String!): Comment!
+  comments(offset: Int, sort: CommentSort): [Comment!]! @deprecated(reason: "unused?")
+  me: User
+  post(id: String!): Post!
+  posts(offset: Int, sort: PostSort): [Post!]!
+  user(id: String!): User
+  users: [User!]!
+}
+
+type User {
+  commentVotes: [UserCommentVote!]!
+  comments: [Comment!]!
+  createdAt: DateTime!
+  id: ID!
+  postVotes: [UserPostVote!]!
+  posts: [Post!]!
+  updatedAt: DateTime!
+  username: String
+}
+
+type UserCommentVote {
+  comment: Comment!
+  direction: Int!
+  user: User!
+}
+
+type UserPostVote {
+  direction: Int!
+  post: Post!
+  user: User!
+}
+
+enum VoteDirection {
+  DOWN
+  UP
+}
+
+input createCommentInput {
+  content: String!
+  level: Int!
+  parentCommentId: String
+  postId: String!
+}
+
+input createPostInput {
+  content: String!
+  link: String!
+  title: String!
+}
+
+input createUserCommentVoteInput {
+  commentId: String!
+  direction: VoteDirection!
+}
+
+input createUserPostVoteInput {
+  direction: VoteDirection!
+  postId: String!
+}
+
+input deleteCommentInput {
+  id: String!
+}
+
+input deletePostInput {
+  id: String!
+}
+
+input deleteUserCommentVoteInput {
+  commentId: String!
+}
+
+input deleteUserInput {
+  id: String!
+}
+
+input deleteUserPostVoteInput {
+  postId: String!
+}
+
+input setUsernameInput {
+  username: String!
+}
+
+input updateCommentInput {
+  content: String!
+  id: String!
+}
+
+input updatePostInput {
+  content: String!
+  id: String!
+}

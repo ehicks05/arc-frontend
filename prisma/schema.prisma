@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator pothos {
+  provider = "prisma-pothos-types"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id
+  username  String?
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+  deleted   Boolean  @default(false)
+
+  posts        Post[]
+  comments     Comment[]
+  postVotes    UserPostVote[]
+  commentVotes UserCommentVote[]
+
+  @@map("user")
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  authorId  String?  @map("author_id")
+  content   String
+  deleted   Boolean  @default(false)
+  netVotes  Int      @default(0) @map("net_votes")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  author    User?          @relation(fields: [authorId], references: [id])
+  comments  Comment[]
+  votes     UserPostVote[]
+  postScore PostScore?
+
+  // unique to posts
+  title String
+  link  String
+
+  @@index([netVotes])
+  @@index([createdAt])
+  @@map("post")
+}
+
+model PostScore {
+  id    String @id @default(uuid())
+  score Float  @default(0)
+
+  postId String @unique @map("post_id")
+  post   Post   @relation(fields: [postId], references: [id])
+
+  @@index([score])
+  @@map("post_score")
+}
+
+model CommentScore {
+  id    String @id @default(uuid())
+  score Float  @default(0)
+
+  commentId String  @unique @map("comment_id")
+  comment   Comment @relation(fields: [commentId], references: [id])
+
+  @@index([score])
+  @@map("comment_score")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  authorId  String?  @map("author_id")
+  content   String
+  deleted   Boolean  @default(false)
+  netVotes  Int      @default(0) @map("net_votes")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  author       User?             @relation(fields: [authorId], references: [id])
+  comments     Comment[]         @relation("CommentToComment")
+  votes        UserCommentVote[]
+  commentScore CommentScore?
+
+  // unique to comments
+  postId          String  @map("post_id")
+  parentCommentId String? @map("parent_comment_id")
+  level           Int     @default(0)
+
+  post          Post     @relation(fields: [postId], references: [id])
+  parentComment Comment? @relation("CommentToComment", fields: [parentCommentId], references: [id])
+
+  @@map("comment")
+}
+
+model UserPostVote {
+  userId    String   @map("user_id")
+  postId    String   @map("post_id")
+  direction Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id])
+  post Post @relation(fields: [postId], references: [id])
+
+  @@id([userId, postId])
+  @@map("user_post_vote")
+}
+
+model UserCommentVote {
+  userId    String   @map("user_id")
+  commentId String   @map("comment_id")
+  direction Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  user    User    @relation(fields: [userId], references: [id])
+  comment Comment @relation(fields: [commentId], references: [id])
+
+  @@id([userId, commentId])
+  @@map("user_comment_vote")
+}

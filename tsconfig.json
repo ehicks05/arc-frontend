@@ -9,6 +9,7 @@
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
+    "strict": true,
     "types": ["vinxi/types/client"],
     "isolatedModules": true,
     "baseUrl": "./",
