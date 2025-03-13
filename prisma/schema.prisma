@@ -44,6 +44,7 @@ model Post {
   title String
   link  String
 
+  @@index([authorId])
   @@index([netVotes])
   @@index([createdAt])
   @@map("post")
@@ -93,6 +94,7 @@ model Comment {
   post          Post     @relation(fields: [postId], references: [id])
   parentComment Comment? @relation("CommentToComment", fields: [parentCommentId], references: [id])
 
+  @@index([authorId])
   @@map("comment")
 }
 
