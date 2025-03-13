@@ -1,5 +1,5 @@
-import { Auth } from '@supabase/auth-ui-react';
 import { useUserQuery } from '@/generated/graphql';
+import { Auth } from '@supabase/auth-ui-react';
 
 const useUser = () => {
   const { session, user } = Auth.useUser();

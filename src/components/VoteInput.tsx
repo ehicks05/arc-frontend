@@ -1,12 +1,12 @@
-import { useModal } from 'react-modal-hook';
+import useUser from '@/hooks/useUser';
 import {
-  BsCaretUp,
-  BsCaretUpFill,
   BsCaretDown,
   BsCaretDownFill,
+  BsCaretUp,
+  BsCaretUpFill,
 } from 'react-icons/bs';
+import { useModal } from 'react-modal-hook';
 import { AuthDialog } from '.';
-import useUser from '@/hooks/useUser';
 
 interface Props {
   direction?: number;

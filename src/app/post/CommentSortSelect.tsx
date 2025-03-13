@@ -1,8 +1,8 @@
-import { Dispatch, SetStateAction } from 'react';
-import clsx from 'clsx';
-import { HiCheck, HiChevronDown } from 'react-icons/hi';
-import { Listbox } from '@headlessui/react';
 import { CommentSort } from '@/generated/graphql';
+import { Listbox } from '@headlessui/react';
+import clsx from 'clsx';
+import type { Dispatch, SetStateAction } from 'react';
+import { HiCheck, HiChevronDown } from 'react-icons/hi';
 
 interface Props {
   value: CommentSort;

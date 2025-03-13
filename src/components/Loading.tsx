@@ -1,15 +1,14 @@
-import React from 'react';
 import { TbMoodSad } from 'react-icons/tb';
 import { TailSpin } from 'react-loader-spinner';
 import { Card } from '.';
 
 interface Props {
-  error?: any;
+  error?: unknown;
 }
 const Loading = ({ error }: Props) => {
   if (error) {
     const message =
-      'message' in error ? error.message : JSON.stringify(error, null, 2);
+      error instanceof Error ? error.message : JSON.stringify(error, null, 2);
     return (
       <Card>
         <div className="text-center text-3xl">Something went wrong.</div>

@@ -1,5 +1,5 @@
-import prisma from '../prisma';
 import { builder } from '../builder';
+import prisma from '../prisma';
 import { CommentSort } from './basic';
 
 builder.prismaObject('Comment', {
@@ -115,7 +115,11 @@ builder.mutationField('updateComment', t =>
       if (comment.authorId !== userId)
         throw new Error('you can only update your own comments');
 
-      return prisma.comment.update({ ...query, where: { id }, data: { content } });
+      return prisma.comment.update({
+        ...query,
+        where: { id },
+        data: { content },
+      });
     },
   }),
 );

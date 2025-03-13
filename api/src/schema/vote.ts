@@ -1,6 +1,6 @@
 import { sum } from 'lodash-es';
-import prisma from '../prisma';
 import { builder } from '../builder';
+import prisma from '../prisma';
 
 const VOTE_DIRECTIONS = ['UP', 'DOWN'] as const;
 const DIRECTION_TO_VALUE = { UP: 1, DOWN: -1 };
@@ -98,12 +98,15 @@ builder.mutationField('deleteUserPostVote', t =>
   }),
 );
 
-const createUserCommentVoteInput = builder.inputType('createUserCommentVoteInput', {
-  fields: t => ({
-    commentId: t.string({ required: true }),
-    direction: t.field({ type: VoteDirection, required: true }),
-  }),
-});
+const createUserCommentVoteInput = builder.inputType(
+  'createUserCommentVoteInput',
+  {
+    fields: t => ({
+      commentId: t.string({ required: true }),
+      direction: t.field({ type: VoteDirection, required: true }),
+    }),
+  },
+);
 
 builder.mutationField('createUserCommentVote', t =>
   t.prismaField({
@@ -128,7 +131,9 @@ builder.mutationField('createUserCommentVote', t =>
           direction,
         },
       });
-      const votes = await prisma.userCommentVote.findMany({ where: { commentId } });
+      const votes = await prisma.userCommentVote.findMany({
+        where: { commentId },
+      });
       const netVotes = sum(votes.map(v => v.direction));
       const comment = await prisma.comment.update({
         where: { id: commentId },
@@ -139,11 +144,14 @@ builder.mutationField('createUserCommentVote', t =>
   }),
 );
 
-const deleteUserCommentVoteInput = builder.inputType('deleteUserCommentVoteInput', {
-  fields: t => ({
-    commentId: t.string({ required: true }),
-  }),
-});
+const deleteUserCommentVoteInput = builder.inputType(
+  'deleteUserCommentVoteInput',
+  {
+    fields: t => ({
+      commentId: t.string({ required: true }),
+    }),
+  },
+);
 
 builder.mutationField('deleteUserCommentVote', t =>
   t.prismaField({
@@ -161,7 +169,9 @@ builder.mutationField('deleteUserCommentVote', t =>
         ...query,
         where: { userId_commentId: { userId, commentId } },
       });
-      const votes = await prisma.userCommentVote.findMany({ where: { commentId } });
+      const votes = await prisma.userCommentVote.findMany({
+        where: { commentId },
+      });
       const netVotes = sum(votes.map(v => v.direction));
       const comment = await prisma.comment.update({
         where: { id: commentId },

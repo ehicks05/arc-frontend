@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react';
 import { Dialog as HUIDialog } from '@headlessui/react';
+import React, { type ReactNode } from 'react';
 
 interface DialogProps {
   isOpen: boolean;
@@ -19,7 +19,7 @@ const Dialog = ({ isOpen, onClose, children }: DialogProps) => (
         <div className="py-8 px-4 sm:px-6 lg:px-8">{children}</div>
 
         <div className="bg-neutral-200 dark:bg-neutral-700 sm:flex sm:flex-row-reverse">
-          <button className="px-4 sm:px-6 py-3" onClick={onClose}>
+          <button type="button" className="px-4 sm:px-6 py-3" onClick={onClose}>
             Close
           </button>
         </div>

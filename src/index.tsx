@@ -1,20 +1,20 @@
 import './index.css';
-import React from 'react';
-import { createRoot } from 'react-dom/client';
 import {
   ApolloClient,
   ApolloLink,
+  ApolloProvider,
   HttpLink,
   InMemoryCache,
-  ApolloProvider,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { BrowserRouter } from 'react-router-dom';
-import { ModalProvider } from 'react-modal-hook';
 import { Auth } from '@supabase/auth-ui-react';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { ModalProvider } from 'react-modal-hook';
+import { BrowserRouter } from 'react-router-dom';
 
-import { supabase } from './supabase';
 import App from './MyApp';
+import { supabase } from './supabase';
 
 const authClient = supabase.auth;
 

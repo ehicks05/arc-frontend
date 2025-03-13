@@ -1,9 +1,9 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
-import { Header, Footer } from './layout';
-import { Post, Posts, User, PostForm } from '@/app';
+import { Post, PostForm, Posts, User } from '@/app';
 import { BackgroundGradients } from './components';
+import { Footer, Header } from './layout';
 
 function MyApp() {
   return (

@@ -1,7 +1,7 @@
-import { Prisma } from '@prisma/client';
-import prisma from '../prisma';
+import type { Prisma } from '@prisma/client';
 import { builder } from '../builder';
-import { CommentSort, PostSort, PostSortKey } from './basic';
+import prisma from '../prisma';
+import { CommentSort, PostSort, type PostSortKey } from './basic';
 
 // TODO: move
 const PAGE_SIZE = 10;
@@ -32,10 +32,10 @@ builder.prismaObject('Post', {
           commentSort === 'BEST'
             ? { commentScore: { score: 'desc' } }
             : commentSort === 'TOP'
-            ? { netVotes: 'desc' }
-            : commentSort === 'NEW'
-            ? { createdAt: 'desc' }
-            : { commentScore: { score: 'desc' } },
+              ? { netVotes: 'desc' }
+              : commentSort === 'NEW'
+                ? { createdAt: 'desc' }
+                : { commentScore: { score: 'desc' } },
       }),
     }),
     commentCount: t.relationCount('comments'),

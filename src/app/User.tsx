@@ -1,8 +1,8 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { TbGhost } from 'react-icons/tb';
-import { Comment, PostStub, Loading, Card } from '@/components';
+import { Card, Comment, Loading, PostStub } from '@/components';
 import { useUserQuery } from '@/generated/graphql';
+import React from 'react';
+import { TbGhost } from 'react-icons/tb';
+import { useParams } from 'react-router-dom';
 
 interface withCreatedAt {
   createdAt: string;

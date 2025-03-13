@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useModal } from 'react-modal-hook';
-import { CgSleep } from 'react-icons/cg';
-import { sortBy } from 'lodash';
+import {
+  AuthDialog,
+  Button,
+  Card,
+  CommentCreateForm,
+  Comments,
+  Loading,
+  PostStub,
+} from '@/components';
 import {
   CommentSort,
   useDeletePostMutation,
   usePostQuery,
 } from '@/generated/graphql';
-import {
-  AuthDialog,
-  CommentCreateForm,
-  Comments,
-  PostStub,
-  Button,
-  Loading,
-  Card,
-} from '@/components';
 import { useUser } from '@/hooks';
-import { toForest } from './utils';
-import PostEditForm from './PostEditForm';
+import { sortBy } from 'lodash';
+import { useState } from 'react';
+import { CgSleep } from 'react-icons/cg';
+import { useModal } from 'react-modal-hook';
+import { useParams } from 'react-router-dom';
 import CommentSortSelect from './CommentSortSelect';
+import PostEditForm from './PostEditForm';
+import { toForest } from './utils';
 
 const Post = () => {
   const { user } = useUser();
@@ -49,10 +49,10 @@ const Post = () => {
     commentSort === CommentSort.Best
       ? c.score.score
       : commentSort === CommentSort.Top
-      ? c.netVotes
-      : commentSort === CommentSort.New
-      ? c.createdAt
-      : c.score.score,
+        ? c.netVotes
+        : commentSort === CommentSort.New
+          ? c.createdAt
+          : c.score.score,
   ).reverse();
 
   const handleClickDelete = async (id: string) => {
@@ -90,7 +90,9 @@ const Post = () => {
                 </Button>
                 <Button
                   disabled={!isAuthor}
-                  onClick={user ? () => handleClickDelete(post.id) : showAuthModal}
+                  onClick={
+                    user ? () => handleClickDelete(post.id) : showAuthModal
+                  }
                 >
                   Delete
                 </Button>
@@ -108,7 +110,10 @@ const Post = () => {
               >
                 Leave a comment
               </Button>
-              <CommentSortSelect value={commentSort} onChange={setCommentSort} />
+              <CommentSortSelect
+                value={commentSort}
+                onChange={setCommentSort}
+              />
             </div>
           )}
           {isEditTopLevelComment && (
@@ -118,7 +123,10 @@ const Post = () => {
                 refetchPost={refetchPost}
                 setEditMode={setIsEditTopLevelComment}
               />
-              <CommentSortSelect value={commentSort} onChange={setCommentSort} />
+              <CommentSortSelect
+                value={commentSort}
+                onChange={setCommentSort}
+              />
             </div>
           )}
         </div>

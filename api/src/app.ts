@@ -1,11 +1,11 @@
-import { IncomingHttpHeaders, IncomingMessage } from 'node:http';
-import { createYoga } from 'graphql-yoga';
+import type { IncomingHttpHeaders, IncomingMessage } from 'node:http';
 import { useJWT } from '@graphql-yoga/plugin-jwt';
 import { useResponseCache } from '@graphql-yoga/plugin-response-cache';
+import { createYoga } from 'graphql-yoga';
 import jwt from 'jsonwebtoken';
 import { schema } from './schema';
 
-const JWT_SECRET = process.env.SUPABASE_JWT_SECRET!;
+const JWT_SECRET = process.env.SUPABASE_JWT_SECRET || '';
 
 const decodeToken = (headers: IncomingHttpHeaders): jwt.JwtPayload | null => {
   if (headers.authorization) {

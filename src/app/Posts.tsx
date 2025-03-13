@@ -1,9 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { TbMoodEmpty } from 'react-icons/tb';
-import { PostStub, Loading, Button, Card } from '@/components';
+import { Button, Card, Loading, PostStub } from '@/components';
 import { PostSort, usePostsQuery } from '@/generated/graphql';
+import { TbMoodEmpty } from 'react-icons/tb';
 
 const pathToSort: Record<string, PostSort> = {
   '/': PostSort.Hot,

@@ -1,6 +1,6 @@
-import { sample, sampleSize } from 'lodash-es';
 import { faker } from '@faker-js/faker';
-import { Comment, User } from '@prisma/client';
+import type { Comment, User } from '@prisma/client';
+import { sample, sampleSize } from 'lodash-es';
 import prisma from '../prisma';
 
 export const adminNuke = async () => {
@@ -80,29 +80,25 @@ export const adminSeed = async () => {
   const UPVOTE_RATIO = Math.random() / 2 + 0.5; // targeting 0.5-1.0
 
   console.log('for each post, creating userPostVotes...');
-  const userPostVoteData = posts
-    .map(p => {
-      const voters = sampleSize(users, Math.random() * MAX_VOTES_PER_POST);
-      return voters.map(u => ({
-        postId: p.id,
-        userId: u.id,
-        direction: Math.random() <= UPVOTE_RATIO ? 1 : -1,
-      }));
-    })
-    .flat();
+  const userPostVoteData = posts.flatMap(p => {
+    const voters = sampleSize(users, Math.random() * MAX_VOTES_PER_POST);
+    return voters.map(u => ({
+      postId: p.id,
+      userId: u.id,
+      direction: Math.random() <= UPVOTE_RATIO ? 1 : -1,
+    }));
+  });
   await prisma.userPostVote.createMany({ data: userPostVoteData });
 
   console.log('for each comment, creating userCommentVotes...');
-  const userCommentVoteData = comments
-    .map(c => {
-      const voters = sampleSize(users, Math.random() * MAX_VOTES_PER_COMMENT);
-      return voters.map(u => ({
-        commentId: c.id,
-        userId: u.id,
-        direction: Math.random() <= UPVOTE_RATIO ? 1 : -1,
-      }));
-    })
-    .flat();
+  const userCommentVoteData = comments.flatMap(c => {
+    const voters = sampleSize(users, Math.random() * MAX_VOTES_PER_COMMENT);
+    return voters.map(u => ({
+      commentId: c.id,
+      userId: u.id,
+      direction: Math.random() <= UPVOTE_RATIO ? 1 : -1,
+    }));
+  });
   await prisma.userCommentVote.createMany({ data: userCommentVoteData });
 
   await prisma.$executeRaw`call updatescore();`;

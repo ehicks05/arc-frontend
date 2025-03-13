@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Auth } from '@supabase/auth-ui-react';
-import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { useApolloClient } from '@apollo/client';
-import { useDarkMode } from 'usehooks-ts';
+import { useSetUsernameMutation } from '@/generated/graphql';
 import { useUser } from '@/hooks';
 import { supabase } from '@/supabase';
-import { useSetUsernameMutation } from '@/generated/graphql';
+import { useApolloClient } from '@apollo/client';
+import { Auth } from '@supabase/auth-ui-react';
+import { ThemeSupa } from '@supabase/auth-ui-shared';
+import type React from 'react';
+import { useEffect, useState } from 'react';
+import { useDarkMode } from 'usehooks-ts';
 import { Button, Dialog, Loading } from '.';
 
 const UsernameForm = () => {

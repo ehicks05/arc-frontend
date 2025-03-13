@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import TextareaAutosize from 'react-textarea-autosize';
 import { Button, Loading } from '@/components/index';
-import { PostDetailFragment, useUpdatePostMutation } from '@/generated/graphql';
+import {
+  type PostDetailFragment,
+  useUpdatePostMutation,
+} from '@/generated/graphql';
+import { useState } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 
 interface Props {
   post: PostDetailFragment;

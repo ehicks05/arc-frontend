@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import prisma from '../prisma';
 import { builder } from '../builder';
+import prisma from '../prisma';
 
 builder.prismaObject('User', {
   fields: t => ({
@@ -30,7 +30,8 @@ builder.queryField('me', t =>
 builder.queryField('users', t =>
   t.prismaField({
     type: ['User'],
-    resolve: async (query, root, args, ctx) => prisma.user.findMany({ ...query }),
+    resolve: async (query, root, args, ctx) =>
+      prisma.user.findMany({ ...query }),
   }),
 );
 

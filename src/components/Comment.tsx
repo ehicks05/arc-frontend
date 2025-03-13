@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FiMinusSquare, FiPlusSquare } from 'react-icons/fi';
-import { useModal } from 'react-modal-hook';
-import { formatDistance } from 'date-fns';
-import { HydratedComment } from '@/types';
 import { AuthDialog, CommentEditForm } from '@/components';
 import { useUser } from '@/hooks';
+import type { HydratedComment } from '@/types';
+import { formatDistance } from 'date-fns';
+import React, { useState } from 'react';
+import { FiMinusSquare, FiPlusSquare } from 'react-icons/fi';
+import { useModal } from 'react-modal-hook';
+import { Link } from 'react-router-dom';
 
-import { Button, Comments, CommentCreateForm, VoteInput } from './index';
+import { DIRECTION_TO_VALUE } from '@/constants';
 import {
-  useDeleteCommentMutation,
+  type CommentFragment,
   VoteDirection,
   useCreateUserCommentVoteMutation,
+  useDeleteCommentMutation,
   useDeleteUserCommentVoteMutation,
-  CommentFragment,
 } from '@/generated/graphql';
-import { DIRECTION_TO_VALUE } from '@/constants';
+import { Button, CommentCreateForm, Comments, VoteInput } from './index';
 
 interface Props {
   comment: HydratedComment;
@@ -47,7 +47,9 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
   const handleVote = async (direction: VoteDirection) =>
     comment.userVote?.direction &&
     DIRECTION_TO_VALUE[direction] === comment.userVote.direction
-      ? deleteUserCommentVote({ variables: { input: { commentId: comment.id } } })
+      ? deleteUserCommentVote({
+          variables: { input: { commentId: comment.id } },
+        })
       : createUserCommentVote({
           variables: { input: { commentId: comment.id, direction } },
         });
@@ -59,7 +61,10 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
       ? 'bg-neutral-50 dark:bg-neutral-900'
       : 'bg-neutral-100 dark:bg-neutral-800';
   return (
-    <div className={`${bgClass} p-2 border-y dark:border-gray-800`} key={comment.id}>
+    <div
+      className={`${bgClass} p-2 border-y dark:border-gray-800`}
+      key={comment.id}
+    >
       <div className="flex gap-2">
         {!minimized && (
           <VoteInput
@@ -98,7 +103,9 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
                   <Button
                     className="text-xs"
                     onClick={
-                      user ? () => setShowReplyForm(!showReplyForm) : showAuthModal
+                      user
+                        ? () => setShowReplyForm(!showReplyForm)
+                        : showAuthModal
                     }
                   >
                     Reply
@@ -109,7 +116,9 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
                         disabled={!isAuthor}
                         className="text-xs"
                         onClick={
-                          user ? () => setShowEditForm(!showEditForm) : showAuthModal
+                          user
+                            ? () => setShowEditForm(!showEditForm)
+                            : showAuthModal
                         }
                       >
                         Edit
@@ -118,7 +127,9 @@ const Comment = ({ comment, refetchPost, notInTree }: Props) => {
                         disabled={!isAuthor}
                         className="text-xs"
                         onClick={
-                          user ? () => handleClickDelete(comment.id) : showAuthModal
+                          user
+                            ? () => handleClickDelete(comment.id)
+                            : showAuthModal
                         }
                       >
                         Delete
@@ -180,7 +191,11 @@ const Header = ({ comment, minimized, setMinimized }: HeaderProps) => (
     </span>
     <span>|</span>
     <span>{comment.netVotes} pts</span>
-    <button className="text-sm" onClick={() => setMinimized(!minimized)}>
+    <button
+      type="button"
+      className="text-sm"
+      onClick={() => setMinimized(!minimized)}
+    >
       {minimized ? <FiPlusSquare /> : <FiMinusSquare />}
     </button>
   </div>

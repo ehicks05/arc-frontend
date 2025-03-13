@@ -1,15 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { formatDistance } from 'date-fns';
 import {
+  type PostStubFragment,
   VoteDirection,
-  PostStubFragment,
   useCreateUserPostVoteMutation,
   useDeleteUserPostVoteMutation,
 } from '@/generated/graphql';
+import { formatDistance } from 'date-fns';
+import { Link } from 'react-router-dom';
 
-import { VoteInput } from '.';
 import { DIRECTION_TO_VALUE } from '@/constants';
+import { VoteInput } from '.';
 
 interface Props {
   post: PostStubFragment;

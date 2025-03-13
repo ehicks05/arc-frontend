@@ -1,5 +1,4 @@
 // credit: https://stitches.dev/
-import React from 'react';
 import { useDarkMode } from 'usehooks-ts';
 
 const VIOLET_GRADIENT =

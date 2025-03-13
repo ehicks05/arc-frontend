@@ -1,5 +1,5 @@
-import { writeFileSync } from 'fs';
-import { printSchema, lexicographicSortSchema } from 'graphql';
+import { writeFileSync } from 'node:fs';
+import { lexicographicSortSchema, printSchema } from 'graphql';
 import './schema/index';
 import { builder } from './builder';
 

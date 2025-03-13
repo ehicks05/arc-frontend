@@ -1,7 +1,6 @@
-import React from 'react';
+import useUser from '@/hooks/useUser';
 import { useModal } from 'react-modal-hook';
 import TextareaAutosize from 'react-textarea-autosize';
-import useUser from '@/hooks/useUser';
 import { AuthDialog, Button } from '.';
 
 interface Props {
@@ -12,7 +11,12 @@ interface Props {
 }
 
 /** Used by both CommentCreateForm and CommentEditForm  */
-const CommentForm = ({ content, setContent, handleSubmit, setEditMode }: Props) => {
+const CommentForm = ({
+  content,
+  setContent,
+  handleSubmit,
+  setEditMode,
+}: Props) => {
   const { username } = useUser();
 
   const [showAuthModal, hideModal] = useModal(() => (

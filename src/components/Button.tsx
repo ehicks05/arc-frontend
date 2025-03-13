@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React from 'react';
+import type React from 'react';
 
 interface Props {
   className?: string;
@@ -10,6 +10,7 @@ interface Props {
 
 const Button = ({ className, disabled, onClick, children }: Props) => (
   <button
+    type="button"
     disabled={disabled}
     onClick={onClick}
     className={clsx(

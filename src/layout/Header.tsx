@@ -1,5 +1,9 @@
-import { Fragment } from 'react';
+import { AuthDialog } from '@/components';
+import { useUser } from '@/hooks';
+import { supabase } from '@/supabase';
+import { toGravatarUrl } from '@/utils/gravatar';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
 import {
   HiOutlineBell,
   HiOutlineMenu,
@@ -7,12 +11,8 @@ import {
   HiOutlineX,
   HiPlus,
 } from 'react-icons/hi';
-import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useModal } from 'react-modal-hook';
-import { toGravatarUrl } from '@/utils/gravatar';
-import { AuthDialog } from '@/components';
-import { useUser } from '@/hooks';
-import { supabase } from '@/supabase';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 
 const NAV_LINKS = [
   { name: 'Hot', href: '/' },
@@ -119,7 +119,11 @@ const ProfileMenu = ({ showAuthModal }: { showAuthModal: () => void }) => {
               {!user && (
                 <Menu.Item>
                   {() => (
-                    <Link to="#" onClick={showAuthModal} className="block px-4 py-2">
+                    <Link
+                      to="#"
+                      onClick={showAuthModal}
+                      className="block px-4 py-2"
+                    >
                       Sign In
                     </Link>
                   )}
@@ -156,6 +160,7 @@ export default function Header() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-2">
                 <button
+                  type="button"
                   title="Create a Post"
                   className="dark:bg-neutral-800 p-1 rounded-full text-neutral-400 hover:text-black dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                 >
@@ -166,13 +171,20 @@ export default function Header() {
                     </Link>
                   )}
                   {!username && (
-                    <div onClick={showAuthModal}>
+                    <button
+                      type="button"
+                      onClick={showAuthModal}
+                      className="flex"
+                    >
                       <HiPlus className="h-6 w-6" aria-hidden="true" />
-                    </div>
+                    </button>
                   )}
                 </button>
 
-                <button className="dark:bg-neutral-800 p-1 rounded-full text-neutral-400 hover:text-black dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                <button
+                  type="button"
+                  className="dark:bg-neutral-800 p-1 rounded-full text-neutral-400 hover:text-black dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                >
                   <span className="sr-only">View notifications</span>
                   <HiOutlineBell className="h-6 w-6" aria-hidden="true" />
                 </button>
@@ -192,7 +204,9 @@ export default function Header() {
                   className={`block px-3 py-2 rounded-md text-base font-medium
                   ${location.pathname !== item.href ? 'text-neutral-300' : ''}
                   `}
-                  aria-current={location.pathname === item.href ? 'page' : undefined}
+                  aria-current={
+                    location.pathname === item.href ? 'page' : undefined
+                  }
                 >
                   {item.name}
                 </NavLink>

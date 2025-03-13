@@ -1,6 +1,5 @@
-import React from 'react';
+import type { HydratedComment } from '@/types';
 import { Comment } from '.';
-import { HydratedComment } from '@/types';
 
 interface Props {
   comments: HydratedComment[];
@@ -9,15 +8,14 @@ interface Props {
 
 const Comments = ({ comments, refetchPost }: Props) => (
   <div className="flex flex-col">
-    {comments &&
-      comments.map(comment => (
-        <Comment
-          key={comment.id}
-          comment={comment}
-          refetchPost={refetchPost}
-          notInTree={false}
-        />
-      ))}
+    {comments?.map(comment => (
+      <Comment
+        key={comment.id}
+        comment={comment}
+        refetchPost={refetchPost}
+        notInTree={false}
+      />
+    ))}
   </div>
 );
 

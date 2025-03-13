@@ -1,4 +1,4 @@
-import { AuthUser } from '@supabase/supabase-js';
+import type { AuthUser } from '@supabase/supabase-js';
 
 export interface ApolloContext {
   req: any;
