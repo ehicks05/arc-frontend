@@ -1,5 +1,5 @@
 import { eventHandler, getRequestURL, readRawBody } from 'vinxi/http';
-import { yoga } from './src/app';
+import { yoga } from './yoga/yoga';
 
 export default eventHandler(async event => {
   const url = getRequestURL(event);

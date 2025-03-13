@@ -6,7 +6,7 @@ import TracingPlugin, {
   wrapResolver,
   isRootField,
 } from '@pothos/plugin-tracing';
-import prisma from './prisma';
+import prisma from './lib/prisma';
 
 const enableTracing = true;
 
@@ -19,8 +19,10 @@ const builder = new SchemaBuilder<{
       Output: Date;
     };
   };
+  DefaultFieldNullability: false;
 }>({
   plugins: [PrismaPlugin, PrismaUtils, TracingPlugin],
+  defaultFieldNullability: false,
   prisma: {
     client: prisma,
     exposeDescriptions: true,

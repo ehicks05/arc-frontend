@@ -1,6 +1,6 @@
 import type { Prisma } from '@prisma/client';
 import { builder } from '../builder';
-import prisma from '../prisma';
+import prisma from '../lib/prisma';
 import { CommentSort, PostSort, type PostSortKey } from './basic';
 
 // TODO: move
@@ -22,7 +22,7 @@ builder.prismaObject('Post', {
     link: t.exposeString('link'),
     content: t.exposeString('content'),
     deleted: t.exposeBoolean('deleted'),
-    author: t.relation('author'),
+    author: t.relation('author', { onNull: 'error' }),
     comments: t.relation('comments', {
       args: {
         commentSort: t.arg({ type: CommentSort }),
@@ -42,7 +42,7 @@ builder.prismaObject('Post', {
     createdAt: t.expose('createdAt', { type: 'DateTime' }),
     updatedAt: t.expose('updatedAt', { type: 'DateTime' }),
     netVotes: t.exposeInt('netVotes'), // previous version was doing a queryRaw with getNetVotes
-    score: t.relation('postScore'),
+    score: t.relation('postScore', { onNull: 'error' }),
     userVote: t.prismaField({
       type: 'UserPostVote',
       nullable: true,
@@ -94,7 +94,7 @@ builder.queryField('post', t =>
 builder.queryField('test', t =>
   t.string({
     resolve: async (query, root, args) =>
-      (await prisma.post.findFirst())?.title,
+      (await prisma.post.findFirst())?.title || 'foo',
   }),
 );
 

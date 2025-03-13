@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { builder } from '../builder';
-import prisma from '../prisma';
+import prisma from '../lib/prisma';
 
 builder.prismaObject('User', {
   fields: t => ({

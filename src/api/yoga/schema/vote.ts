@@ -1,6 +1,6 @@
 import { sum } from 'lodash-es';
 import { builder } from '../builder';
-import prisma from '../prisma';
+import prisma from '../lib/prisma';
 
 const VOTE_DIRECTIONS = ['UP', 'DOWN'] as const;
 const DIRECTION_TO_VALUE = { UP: 1, DOWN: -1 };

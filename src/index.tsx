@@ -8,7 +8,6 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { Auth } from '@supabase/auth-ui-react';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ModalProvider } from 'react-modal-hook';
 import { BrowserRouter } from 'react-router-dom';
@@ -51,13 +50,13 @@ const client = new ApolloClient({
           // getPosts: offsetLimitPagination(),
           getPosts: {
             keyArgs: ['sort'],
-            merge(existing, incoming, { args: { offset = 0 } }) {
+            merge(existing, incoming, { args }) {
               // Slicing is necessary because the existing data is
               // immutable, and frozen in development.
               const merged = existing ? existing.slice(0) : [];
               // eslint-disable-next-line no-plusplus
               for (let i = 0; i < incoming.length; ++i) {
-                merged[offset + i] = incoming[i];
+                merged[args?.offset + i] = incoming[i];
               }
               return merged;
             },
@@ -68,7 +67,7 @@ const client = new ApolloClient({
   }),
 });
 
-const container = document.getElementById('root');
+const container = document.getElementById('root') as Element;
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 root.render(
   <Auth.UserContextProvider supabaseClient={supabase}>

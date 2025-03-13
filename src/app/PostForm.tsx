@@ -1,7 +1,7 @@
 import { Button, Loading } from '@/components';
 import { useCreatePostMutation } from '@/generated/graphql';
 import { useApolloClient } from '@apollo/client';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -39,6 +39,7 @@ const PostForm = () => {
   return (
     <div className="max-w-4xl w-full mx-auto">
       <div>
+        {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
         <label>Title</label>
         <div>
           <TextareaAutosize
@@ -50,6 +51,7 @@ const PostForm = () => {
         </div>
       </div>
       <div>
+        {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
         <label>Link</label>
         <div>
           <TextareaAutosize
@@ -61,6 +63,7 @@ const PostForm = () => {
         </div>
       </div>
       <div>
+        {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
         <label>Content</label>
         <div>
           <TextareaAutosize

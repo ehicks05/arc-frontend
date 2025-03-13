@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import type { Comment, User } from '@prisma/client';
 import { sample, sampleSize } from 'lodash-es';
-import prisma from '../prisma';
+import prisma from '../lib/prisma';
 
 export const adminNuke = async () => {
   await prisma.comment.deleteMany();

@@ -2,7 +2,7 @@ import { AuthDialog, CommentEditForm } from '@/components';
 import { useUser } from '@/hooks';
 import type { HydratedComment } from '@/types';
 import { formatDistance } from 'date-fns';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FiMinusSquare, FiPlusSquare } from 'react-icons/fi';
 import { useModal } from 'react-modal-hook';
 import { Link } from 'react-router-dom';

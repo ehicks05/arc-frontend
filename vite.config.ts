@@ -28,7 +28,7 @@ export default createApp({
     {
       name: 'api',
       type: 'http',
-      handler: './api/api.ts',
+      handler: './src/api/api.ts',
       base: '/api',
     },
   ],

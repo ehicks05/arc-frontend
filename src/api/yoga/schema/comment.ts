@@ -1,5 +1,5 @@
 import { builder } from '../builder';
-import prisma from '../prisma';
+import prisma from '../lib/prisma';
 import { CommentSort } from './basic';
 
 builder.prismaObject('Comment', {
@@ -8,14 +8,14 @@ builder.prismaObject('Comment', {
     content: t.exposeString('content'),
     deleted: t.exposeBoolean('deleted'),
     level: t.exposeInt('level'),
-    author: t.relation('author'),
+    author: t.relation('author', { onNull: 'error' }),
     post: t.relation('post'),
     parentComment: t.relation('parentComment', { nullable: true }),
     comments: t.relation('comments'),
     createdAt: t.expose('createdAt', { type: 'DateTime' }),
     updatedAt: t.expose('updatedAt', { type: 'DateTime' }),
     netVotes: t.exposeInt('netVotes'), // previous version was doing a queryRaw with getNetVotes
-    score: t.relation('commentScore'),
+    score: t.relation('commentScore', { onNull: 'error' }),
     userVote: t.prismaField({
       type: 'UserCommentVote',
       nullable: true,

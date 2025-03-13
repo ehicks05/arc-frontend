@@ -2,7 +2,7 @@ import {
   type CommentFragment,
   useUpdateCommentMutation,
 } from '@/generated/graphql';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CommentForm, Loading } from '.';
 
 interface Props {

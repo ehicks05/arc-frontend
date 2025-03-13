@@ -5,39 +5,41 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  DateTime: any;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  DateTime: { input: any; output: any; }
 };
 
 export type Comment = {
   __typename?: 'Comment';
   author: User;
   comments: Array<Comment>;
-  content: Scalars['String'];
-  createdAt: Scalars['DateTime'];
-  deleted: Scalars['Boolean'];
-  id: Scalars['ID'];
-  level: Scalars['Int'];
-  netVotes: Scalars['Int'];
+  content: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  deleted: Scalars['Boolean']['output'];
+  id: Scalars['ID']['output'];
+  level: Scalars['Int']['output'];
+  netVotes: Scalars['Int']['output'];
   parentComment?: Maybe<Comment>;
   post: Post;
   score: CommentScore;
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime']['output'];
   userVote?: Maybe<UserCommentVote>;
 };
 
 export type CommentScore = {
   __typename?: 'CommentScore';
   comment: Comment;
-  id: Scalars['ID'];
-  score: Scalars['Float'];
+  id: Scalars['ID']['output'];
+  score: Scalars['Float']['output'];
 };
 
 export enum CommentSort {
@@ -125,17 +127,17 @@ export type MutationUpdatePostArgs = {
 export type Post = {
   __typename?: 'Post';
   author: User;
-  commentCount: Scalars['Int'];
+  commentCount: Scalars['Int']['output'];
   comments: Array<Comment>;
-  content: Scalars['String'];
-  createdAt: Scalars['DateTime'];
-  deleted: Scalars['Boolean'];
-  id: Scalars['ID'];
-  link: Scalars['String'];
-  netVotes: Scalars['Int'];
+  content: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  deleted: Scalars['Boolean']['output'];
+  id: Scalars['ID']['output'];
+  link: Scalars['String']['output'];
+  netVotes: Scalars['Int']['output'];
   score: PostScore;
-  title: Scalars['String'];
-  updatedAt: Scalars['DateTime'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
   userVote?: Maybe<UserPostVote>;
 };
 
@@ -146,9 +148,9 @@ export type PostCommentsArgs = {
 
 export type PostScore = {
   __typename?: 'PostScore';
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   post: Post;
-  score: Scalars['Float'];
+  score: Scalars['Float']['output'];
 };
 
 export enum PostSort {
@@ -165,59 +167,60 @@ export type Query = {
   me?: Maybe<User>;
   post: Post;
   posts: Array<Post>;
+  test: Scalars['String']['output'];
   user?: Maybe<User>;
   users: Array<User>;
 };
 
 
 export type QueryCommentArgs = {
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
 };
 
 
 export type QueryCommentsArgs = {
-  offset?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<CommentSort>;
 };
 
 
 export type QueryPostArgs = {
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
 };
 
 
 export type QueryPostsArgs = {
-  offset?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<PostSort>;
 };
 
 
 export type QueryUserArgs = {
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
 };
 
 export type User = {
   __typename?: 'User';
   commentVotes: Array<UserCommentVote>;
   comments: Array<Comment>;
-  createdAt: Scalars['DateTime'];
-  id: Scalars['ID'];
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
   postVotes: Array<UserPostVote>;
   posts: Array<Post>;
-  updatedAt: Scalars['DateTime'];
-  username?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['DateTime']['output'];
+  username?: Maybe<Scalars['String']['output']>;
 };
 
 export type UserCommentVote = {
   __typename?: 'UserCommentVote';
   comment: Comment;
-  direction: Scalars['Int'];
+  direction: Scalars['Int']['output'];
   user: User;
 };
 
 export type UserPostVote = {
   __typename?: 'UserPostVote';
-  direction: Scalars['Int'];
+  direction: Scalars['Int']['output'];
   post: Post;
   user: User;
 };
@@ -228,60 +231,60 @@ export enum VoteDirection {
 }
 
 export type CreateCommentInput = {
-  content: Scalars['String'];
-  level: Scalars['Int'];
-  parentCommentId?: InputMaybe<Scalars['String']>;
-  postId: Scalars['String'];
+  content: Scalars['String']['input'];
+  level: Scalars['Int']['input'];
+  parentCommentId?: InputMaybe<Scalars['String']['input']>;
+  postId: Scalars['String']['input'];
 };
 
 export type CreatePostInput = {
-  content: Scalars['String'];
-  link: Scalars['String'];
-  title: Scalars['String'];
+  content: Scalars['String']['input'];
+  link: Scalars['String']['input'];
+  title: Scalars['String']['input'];
 };
 
 export type CreateUserCommentVoteInput = {
-  commentId: Scalars['String'];
+  commentId: Scalars['String']['input'];
   direction: VoteDirection;
 };
 
 export type CreateUserPostVoteInput = {
   direction: VoteDirection;
-  postId: Scalars['String'];
+  postId: Scalars['String']['input'];
 };
 
 export type DeleteCommentInput = {
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
 };
 
 export type DeletePostInput = {
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
 };
 
 export type DeleteUserCommentVoteInput = {
-  commentId: Scalars['String'];
+  commentId: Scalars['String']['input'];
 };
 
 export type DeleteUserInput = {
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
 };
 
 export type DeleteUserPostVoteInput = {
-  postId: Scalars['String'];
+  postId: Scalars['String']['input'];
 };
 
 export type SetUsernameInput = {
-  username: Scalars['String'];
+  username: Scalars['String']['input'];
 };
 
 export type UpdateCommentInput = {
-  content: Scalars['String'];
-  id: Scalars['String'];
+  content: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 };
 
 export type UpdatePostInput = {
-  content: Scalars['String'];
-  id: Scalars['String'];
+  content: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 };
 
 export type CommentFragment = { __typename?: 'Comment', id: string, content: string, deleted: boolean, level: number, createdAt: any, updatedAt: any, netVotes: number, post: { __typename?: 'Post', id: string }, author: { __typename?: 'User', id: string, username?: string | null }, parentComment?: { __typename?: 'Comment', id: string } | null, score: { __typename?: 'CommentScore', score: number }, userVote?: { __typename?: 'UserCommentVote', direction: number } | null };
@@ -313,14 +316,14 @@ export type PostDetailFragment = { __typename?: 'Post', content: string, id: str
 
 export type PostsQueryVariables = Exact<{
   sort?: InputMaybe<PostSort>;
-  offset?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
 export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, link: string, deleted: boolean, createdAt: any, updatedAt: any, commentCount: number, netVotes: number, author: { __typename?: 'User', id: string, username?: string | null }, score: { __typename?: 'PostScore', score: number }, userVote?: { __typename?: 'UserPostVote', direction: number } | null }> };
 
 export type PostQueryVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
 }>;
 
 
@@ -348,7 +351,7 @@ export type DeletePostMutationVariables = Exact<{
 export type DeletePostMutation = { __typename?: 'Mutation', deletePost: { __typename?: 'Post', id: string, title: string, link: string, deleted: boolean, createdAt: any, updatedAt: any, commentCount: number, netVotes: number, author: { __typename?: 'User', id: string, username?: string | null }, score: { __typename?: 'PostScore', score: number }, userVote?: { __typename?: 'UserPostVote', direction: number } | null } };
 
 export type UserQueryVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
 }>;
 
 
@@ -580,8 +583,13 @@ export function usePostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Post
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<PostsQuery, PostsQueryVariables>(PostsDocument, options);
         }
+export function usePostsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PostsQuery, PostsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PostsQuery, PostsQueryVariables>(PostsDocument, options);
+        }
 export type PostsQueryHookResult = ReturnType<typeof usePostsQuery>;
 export type PostsLazyQueryHookResult = ReturnType<typeof usePostsLazyQuery>;
+export type PostsSuspenseQueryHookResult = ReturnType<typeof usePostsSuspenseQuery>;
 export type PostsQueryResult = Apollo.QueryResult<PostsQuery, PostsQueryVariables>;
 export const PostDocument = gql`
     query Post($id: String!) {
@@ -607,7 +615,7 @@ export const PostDocument = gql`
  *   },
  * });
  */
-export function usePostQuery(baseOptions: Apollo.QueryHookOptions<PostQuery, PostQueryVariables>) {
+export function usePostQuery(baseOptions: Apollo.QueryHookOptions<PostQuery, PostQueryVariables> & ({ variables: PostQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<PostQuery, PostQueryVariables>(PostDocument, options);
       }
@@ -615,8 +623,13 @@ export function usePostLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostQ
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<PostQuery, PostQueryVariables>(PostDocument, options);
         }
+export function usePostSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PostQuery, PostQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PostQuery, PostQueryVariables>(PostDocument, options);
+        }
 export type PostQueryHookResult = ReturnType<typeof usePostQuery>;
 export type PostLazyQueryHookResult = ReturnType<typeof usePostLazyQuery>;
+export type PostSuspenseQueryHookResult = ReturnType<typeof usePostSuspenseQuery>;
 export type PostQueryResult = Apollo.QueryResult<PostQuery, PostQueryVariables>;
 export const CreatePostDocument = gql`
     mutation createPost($input: createPostInput!) {
@@ -755,7 +768,7 @@ ${PostStubFragmentDoc}`;
  *   },
  * });
  */
-export function useUserQuery(baseOptions: Apollo.QueryHookOptions<UserQuery, UserQueryVariables>) {
+export function useUserQuery(baseOptions: Apollo.QueryHookOptions<UserQuery, UserQueryVariables> & ({ variables: UserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options);
       }
@@ -763,8 +776,13 @@ export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQ
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(UserDocument, options);
         }
+export function useUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UserQuery, UserQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+        }
 export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
 export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
+export type UserSuspenseQueryHookResult = ReturnType<typeof useUserSuspenseQuery>;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
 export const CreateUserPostVoteDocument = gql`
     mutation createUserPostVote($input: createUserPostVoteInput!) {

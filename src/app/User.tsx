@@ -1,6 +1,5 @@
 import { Card, Comment, Loading, PostStub } from '@/components';
 import { useUserQuery } from '@/generated/graphql';
-import React from 'react';
 import { TbGhost } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
 
