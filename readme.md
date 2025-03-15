@@ -1,3 +1,9 @@
+> [!NOTE]  
+> 3/15/2025
+> 
+> Exploring single-repo api+react solutions outside of nextjs. Currently trying out vinxi. Planning to read up on tanstack start next.
+
+
 # arc
 
 ## TODO
