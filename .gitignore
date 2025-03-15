@@ -9,7 +9,8 @@
 /coverage
 
 # production
-/build
+/.output
+/.vinxi
 
 # misc
 .DS_Store

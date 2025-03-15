@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vinxi start",
-    "build": "vinxi build",
+    "build": "vinxi build && npx prisma generate",
     "dev": "vinxi dev",
     "serve": "vinxi preview",
     "generate-server": "npx prisma generate",
@@ -68,11 +68,7 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
