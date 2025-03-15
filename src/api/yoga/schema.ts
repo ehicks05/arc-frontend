@@ -6,6 +6,8 @@ import { builder } from './builder';
 const schema = builder.toSchema();
 
 const schemaAsString = printSchema(lexicographicSortSchema(schema));
-writeFileSync('./src/generated/schema.graphql', schemaAsString);
+
+if (process.env.NODE_ENV === 'development')
+  writeFileSync('./src/generated/schema.graphql', schemaAsString);
 
 export { schema };

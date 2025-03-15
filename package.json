@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "start": "vinxi start",
-    "build": "prisma generate && vinxi build",
+    "build": "vinxi build",
     "dev": "vinxi dev",
     "serve": "vinxi preview",
     "generate-server": "npx prisma generate",
-    "generate-client": "graphql-codegen --config codegen.ts --verbose"
+    "generate-client": "graphql-codegen --config codegen.ts --verbose",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@apollo/client": "^3.13.4",
