@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vinxi start",
-    "build": "vinxi build && npx prisma generate",
+    "build": "prisma generate && vinxi build",
     "dev": "vinxi dev",
     "serve": "vinxi preview",
     "generate-server": "npx prisma generate",
