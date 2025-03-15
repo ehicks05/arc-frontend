@@ -1,26 +1,10 @@
-# arc-frontend
-
-## Prereqs
-
-1. node
-
-## Getting Started
-
-1. clone repo
-2. run:
-   ```
-   npm i
-   npm run start
-   ```
+# arc
 
 ## TODO
-
 1. sanitize user-submitted links
 2. make app look good
 3. finish comment sorting
 4. confirm all sort behaviors
-
-# arc-backend
 
 ## Prereqs
 
@@ -31,13 +15,7 @@
 ## Getting Started
 
 1. clone repo
-2. set up a `/.env` file with
-   ```
-   DATABASE_URL=
-   SUPABASE_URL=
-   SUPABASE_SERVICE_KEY=
-   SUPABASE_JWT_SECRET=
-   ```
+2. set up a `/.env` file guided by `/.env.example`
 3. To set up the db schema(s), run
    ```
    npx prisma db dev
@@ -45,13 +23,17 @@
 4. to start the app, run:
    ```
    npm i
-   npm run generate
+   npm run generate-server
+   npm run generate-client
    npm run dev
    ```
 
 ## Notes
 
-Uses Prisma ORM and nexus
+Uses:
+ - Prisma ORM
+ - pothos to help generate a graphql schema from the prisma schema
+ - yoga graphql server
 
 ### Scoring
 
