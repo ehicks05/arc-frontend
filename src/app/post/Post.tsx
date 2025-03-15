@@ -101,7 +101,7 @@ const Post = () => {
           </div>
         </div>
 
-        <div className="flex">
+        <div className="flex justify-start">
           {!isEditTopLevelComment && (
             <div className="flex w-full justify-between">
               <Button
